@@ -17,39 +17,39 @@ interface NewsCardProps {
 
 const NewsCard = ({ news }: NewsCardProps) => {
   return (
-    <div className="relative group p-[1px] rounded-[32px] transition-all duration-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)]">
-      {/* Subtle border glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px]" />
+    <div className="relative group p-[1px] rounded-[32px] transition-all duration-500 hover:shadow-[0_0_50px_rgba(59,130,246,0.1)]">
+      {/* Glow background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px]" />
       
-      <Card className="relative z-10 bg-[#0c0c0e] border-white/5 group-hover:border-white/10 rounded-[31px] overflow-hidden flex flex-col md:flex-row h-full">
-        {/* Image: Now contained and sharp */}
-        <div className="relative w-full md:w-[260px] h-[220px] md:h-auto p-3">
+      <Card className="relative z-10 bg-[#0c0c0e] border-white/5 group-hover:border-white/10 rounded-[31px] overflow-hidden flex flex-col md:flex-row h-full p-5 gap-6">
+        {/* Image: Evenly spaced with p-5 from the card container */}
+        <div className="relative w-full md:w-[280px] h-[220px] md:h-auto shrink-0">
           <img 
             src={news.imageUrl} 
             alt={news.title}
-            className="object-cover w-full h-full rounded-[24px] grayscale-[20%] group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-700"
+            className="object-cover w-full h-full rounded-[22px] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 shadow-2xl"
           />
         </div>
 
-        {/* Content Section */}
-        <div className="flex-1 p-6 md:p-8 flex flex-col relative">
+        {/* Content: Balanced padding */}
+        <div className="flex-1 flex flex-col relative py-2">
           <div className="flex items-center gap-2 mb-4">
-            <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
-            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-blue-400/90">
+            <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.9)]" />
+            <span className="text-[11px] font-black uppercase tracking-[0.25em] text-blue-400">
               {news.category}
             </span>
           </div>
 
-          <h3 className="text-[22px] font-bold text-white leading-tight tracking-tight mb-4 line-clamp-2 pr-4">
+          <h3 className="text-[24px] font-bold text-white leading-tight tracking-tight mb-4 line-clamp-2 pr-4">
             {news.title}
           </h3>
 
-          <p className="text-zinc-400 text-[15px] leading-relaxed line-clamp-2 mb-8 font-medium max-w-[90%]">
+          <p className="text-zinc-400 text-[16px] leading-relaxed line-clamp-2 mb-8 font-medium">
             {news.summary}
           </p>
 
-          <div className="mt-auto flex items-center gap-3">
-            <Button className="h-12 px-8 bg-white text-black hover:bg-zinc-200 transition-all rounded-full font-black text-[13px] flex items-center gap-2 shadow-xl active:scale-95">
+          <div className="mt-auto flex items-center gap-4">
+            <Button className="h-12 px-8 bg-white text-black hover:bg-zinc-200 transition-all rounded-full font-black text-[14px] flex items-center gap-2 shadow-xl">
               <PlayCircle className="w-5 h-5 fill-current" />
               LISTEN NOW
             </Button>
@@ -58,10 +58,10 @@ const NewsCard = ({ news }: NewsCardProps) => {
             </Button>
           </div>
 
-          {/* Time: Moved to Bottom Right in English */}
-          <div className="absolute bottom-8 right-8 text-zinc-500 flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5" />
-            <span className="text-[11px] font-bold uppercase tracking-wider">{news.publishedAt}</span>
+          {/* Time: Larger and high contrast */}
+          <div className="absolute bottom-2 right-0 text-zinc-400 flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            <span className="text-[13px] font-black uppercase tracking-widest">{news.publishedAt}</span>
           </div>
         </div>
       </Card>
