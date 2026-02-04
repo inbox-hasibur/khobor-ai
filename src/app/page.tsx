@@ -4,7 +4,7 @@ import HeadlineSlider from "@/components/HeadlineSlider";
 import MainFeed from "@/components/MainFeed";
 import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 
-// --- MOCK DATA (Soon to be replaced by Database) ---
+// --- MOCK DATA ---
 const HEADLINES = [
   {
     id: "h1",
@@ -48,40 +48,43 @@ const LIVE_UPDATES = [
     title: "Shahbag Intersection Blocked",
     summary: "Protestors gathered; traffic halted completely.",
     category: "Traffic",
-    publishedAt: "10m ago"
+    publishedAt: "10M AGO"
   },
   {
     id: "l2",
     title: "Power Outage in Rampura",
     summary: "Maintenance work; expected to return in 2 hours.",
     category: "Utility",
-    publishedAt: "25m ago"
+    publishedAt: "25M AGO"
   }
 ];
 
 export default function Home() {
   return (
-    <main className="max-w-[1440px] mx-auto px-8 pt-16 pb-48">
+    <main className="max-w-[1300px] mx-auto px-6 pt-32 pb-48 transition-all duration-500">
       
-      {/* 1. HERO SECTION: Headline Slider */}
-      <HeadlineSlider headlines={HEADLINES} />
+      {/* 1. HERO SECTION: Margin Reduced to mb-12 */}
+      <section className="mb-12">
+        <HeadlineSlider headlines={HEADLINES} />
+      </section>
 
       {/* 2. MAIN CONTENT: 2-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
         
-        {/* Section 2.1: Left Column (Main Feed) */}
+        {/* Section 2.1: Left Column (Main Feed - 8 Cols) */}
         <MainFeed newsItems={MAIN_FEED} />
 
-        {/* Section 2.2: Right Column (Live Feed) */}
+        {/* Section 2.2: Right Column (Live Feed - 4 Cols) */}
         <LiveFeedSidebar updates={LIVE_UPDATES} />
 
       </div>
 
-      {/* 3. FLOATING COMPONENT: Audio Player Dock */}
-      <div className="fixed bottom-12 left-1/2 -translate-x-1/2 w-[90%] max-w-[460px] z-50">
-        <div className="bg-[#161618]/95 backdrop-blur-3xl border border-white/10 p-4 rounded-[42px] flex items-center gap-6 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.9)]">
-          <div className="w-16 h-16 bg-black rounded-[26px] flex items-center justify-center border border-white/5 overflow-hidden">
-             <div className="flex items-end gap-[3px] h-6">
+      {/* 3. FLOATING PLAYER */}
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-[90%] max-w-[460px] z-50">
+        <div className="bg-[#111113]/90 backdrop-blur-3xl border border-white/10 p-4 rounded-[42px] flex items-center gap-6 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.8)]">
+          
+          <div className="w-16 h-16 bg-black rounded-[26px] flex items-center justify-center border border-white/5 overflow-hidden shadow-inner">
+             <div className="flex items-end gap-[4px] h-6">
                 <div className="w-1.5 bg-blue-500 rounded-full animate-[bounce_0.8s_infinite]" />
                 <div className="w-1.5 bg-blue-400 rounded-full animate-[bounce_1.1s_infinite]" />
                 <div className="w-1.5 bg-blue-600 rounded-full animate-[bounce_0.9s_infinite]" />
@@ -91,10 +94,10 @@ export default function Home() {
           
           <div className="flex-1">
             <p className="text-[11px] font-black text-zinc-500 uppercase tracking-[0.3em] mb-1">Morning Briefing</p>
-            <p className="text-[18px] font-black text-white tracking-tight leading-none">8 stories ready to play</p>
+            <p className="text-[19px] font-black text-white tracking-tight leading-none">8 stories ready to play</p>
           </div>
 
-          <button className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_25px_rgba(255,255,255,0.2)]">
+          <button className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] active:scale-95">
              <PlayCircle className="w-11 h-11 fill-current" />
           </button>
         </div>
