@@ -1,4 +1,4 @@
-# Khobor (খবর) 🎙️📰
+# Khobor AI(খবর) 🎙️📰
 
 **Khobor** is an AI-powered, hyper-local news aggregator and automated podcast generator designed specifically for the Bangladeshi context. It solves the "information overload" and "commuter's struggle" by transforming the latest news into a hands-free, audio-first experience.
 
