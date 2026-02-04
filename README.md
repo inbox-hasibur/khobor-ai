@@ -1,8 +1,7 @@
 # 🎙️ Khobor AI (খবর এআই)
 > **Your Smart, Audio-First Daily News Companion for Bangladesh.**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://khobor-ai.vercel.app) 
-[![Alternate Link](https://img.shields.io/badge/Mirror-Link-blue)](https://khobor.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://khobor.vercel.app) 
 
 **Khobor AI** is a revolutionary AI-driven news aggregator designed specifically for the busy Bangladeshi context. It solves the "information overload" problem by scraping trusted sources, summarizing key insights using Gemini AI, and converting them into a high-quality audio playlist for hands-free consumption.
 
@@ -64,7 +63,6 @@ Using advanced Neural TTS technology (Microsoft Edge TTS), our news doesn't soun
 ---
 
 ## 🔗 Project Links
-- **Primary Domain:** [khobor-ai.vercel.app](https://khobor-ai.vercel.app)
 - **Secondary Domain:** [khobor.vercel.app](https://khobor.vercel.app)
 
 ---
