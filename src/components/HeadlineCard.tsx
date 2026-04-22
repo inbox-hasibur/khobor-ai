@@ -35,7 +35,7 @@ const HeadlineCard = ({ news }: HeadlineCardProps) => {
           </span>
         </div>
 
-        <h2 className="text-2xl font-black text-white leading-tight tracking-tight mb-4 group-hover:text-blue-400 transition-colors line-clamp-2">
+        <h2 className="text-xl md:text-2xl font-black text-white leading-tight tracking-tight mb-4 group-hover:text-blue-400 transition-colors line-clamp-2">
           {news.title}
         </h2>
 

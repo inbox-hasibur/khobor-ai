@@ -1,10 +1,12 @@
 import React from "react";
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlayCircle, Clock, ArrowUpRight } from "lucide-react";
 
 interface NewsCardProps {
   news: {
+    id: string;
     title: string;
     summary: string;
     source: string;
@@ -12,6 +14,7 @@ interface NewsCardProps {
     priority: "high" | "medium" | "low";
     publishedAt: string;
     imageUrl?: string;
+    originalUrl?: string;
   };
 }
 
@@ -21,17 +24,19 @@ const NewsCard = ({ news }: NewsCardProps) => {
       {/* Dynamic Border Glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px]" />
       
-      <Card className="relative z-10 bg-[#0c0c0e] border-white/5 group-hover:border-white/10 rounded-[31px] overflow-hidden flex flex-col md:flex-row h-full p-5 gap-7">
+      <Card className="relative z-10 bg-card border-border group-hover:border-foreground/10 rounded-[31px] overflow-hidden flex flex-col md:flex-row h-full p-5 gap-7">
         
         {/* Container for Image: Perfectly rounded and spaced */}
         <div className="relative w-full md:w-[280px] h-[220px] md:h-auto shrink-0 overflow-hidden rounded-[22px]">
-          <img 
-            src={news.imageUrl} 
-            alt={news.title}
-            className="object-cover w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 shadow-inner"
-          />
+          <Link href={`/news/${news.id}`}>
+            <img 
+              src={news.imageUrl} 
+              alt={news.title}
+              className="object-cover w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 shadow-inner cursor-pointer"
+            />
+          </Link>
           {/* Subtle Inner Shadow on Image */}
-          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[22px]" />
+          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[22px] pointer-events-none" />
         </div>
 
         {/* Content Section: Symmetrical Spacing */}
@@ -45,24 +50,28 @@ const NewsCard = ({ news }: NewsCardProps) => {
           </div>
 
           {/* News Title */}
-          <h3 className="text-[23px] font-bold text-white leading-[1.3] tracking-tight mb-4 line-clamp-2 pr-6">
-            {news.title}
+          <h3 className="text-[20px] md:text-[23px] font-bold text-foreground leading-[1.3] tracking-tight mb-4 line-clamp-2 pr-6">
+            <Link href={`/news/${news.id}`} className="hover:text-blue-500 transition-colors">
+              {news.title}
+            </Link>
           </h3>
 
           {/* Summary Text */}
-          <p className="text-zinc-400 text-[15px] leading-relaxed line-clamp-2 mb-10 font-medium opacity-90">
+          <p className="text-muted-foreground text-[14px] md:text-[15px] leading-relaxed line-clamp-2 mb-6 md:mb-10 font-medium opacity-90">
             {news.summary}
           </p>
 
           {/* Action Buttons */}
-          <div className="mt-auto flex items-center gap-4">
-            <Button className="h-12 px-8 bg-white text-black hover:bg-zinc-200 transition-all rounded-full font-black text-[13px] flex items-center gap-2 shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-95">
-              <PlayCircle className="w-5 h-5 fill-current" />
+          <div className="mt-auto flex items-center gap-3 md:gap-4">
+            <Button className="h-10 md:h-12 px-6 md:px-8 bg-foreground text-background hover:opacity-90 transition-all rounded-full font-black text-[12px] md:text-[13px] flex items-center gap-2 shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-95">
+              <PlayCircle className="w-4 h-4 md:w-5 md:h-5 fill-current" />
               LISTEN NOW
             </Button>
-            <Button variant="outline" className="h-12 w-12 p-0 rounded-full border-white/10 bg-white/5 hover:bg-white/10 text-white transition-all">
-              <ArrowUpRight className="w-5 h-5 text-zinc-400 group-hover:text-white" />
-            </Button>
+            <Link href={`/news/${news.id}`}>
+              <Button variant="outline" className="h-10 w-10 md:h-12 md:w-12 p-0 rounded-full border-border bg-background hover:bg-muted text-foreground transition-all">
+                <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-foreground" />
+              </Button>
+            </Link>
           </div>
 
           {/* High-Contrast Large Timestamp - Bottom Right */}
