@@ -62,7 +62,7 @@ async function scrapeSource(url: string, selector: string) {
 
     return newsItems;
   } catch (error) {
-    console.error(`Error scraping ${url}:`, error.message);
+    console.error(`Error scraping ${url}:`, error instanceof Error ? error.message : String(error));
     return [];
   }
 }
