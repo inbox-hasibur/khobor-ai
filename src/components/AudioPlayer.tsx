@@ -162,14 +162,14 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            className="fixed inset-0 z-[60] bg-background/80 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-[60] bg-background/90 backdrop-blur-xl flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsExpanded(false)}
           >
             <motion.div
-              className="glass rounded-[40px] p-8 w-full max-w-md"
+              className="glass-strong rounded-[40px] p-8 w-full max-w-md"
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
@@ -243,7 +243,7 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
         transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div 
-          className="glass rounded-[28px] md:rounded-[36px] p-3 md:p-4 shadow-2xl"
+          className="glass-strong rounded-[28px] md:rounded-[36px] p-3 md:p-4"
           whileHover={{ scale: 1.005 }}
           transition={{ duration: 0.2 }}
         >

@@ -67,8 +67,8 @@ const Navbar = () => {
           
           {/* Main Navigation Dock - Enhanced Glassmorphism */}
           <motion.nav 
-            className={`flex-1 glass rounded-2xl p-1.5 flex items-center justify-between shadow-2xl relative transition-all duration-500 ${
-              scrolled ? "shadow-[0_8px_32px_rgba(0,0,0,0.12)]" : ""
+            className={`flex-1 glass-strong rounded-2xl p-1.5 flex items-center justify-between relative transition-all duration-500 ${
+              scrolled ? "shadow-[0_8px_32px_rgba(0,0,0,0.15)]" : ""
             }`}
             whileHover={{ scale: 1.002 }}
             transition={{ duration: 0.3 }}
@@ -170,7 +170,7 @@ const Navbar = () => {
 
           {/* Auth Buttons - Desktop */}
           <motion.div 
-            className="hidden sm:flex glass rounded-2xl p-1.5 items-center gap-1 shadow-2xl"
+            className="hidden sm:flex glass-strong rounded-2xl p-1.5 items-center gap-1"
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.3 }}
           >
@@ -182,11 +182,11 @@ const Navbar = () => {
               Login
             </motion.button>
             <motion.button 
-              className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
+              className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
               whileHover={{ scale: 1.02, y: -1 }}
               whileTap={{ scale: 0.98 }}
             >
-              Sign up
+              Sign&nbsp;up
             </motion.button>
           </motion.div>
         </div>
@@ -195,7 +195,7 @@ const Navbar = () => {
         <AnimatePresence>
           {isSearchOpen && (
             <motion.div 
-              className="glass-strong rounded-2xl p-2 shadow-2xl"
+              className="glass-strong rounded-2xl p-2"
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -232,7 +232,7 @@ const Navbar = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
-              className="md:hidden glass rounded-2xl p-4 flex flex-col gap-2 shadow-2xl"
+              className="md:hidden glass-strong rounded-2xl p-4 flex flex-col gap-2"
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -251,10 +251,10 @@ const Navbar = () => {
                   Login
                 </motion.button>
                 <motion.button 
-                  className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg"
+                  className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap"
                   whileTap={{ scale: 0.98 }}
                 >
-                  Sign up
+                  Sign&nbsp;up
                 </motion.button>
               </div>
             </motion.div>

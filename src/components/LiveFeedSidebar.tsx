@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Zap, Bell, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 interface LiveUpdate {
   id: string;
@@ -131,15 +132,17 @@ const LiveFeedSidebar = ({ updates }: LiveFeedSidebarProps) => {
         </motion.div>
         
         {/* View All Button - Enhanced with hover effect */}
-        <motion.button 
-          className="w-full mt-8 py-4 bg-secondary hover:bg-secondary/80 rounded-2xl text-caption text-secondary-foreground transition-all border border-border group flex items-center justify-center gap-2"
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
-        >
-          <Bell className="w-4 h-4" />
-          View All Alerts
-          <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </motion.button>
+        <Link href="/alerts" className="block">
+          <motion.div 
+            className="w-full mt-8 py-4 bg-secondary hover:bg-secondary/80 rounded-2xl text-caption text-secondary-foreground transition-all border border-border group flex items-center justify-center gap-2"
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+          >
+            <Bell className="w-4 h-4" />
+            View All Alerts
+            <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </motion.div>
+        </Link>
       </motion.div>
     </aside>
   );
