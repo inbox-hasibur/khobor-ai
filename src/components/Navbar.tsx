@@ -57,7 +57,7 @@ const Navbar = () => {
 
   return (
     <motion.div 
-      className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[980px] px-4 md:px-6"
+      className="fixed top-2 md:top-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[980px] px-2 md:px-6"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -67,14 +67,14 @@ const Navbar = () => {
           
           {/* Main Navigation Dock - Enhanced Glassmorphism */}
           <motion.nav 
-            className={`flex-1 glass-strong rounded-2xl p-1.5 flex items-center justify-between relative transition-all duration-500 ${
+            className={`flex-1 glass-strong rounded-2xl p-1 md:p-1.5 flex items-center justify-between relative transition-all duration-500 ${
               scrolled ? "shadow-[0_8px_32px_rgba(0,0,0,0.15)]" : ""
             }`}
             whileHover={{ scale: 1.002 }}
             transition={{ duration: 0.3 }}
           >
             {/* Logo Section */}
-            <Link href="/" className="flex items-center gap-2 pl-3 md:pl-4 pr-4 md:pr-6 border-r border-border">
+            <Link href="/" className="flex items-center gap-2 pl-2 md:pl-4 pr-3 md:pr-6 border-r border-border">
               <motion.div 
                 className="w-8 h-8 bg-gradient-to-br from-primary to-purple-600 rounded-xl flex items-center justify-center shadow-lg"
                 whileHover={{ scale: 1.05, rotate: 3 }}
@@ -148,8 +148,7 @@ const Navbar = () => {
               <div className="md:hidden">
                 <motion.button 
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
-                  whileHover={{ scale: 1.1 }}
+                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-w-[44px] min-h-[44px] flex items-center justify-center"
                   whileTap={{ scale: 0.9 }}
                 >
                   <AnimatePresence mode="wait">
@@ -232,7 +231,7 @@ const Navbar = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
-              className="md:hidden glass-strong rounded-2xl p-4 flex flex-col gap-2"
+              className="md:hidden glass-strong rounded-2xl p-3 md:p-4 flex flex-col gap-1"
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -242,16 +241,16 @@ const Navbar = () => {
               <NavLink href="/discover" icon={<Globe className="w-4 h-4" />} label="Discover" onClick={() => setIsMenuOpen(false)} />
               <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" onClick={() => setIsMenuOpen(false)} />
               <NavLink href="/categories" icon={<LayoutGrid className="w-4 h-4" />} label="Categories" onClick={() => setIsMenuOpen(false)} />
-              <div className="h-px bg-border my-2" />
-              <div className="flex gap-2">
+              <div className="h-px bg-border my-1" />
+              <div className="flex gap-2 mt-1">
                 <motion.button 
-                  className="flex-1 py-3 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                  className="flex-1 py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
                   whileTap={{ scale: 0.98 }}
                 >
                   Login
                 </motion.button>
                 <motion.button 
-                  className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap"
+                  className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap min-h-[44px]"
                   whileTap={{ scale: 0.98 }}
                 >
                   Sign&nbsp;up
@@ -285,7 +284,7 @@ const NavLink = ({
     className="relative group"
   >
     <motion.div
-      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-[12px] font-bold transition-all duration-300 w-full md:w-auto ${
+      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 ${
         active 
           ? "text-foreground" 
           : "text-muted-foreground hover:text-foreground"

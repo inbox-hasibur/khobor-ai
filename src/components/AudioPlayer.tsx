@@ -169,7 +169,7 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
             onClick={() => setIsExpanded(false)}
           >
             <motion.div
-              className="glass-strong rounded-[40px] p-8 w-full max-w-md"
+              className="glass-strong rounded-[24px] md:rounded-[40px] p-5 md:p-8 w-full max-w-md"
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
@@ -237,13 +237,13 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
 
       {/* Compact Player */}
       <motion.div 
-        className="fixed bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 w-[95%] max-w-[480px] z-50"
+        className="fixed bottom-3 md:bottom-10 left-1/2 -translate-x-1/2 w-[96%] max-w-[480px] z-50"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div 
-          className="glass-strong rounded-[28px] md:rounded-[36px] p-3 md:p-4"
+          className="glass-strong rounded-[20px] md:rounded-[36px] p-2.5 md:p-4"
           whileHover={{ scale: 1.005 }}
           transition={{ duration: 0.2 }}
         >
@@ -256,11 +256,11 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
             />
           </div>
           
-          <div className="flex items-center gap-3 md:gap-5 pt-2">
+          <div className="flex items-center gap-2.5 md:gap-5 pt-1.5">
             {/* Visualizer/Artwork */}
             <motion.button
               onClick={() => setIsExpanded(true)}
-              className="w-12 h-12 md:w-14 md:h-14 rounded-[18px] md:rounded-[22px] bg-muted flex items-center justify-center overflow-hidden flex-shrink-0"
+              className="w-10 h-10 md:w-14 md:h-14 rounded-[14px] md:rounded-[22px] bg-muted flex items-center justify-center overflow-hidden flex-shrink-0"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -270,19 +270,19 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
             {/* Info */}
             <div className="flex-1 min-w-0 cursor-pointer" onClick={() => setIsExpanded(true)}>
               <motion.p 
-                className="text-[10px] md:text-[11px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-0.5 truncate"
+                className="text-[9px] md:text-[11px] font-bold text-muted-foreground uppercase tracking-[0.15em] md:tracking-[0.2em] mb-0.5 truncate"
                 animate={{ opacity: isPlaying ? [1, 0.6, 1] : 1 }}
                 transition={{ duration: 2, repeat: isPlaying ? Infinity : 0 }}
               >
                 {isPlaying ? "Now Playing" : "AI Podcast"}
               </motion.p>
-              <p className="text-[14px] md:text-[16px] font-bold text-foreground tracking-tight leading-none truncate">
+              <p className="text-[13px] md:text-[16px] font-bold text-foreground tracking-tight leading-none truncate">
                 {track.title}
               </p>
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-1 md:gap-2">
+            <div className="flex items-center gap-0.5 md:gap-2">
               {/* Volume */}
               <motion.button
                 onClick={toggleMute}
@@ -296,7 +296,7 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
               {/* Play/Pause */}
               <motion.button 
                 onClick={togglePlay}
-                className="w-11 h-11 md:w-12 md:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/20"
+                className="w-10 h-10 md:w-12 md:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/20 flex-shrink-0"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
               >

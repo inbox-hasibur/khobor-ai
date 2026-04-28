@@ -161,7 +161,7 @@ export default function Home() {
 
   return (
     <motion.main 
-      className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 pt-28 md:pt-36 pb-40 md:pb-48"
+      className="max-w-[1400px] mx-auto px-3 md:px-6 lg:px-8 pt-24 md:pt-36 pb-32 md:pb-48"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
