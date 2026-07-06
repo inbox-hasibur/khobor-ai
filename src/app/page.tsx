@@ -6,75 +6,8 @@ import HeadlineSlider from "@/components/HeadlineSlider";
 import MainFeed from "@/components/MainFeed";
 import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 import AudioPlayer from "@/components/AudioPlayer";
-import { Newspaper, Loader2, Radio, TrendingUp, Calendar } from "lucide-react";
-
-// Mock data for demo purposes
-const MOCK_HEADLINES = [
-  {
-    id: "1",
-    title: "Bangladesh Economy Shows Strong Growth in Q3 2024",
-    category: "Economy",
-    imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop",
-    source: "Financial Express",
-  },
-  {
-    id: "2",
-    title: "New Tech Innovations Transforming Dhaka's Startup Scene",
-    category: "Technology",
-    imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop",
-    source: "Tech Bangladesh",
-  },
-  {
-    id: "3",
-    title: "National Cricket Team Prepares for International Series",
-    category: "Sports",
-    imageUrl: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2070&auto=format&fit=crop",
-    source: "Sports Daily",
-  },
-];
-
-const MOCK_NEWS = [
-  {
-    id: "4",
-    title: "Government Announces New Infrastructure Projects for 2025",
-    summary: "Major development initiatives including highway expansion and bridge construction are set to begin early next year, promising to boost connectivity across the nation.",
-    source: "Daily Star",
-    category: "National",
-    priority: "high" as const,
-    publishedAt: "2 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "5",
-    title: "AI Revolution: How Local Businesses Are Adapting",
-    summary: "Small and medium enterprises across Bangladesh are increasingly adopting artificial intelligence tools to streamline operations and reach new markets.",
-    source: "Business Standard",
-    category: "Technology",
-    priority: "medium" as const,
-    publishedAt: "4 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "6",
-    title: "Weather Alert: Heavy Rain Expected in Coastal Regions",
-    summary: "Meteorological Department forecasts significant rainfall in the southern districts over the next 48 hours. Residents advised to take precautions.",
-    source: "Weather BD",
-    category: "Weather",
-    priority: "medium" as const,
-    publishedAt: "5 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1525088553748-01d6e210e00b?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "7",
-    title: "Education Ministry Reforms Curriculum for Digital Age",
-    summary: "New educational framework emphasizes coding, digital literacy, and critical thinking skills for students from primary to higher secondary levels.",
-    source: "Education Today",
-    category: "Education",
-    priority: "low" as const,
-    publishedAt: "6 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2070&auto=format&fit=crop",
-  },
-];
+import { useNews, useWeather } from "@/hooks/useNews";
+import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles } from "lucide-react";
 
 const LIVE_UPDATES = [
   {
@@ -126,6 +59,8 @@ const itemVariants = {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState("");
+  const { news, loading: newsLoading } = useNews();
+  const { weather } = useWeather();
 
   useEffect(() => {
     // Simulate loading
@@ -145,7 +80,32 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
+  // Transform news for headlines (top 3 with images)
+  const headlines = news.slice(0, 3).map((item: any) => ({
+    id: item._id || item.id,
+    title: item.title,
+    category: item.category,
+    imageUrl: item.imageUrl || "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+    source: item.source,
+  }));
+
+  // Transform news for main feed
+  const feedItems = news.map((item: any, index: number) => ({
+    id: item._id || `news-${index}`,
+    title: item.title,
+    summary: item.summary || "সংক্ষিপ্ত বিবরণ পাওয়া যায়নি।",
+    source: item.source || "Khobor AI",
+    category: item.category || "General",
+    priority: item.priority || "medium" as const,
+    publishedAt: item.publishedAt 
+      ? new Date(item.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      : "Today",
+    imageUrl: item.imageUrl || "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+  }));
+
+  const totalStories = news.length || 0;
+
+  if (isLoading || newsLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <motion.div
@@ -179,11 +139,11 @@ export default function Home() {
             </h1>
             <p className="text-body text-muted-foreground mt-2 max-w-lg">
               Stay informed with AI-curated news personalized for you. 
-              <span className="text-foreground font-medium"> {MOCK_NEWS.length + MOCK_HEADLINES.length} stories</span> today.
+              <span className="text-foreground font-medium"> {totalStories} stories</span> today.
             </p>
           </div>
           
-          {/* Quick Stats - Design Theory: Repetition, Balance */}
+          {/* Quick Stats */}
           <div className="flex items-center gap-4 md:gap-6">
             <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
               <Radio className="w-4 h-4 text-primary" />
@@ -195,14 +155,22 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Weather widget */}
+        {weather && (
+          <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 rounded-full w-fit border border-primary/10">
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <span className="text-[12px] font-medium text-muted-foreground">{weather.weatherText}</span>
+          </div>
+        )}
       </motion.section>
       
       {/* 1. HERO SECTION - Headlines */}
       <motion.section variants={itemVariants} className="mb-10 md:mb-16">
-        <HeadlineSlider headlines={MOCK_HEADLINES} />
+        <HeadlineSlider headlines={headlines} />
       </motion.section>
 
-      {/* 2. MAIN CONTENT: 2-Column Grid - Design Theory: Balance, Alignment */}
+      {/* 2. MAIN CONTENT: 2-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         
         {/* Section 2.1: Left Column (Main Feed - 8 Cols) */}
@@ -210,7 +178,7 @@ export default function Home() {
           className="lg:col-span-8"
           variants={itemVariants}
         >
-          <MainFeed newsItems={MOCK_NEWS} />
+          <MainFeed newsItems={feedItems} />
         </motion.div>
 
         {/* Section 2.2: Right Column (Live Feed - 4 Cols) */}
@@ -224,7 +192,7 @@ export default function Home() {
       </div>
 
       {/* 3. FLOATING AUDIO PLAYER */}
-      <AudioPlayer storiesCount={MOCK_NEWS.length + MOCK_HEADLINES.length} />
+      <AudioPlayer storiesCount={totalStories || 7} />
     </motion.main>
   );
 }
