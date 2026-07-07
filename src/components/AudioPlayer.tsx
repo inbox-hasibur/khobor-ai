@@ -53,10 +53,11 @@ import { Howl } from "howler";
 
 interface AudioPlayerProps {
   storiesCount: number;
+  newsItems?: any[];
 }
 
 // === AI-ENHANCED DEMO PLAYLIST ===
-const DEMO_PLAYLIST = [
+const DEFAULT_PLAYLIST = [
   {
     id: 1,
     title: "AI News Briefing",
@@ -155,7 +156,27 @@ const EQ_PRESETS: Record<EqualizerPreset, number[]> = {
   classical: [2, 1, 0, 1, 2],
 };
 
-const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
+const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
+  const DEMO_PLAYLIST = React.useMemo(() => {
+    if (newsItems && newsItems.length > 0) {
+      return newsItems.map((item: any, i: number) => ({
+        id: item.id || `news-${i}`,
+        title: item.title,
+        artist: item.source || "Khobor AI",
+        src: `/api/audio/tts?text=${encodeURIComponent(item.summary || item.title)}`,
+        duration: 30, // TTS audio duration placeholder
+        category: item.category || "News",
+        mood: "informative",
+        bpm: 100,
+        rating: Number((4.0 + Math.random()).toFixed(1)),
+        playsCount: Math.floor(Math.random() * 5000) + 100,
+        aiSummary: item.summary || item.title,
+        waveform: Array.from({ length: 30 }, () => Math.floor(Math.random() * 80) + 10),
+      }));
+    }
+    return DEFAULT_PLAYLIST;
+  }, [newsItems]);
+
   // === CORE PLAYER STATE ===
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -208,7 +229,7 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
       [order[i], order[j]] = [order[j], order[i]];
     }
     setShuffledOrder(order);
-  }, []);
+  }, [DEMO_PLAYLIST.length]);
 
   // === LOAD FAVORITES ===
   useEffect(() => {
@@ -527,7 +548,7 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
             onClick={() => { setIsExpanded(false); setViewMode("player"); }}
           >
             <motion.div
-              className="glass-strong rounded-[28px] md:rounded-[44px] p-4 md:p-8 w-full max-w-lg relative max-h-[95vh] overflow-y-auto no-scrollbar"
+              className="glass-strong rounded-[28px] md:rounded-[44px] p-4 md:p-8 pb-8 md:pb-12 w-full max-w-lg relative max-h-[95vh] overflow-y-auto no-scrollbar flex flex-col"
               initial={{ scale: 0.92, y: 30 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.92, y: 30 }}
@@ -1131,6 +1152,8 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
                       <SlidersHorizontal className="w-4 h-4" />
                     </motion.button>
                   </div>
+                  {/* Spacer for bottom padding */}
+                  <div className="h-6 md:h-10 w-full" />
                 </>
               )}
             </motion.div>

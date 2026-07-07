@@ -197,7 +197,7 @@ export default function Home() {
       </div>
 
       {/* 3. FLOATING AUDIO PLAYER */}
-      <AudioPlayer storiesCount={totalStories || 7} />
+      <AudioPlayer storiesCount={totalStories || 7} newsItems={feedItems} />
     </motion.main>
   );
 }
