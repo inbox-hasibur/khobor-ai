@@ -33,14 +33,14 @@ const itemVariants = {
 };
 
 const MainFeed = ({ newsItems }: MainFeedProps) => {
-  const [activeCategory, setActiveCategory] = React.useState("Latest");
+  const [activeCategory, setActiveCategory] = React.useState("সর্বশেষ");
   const [isHovered, setIsHovered] = React.useState(false);
   
   // Get unique categories from news items
-  const dynamicCategories = ["Latest", ...Array.from(new Set(newsItems.map(item => item.category)))];
-  const categories = dynamicCategories.length > 1 ? dynamicCategories : ["Latest", "National", "Economy", "Sports", "Weather"];
+  const dynamicCategories = ["সর্বশেষ", ...Array.from(new Set(newsItems.map(item => item.category)))];
+  const categories = dynamicCategories.length > 1 ? dynamicCategories : ["সর্বশেষ", "জাতীয়", "অর্থনীতি", "খেলাধুলা", "আবহাওয়া"];
 
-  const filteredNews = activeCategory === "Latest" 
+  const filteredNews = activeCategory === "সর্বশেষ" 
     ? newsItems 
     : newsItems.filter(item => item.category === activeCategory);
 
@@ -65,7 +65,7 @@ const MainFeed = ({ newsItems }: MainFeedProps) => {
               <Sparkles className="w-5 h-5 text-primary opacity-50" />
             </div>
           </div>
-          <h2 className="text-headline text-foreground">Daily Digest</h2>
+          <h2 className="text-headline text-foreground font-serif">দৈনিক সারসংক্ষেপ</h2>
         </div>
         
         {/* Category Navigation - Improved visual hierarchy */}
@@ -74,7 +74,7 @@ const MainFeed = ({ newsItems }: MainFeedProps) => {
             <motion.button 
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`relative px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap ${
+              className={`relative px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap font-serif ${
                 activeCategory === cat 
                   ? "text-primary-foreground font-bold" 
                   : "text-muted-foreground hover:text-foreground"
@@ -123,7 +123,7 @@ const MainFeed = ({ newsItems }: MainFeedProps) => {
               variants={itemVariants}
               className="py-20 text-center border border-dashed border-border rounded-3xl bg-muted/30"
             >
-              <p className="text-muted-foreground font-medium">No news found in this category.</p>
+              <p className="text-muted-foreground font-medium">এই ক্যাটাগরিতে কোনো খবর পাওয়া যায়নি।</p>
             </motion.div>
           )}
         </motion.div>

@@ -3,7 +3,6 @@ import { Hind_Siliguri, Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
-import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 
 const hindSiliguri = Hind_Siliguri({ 
   subsets: ["bengali", "latin"], 
@@ -34,7 +33,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <BreakingNewsTicker />
           <Navbar />
           {children}
         </ThemeProvider>

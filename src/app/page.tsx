@@ -6,6 +6,7 @@ import HeadlineSlider from "@/components/HeadlineSlider";
 import MainFeed from "@/components/MainFeed";
 import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 import AudioPlayer from "@/components/AudioPlayer";
+import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import { useNews, useWeather } from "@/hooks/useNews";
 import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun } from "lucide-react";
 
@@ -114,7 +115,7 @@ export default function Home() {
         >
           <Loader2 className="w-8 h-8 text-primary" />
         </motion.div>
-        <p className="text-muted-foreground text-sm">Loading your personalized briefing...</p>
+        <p className="text-muted-foreground text-sm">আপনার কাস্টমাইজড খবর লোড হচ্ছে...</p>
       </div>
     );
   }
@@ -128,18 +129,20 @@ export default function Home() {
     >
       {/* Welcome Header - Visual Hierarchy */}
       <motion.section variants={itemVariants} className="mb-10 md:mb-14">
+        <BreakingNewsTicker />
+        
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               <Calendar className="w-4 h-4" />
               <span className="text-[13px] font-medium">{currentDate}</span>
             </div>
-            <h1 className="text-display text-foreground">
-              Your <span className="gradient-text">Daily Briefing</span>
+            <h1 className="text-display text-foreground font-serif">
+              আপনার <span className="text-primary">দৈনিক সারসংক্ষেপ</span>
             </h1>
             <p className="text-body text-muted-foreground mt-2 max-w-lg">
-              Stay informed with AI-curated news personalized for you. 
-              <span className="text-foreground font-medium"> {totalStories} stories</span> today.
+              এআই দ্বারা বাছাইকৃত খবরের সাথে আপডেট থাকুন। আজ 
+              <span className="text-foreground font-medium"> {totalStories}টি খবর</span> রয়েছে।
             </p>
           </div>
           
@@ -159,11 +162,11 @@ export default function Home() {
             <div className="flex items-center gap-4 md:gap-6">
               <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
                 <Radio className="w-4 h-4 text-primary" />
-                <span className="text-[12px] font-semibold">Live Updates</span>
+                <span className="text-[12px] font-semibold">লাইভ আপডেট</span>
               </div>
               <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
                 <TrendingUp className="w-4 h-4 text-emerald-500" />
-                <span className="text-[12px] font-semibold">Trending</span>
+                <span className="text-[12px] font-semibold">ট্রেন্ডিং</span>
               </div>
             </div>
           </div>

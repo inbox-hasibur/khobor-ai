@@ -12,8 +12,8 @@ const newsItems = [
 
 export default function BreakingNewsTicker() {
   return (
-    <div className="w-full bg-[#111116]/90 backdrop-blur-md border-b border-red-900/30 text-white flex items-center relative z-[200]">
-      <div className="flex-shrink-0 bg-[#0f0709] text-red-500 font-bold px-4 py-2 border-r border-red-900/30 flex items-center gap-2 z-10 shadow-[4px_0_12px_rgba(0,0,0,0.5)]">
+    <div className="w-full bg-[#111116]/60 backdrop-blur-md border border-red-900/30 rounded-2xl text-white flex items-center relative overflow-hidden mb-8 shadow-sm">
+      <div className="flex-shrink-0 bg-red-950/40 text-red-500 font-bold px-4 py-2.5 border-r border-red-900/30 flex items-center gap-2 z-10 backdrop-blur-md">
         <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse-glow"></span>
         <span className="font-serif">ব্রেকিং নিউজ</span>
       </div>
