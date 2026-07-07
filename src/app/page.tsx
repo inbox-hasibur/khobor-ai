@@ -7,7 +7,7 @@ import MainFeed from "@/components/MainFeed";
 import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 import AudioPlayer from "@/components/AudioPlayer";
 import { useNews, useWeather } from "@/hooks/useNews";
-import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles } from "lucide-react";
+import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun } from "lucide-react";
 
 const LIVE_UPDATES = [
   {
@@ -143,26 +143,31 @@ export default function Home() {
             </p>
           </div>
           
-          {/* Quick Stats */}
-          <div className="flex items-center gap-4 md:gap-6">
-            <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
-              <Radio className="w-4 h-4 text-primary" />
-              <span className="text-[12px] font-semibold">Live Updates</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
-              <TrendingUp className="w-4 h-4 text-emerald-500" />
-              <span className="text-[12px] font-semibold">Trending</span>
+          {/* Quick Stats & Weather */}
+          <div className="flex flex-col items-end gap-4">
+            {/* Weather widget */}
+            {weather && (
+              <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full border border-blue-500/20 shadow-sm">
+                <CloudSun className="w-5 h-5 text-blue-500" />
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-bold text-foreground leading-none">{weather.temp}°C</span>
+                  <span className="text-[10px] font-medium text-muted-foreground capitalize">{weather.description}</span>
+                </div>
+              </div>
+            )}
+            
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
+                <Radio className="w-4 h-4 text-primary" />
+                <span className="text-[12px] font-semibold">Live Updates</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
+                <TrendingUp className="w-4 h-4 text-emerald-500" />
+                <span className="text-[12px] font-semibold">Trending</span>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Weather widget */}
-        {weather && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 rounded-full w-fit border border-primary/10">
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-[12px] font-medium text-muted-foreground">{weather.weatherText}</span>
-          </div>
-        )}
       </motion.section>
       
       {/* 1. HERO SECTION - Headlines */}

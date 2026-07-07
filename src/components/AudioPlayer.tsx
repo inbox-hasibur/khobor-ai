@@ -47,6 +47,7 @@ import {
   Zap,
   Activity,
   AlignCenter,
+  Bot,
 } from "lucide-react";
 import { Howl } from "howler";
 
@@ -786,38 +787,47 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
               {/* === VIEW MODE: PLAYER (DEFAULT) === */}
               {viewMode === "player" && (
                 <>
-                  {/* === VINYL DISC / VISUALIZER === */}
-                  <div className="relative w-48 h-48 mx-auto mb-6">
-                    {/* Outer ring glow */}
+                  {/* === AI ROBOT / VISUALIZER === */}
+                  <div className="relative w-full max-w-[240px] mx-auto mb-6 flex flex-col items-center gap-6">
+                    {/* Robot Avatar */}
                     <motion.div
-                      className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 via-purple-600/10 to-primary/5"
-                      animate={isPlaying ? { rotate: discRotation } : {}}
-                      transition={isPlaying ? { duration: 10, repeat: Infinity, ease: "linear" } : {}}
-                      style={{ borderRadius: "50%" }}
-                    />
-                    {/* Vinyl disc */}
-                    <motion.div
-                      className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-800 via-gray-900 to-black dark:from-gray-200 dark:via-gray-100 dark:to-gray-300 flex items-center justify-center shadow-2xl overflow-hidden"
-                      animate={isPlaying ? { rotate: discRotation } : {}}
-                      transition={isPlaying ? { duration: 8, repeat: Infinity, ease: "linear" } : {}}
+                      className="w-32 h-32 rounded-[2rem] bg-gradient-to-br from-primary/10 to-purple-600/10 border border-primary/20 flex items-center justify-center shadow-[0_0_40px_rgba(59,130,246,0.15)]"
+                      animate={isPlaying ? { y: [0, -8, 0] } : {}}
+                      transition={isPlaying ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : {}}
                     >
-                      {/* Vinyl grooves */}
-                      <div className="absolute inset-4 rounded-full border-2 border-gray-700/30 dark:border-gray-400/30" />
-                      <div className="absolute inset-8 rounded-full border-2 border-gray-700/20 dark:border-gray-400/20" />
-                      <div className="absolute inset-12 rounded-full border-2 border-gray-700/15 dark:border-gray-400/15" />
-                      {/* Center label */}
-                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg z-10">
-                        <AudioVisualizer isPlaying={isPlaying} size="large" />
-                      </div>
+                      <motion.div
+                        className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg relative overflow-hidden"
+                        animate={isPlaying ? { 
+                          boxShadow: ["0 0 15px rgba(59,130,246,0.4)", "0 0 35px rgba(147,51,234,0.6)", "0 0 15px rgba(59,130,246,0.4)"]
+                        } : {}}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <Bot className="w-12 h-12 text-white" />
+                        
+                        {/* Scanning line effect */}
+                        {isPlaying && (
+                          <motion.div 
+                            className="absolute inset-0 bg-gradient-to-b from-transparent via-white/25 to-transparent h-1/2"
+                            animate={{ top: ["-50%", "150%"] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                          />
+                        )}
+                      </motion.div>
                     </motion.div>
+
+                    {/* Sound Cloud style Waveform Below */}
+                    <div className="w-full flex justify-center items-end h-16 bg-muted/30 rounded-2xl px-6 pb-2 border border-border/50">
+                       <AudioVisualizer isPlaying={isPlaying} size="large" />
+                    </div>
+
                     {/* Error / Loading overlay */}
                     {hasError && (
-                      <div className="absolute inset-0 bg-destructive/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                      <div className="absolute inset-0 bg-destructive/10 rounded-3xl flex items-center justify-center backdrop-blur-sm z-10">
                         <p className="text-xs text-destructive font-medium">Load Error</p>
                       </div>
                     )}
                     {!isLoaded && !hasError && (
-                      <div className="absolute inset-0 bg-background/30 rounded-full flex items-center justify-center backdrop-blur-sm">
+                      <div className="absolute inset-0 bg-background/30 rounded-3xl flex items-center justify-center backdrop-blur-sm z-10">
                         <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
                       </div>
                     )}
@@ -1009,10 +1019,10 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
                       <AnimatePresence>
                         {showSpeedMenu && (
                           <motion.div
-                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 p-1.5 bg-background border border-border rounded-2xl shadow-xl flex gap-1"
-                            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 p-1.5 bg-background/95 backdrop-blur border border-border rounded-2xl shadow-xl flex gap-1 z-50"
+                            initial={{ opacity: 0, y: -10, scale: 0.9 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.9 }}
                           >
                             {SPEED_OPTIONS.map(speed => (
                               <button
@@ -1046,10 +1056,10 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
                       <AnimatePresence>
                         {showSleepMenu && (
                           <motion.div
-                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 p-2 bg-background border border-border rounded-2xl shadow-xl min-w-[140px]"
-                            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 p-2 bg-background/95 backdrop-blur border border-border rounded-2xl shadow-xl min-w-[140px] z-50"
+                            initial={{ opacity: 0, y: -10, scale: 0.9 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.9 }}
                           >
                             <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider mb-1.5 px-2">Sleep Timer</p>
                             {(["off", "15min", "30min", "45min", "60min", "end_of_track"] as SleepTimerOption[]).map(option => (
@@ -1085,10 +1095,10 @@ const AudioPlayer = ({ storiesCount }: AudioPlayerProps) => {
                       <AnimatePresence>
                         {showVolumeSlider && (
                           <motion.div
-                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 p-3 bg-background border border-border rounded-2xl shadow-xl"
-                            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 p-3 bg-background/95 backdrop-blur border border-border rounded-2xl shadow-xl z-50"
+                            initial={{ opacity: 0, y: -10, scale: 0.9 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.9 }}
                           >
                             <div className="flex items-center gap-2">
                               <button onClick={toggleMute} className="text-muted-foreground hover:text-foreground">

@@ -4,12 +4,18 @@ import * as cheerio from "cheerio";
 export async function scrapeJamunaTV() {
   try {
     // Try Jamuna TV
-    const newsItems = await scrapeSource("https://www.jamuna.tv/", ".post-item, article, .news-item");
+    let newsItems = await scrapeSource("https://www.jamuna.tv/", ".post-item, article, .news-item, .card, .news-card");
     if (newsItems.length > 0) return newsItems;
 
-    // Fallback to a secondary source if Jamuna fails (403 or empty)
-    console.log("Jamuna TV failed or blocked, trying fallback source...");
-    return await scrapeSource("https://www.dhakatribune.com/articles/latest", ".news-list-item, article, .news-item");
+    // Fallback to a secondary source if Jamuna fails
+    console.log("Jamuna TV failed or empty, trying Dhaka Tribune...");
+    newsItems = await scrapeSource("https://www.dhakatribune.com/articles/latest", ".news-list-item, article, .news-item, .listing-content, .post-content");
+    if (newsItems.length > 0) return newsItems;
+
+    // Second Fallback
+    console.log("Dhaka Tribune failed or empty, trying Prothom Alo English...");
+    newsItems = await scrapeSource("https://en.prothomalo.com/bangladesh", ".news-item, .card, article");
+    return newsItems;
   } catch (error) {
     console.error("Error in scraping service:", error);
     return [];
@@ -21,9 +27,9 @@ async function scrapeSource(url: string, selector: string) {
     const { data } = await axios.get(url, {
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
       },
-      timeout: 10000,
+      timeout: 15000,
     });
 
     const $ = cheerio.load(data);
@@ -31,7 +37,7 @@ async function scrapeSource(url: string, selector: string) {
 
     $(selector).each((i, element) => {
       if (newsItems.length < 10) {
-        const title = $(element).find("h1, h2, h3, .title, .post-title, .heading").first().text().trim();
+        const title = $(element).find("h1, h2, h3, h4, .title, .post-title, .heading, a").first().text().trim();
         const summary = $(element).find("p, .description, .summary, .excerpt, .post-content").first().text().trim();
         const imageUrl = $(element).find("img").attr("src") || $(element).find("img").attr("data-src");
         const originalUrl = $(element).find("a").attr("href");
@@ -60,6 +66,7 @@ async function scrapeSource(url: string, selector: string) {
       }
     });
 
+    console.log(`Scraped ${newsItems.length} items from ${url}`);
     return newsItems;
   } catch (error) {
     console.error(`Error scraping ${url}:`, error instanceof Error ? error.message : String(error));
