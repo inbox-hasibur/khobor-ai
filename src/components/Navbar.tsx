@@ -16,8 +16,10 @@ import {
   Command
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -172,24 +174,48 @@ const Navbar = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.3 }}
           >
-            <Link href="/login">
-              <motion.button 
-                className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Login
-              </motion.button>
-            </Link>
-            <Link href="/register">
-              <motion.button 
-                className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Sign&nbsp;up
-              </motion.button>
-            </Link>
+            {status === "authenticated" ? (
+              <>
+                <Link href="/profile">
+                  <motion.button 
+                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted flex items-center gap-2"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Profile
+                  </motion.button>
+                </Link>
+                <motion.button 
+                  onClick={() => signOut()}
+                  className="px-5 py-2.5 bg-destructive/10 text-destructive rounded-xl text-[12px] font-bold hover:bg-destructive hover:text-destructive-foreground transition-all shadow-sm"
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Logout
+                </motion.button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <motion.button 
+                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Login
+                  </motion.button>
+                </Link>
+                <Link href="/register">
+                  <motion.button 
+                    className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Sign&nbsp;up
+                  </motion.button>
+                </Link>
+              </>
+            )}
           </motion.div>
         </div>
 
@@ -245,22 +271,46 @@ const Navbar = () => {
               <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" onClick={() => setIsMenuOpen(false)} />
               <div className="h-px bg-border my-1" />
               <div className="flex gap-2 mt-1">
-                <Link href="/login" className="flex-1" onClick={() => setIsMenuOpen(false)}>
-                  <motion.button 
-                    className="w-full py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Login
-                  </motion.button>
-                </Link>
-                <Link href="/register" className="flex-1" onClick={() => setIsMenuOpen(false)}>
-                  <motion.button 
-                    className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap min-h-[44px]"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Sign&nbsp;up
-                  </motion.button>
-                </Link>
+                {status === "authenticated" ? (
+                  <>
+                    <Link href="/profile" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                      <motion.button 
+                        className="w-full py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Profile
+                      </motion.button>
+                    </Link>
+                    <div className="flex-1">
+                      <motion.button 
+                        onClick={() => { signOut(); setIsMenuOpen(false); }}
+                        className="w-full py-3 bg-destructive/10 text-destructive rounded-xl text-[13px] font-bold hover:bg-destructive hover:text-destructive-foreground transition-all min-h-[44px]"
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Logout
+                      </motion.button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/login" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                      <motion.button 
+                        className="w-full py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Login
+                      </motion.button>
+                    </Link>
+                    <Link href="/register" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                      <motion.button 
+                        className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap min-h-[44px]"
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Sign&nbsp;up
+                      </motion.button>
+                    </Link>
+                  </>
+                )}
               </div>
             </motion.div>
           )}
