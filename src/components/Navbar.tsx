@@ -15,7 +15,8 @@ import {
   Moon,
   Command,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Cpu
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
@@ -98,6 +99,7 @@ const Navbar = () => {
               <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active />
               <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" />
               <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" />
+              <NavLink href="/models" icon={<Cpu className="w-4 h-4" />} label="AI Models" />
             </div>
 
             <div className="flex items-center gap-1 pr-2">
@@ -179,6 +181,16 @@ const Navbar = () => {
           >
             {status === "authenticated" ? (
               <div className="flex items-center gap-2">
+                <motion.button 
+                  onClick={() => signOut()}
+                  className="px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-2 h-9"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </motion.button>
+                
                 <div className="relative">
                   <motion.button 
                     onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
@@ -196,30 +208,30 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-3 w-64 rounded-2xl border border-border bg-card shadow-[0_8px_30px_rgb(0,0,0,0.12)] overflow-hidden py-2 z-50 flex flex-col"
+                        className="absolute right-0 mt-3 w-64 rounded-2xl border border-border bg-slate-950 shadow-[0_8px_30px_rgb(0,0,0,0.4)] overflow-hidden py-2 z-50 flex flex-col"
                       >
-                        <div className="px-5 py-3 border-b border-border bg-muted/30">
-                          <p className="text-[14px] font-bold text-foreground">{session?.user?.name}</p>
-                          <p className="text-[12px] text-muted-foreground truncate">{session?.user?.email}</p>
+                        <div className="px-5 py-3 border-b border-border bg-slate-900/50">
+                          <p className="text-[14px] font-bold text-slate-200">{session?.user?.name}</p>
+                          <p className="text-[12px] text-slate-400 truncate">{session?.user?.email}</p>
                         </div>
                         <div className="p-2 flex flex-col gap-1">
                           <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
-                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
                               Dashboard
                             </div>
                           </Link>
-                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
-                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                          <Link href="/profile/byok" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
                               BYOK Management
                             </div>
                           </Link>
-                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
-                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                          <Link href="/profile/api" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
                               API Management
                             </div>
                           </Link>
-                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
-                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                          <Link href="/profile/preferences" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
                               Preferences
                             </div>
                           </Link>
@@ -228,16 +240,6 @@ const Navbar = () => {
                     )}
                   </AnimatePresence>
                 </div>
-                
-                <motion.button 
-                  onClick={() => signOut()}
-                  className="px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-2 h-9"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <LogOut className="w-4 h-4" />
-                  Logout
-                </motion.button>
               </div>
             ) : (
               <>
@@ -314,6 +316,7 @@ const Navbar = () => {
               <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active onClick={() => setIsMenuOpen(false)} />
               <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" onClick={() => setIsMenuOpen(false)} />
               <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/models" icon={<Cpu className="w-4 h-4" />} label="AI Models" onClick={() => setIsMenuOpen(false)} />
               <div className="h-px bg-border my-1" />
               <div className="flex gap-2 mt-1">
                 {status === "authenticated" ? (

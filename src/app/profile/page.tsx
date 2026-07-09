@@ -2,87 +2,89 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { User, Key, LayoutGrid, Settings, Shield } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Activity, Clock, FileAudio, Users } from "lucide-react";
+import { useSession } from "next-auth/react";
 
-export default function ProfilePage() {
+export default function ProfileDashboard() {
+  const { data: session } = useSession();
+
   return (
-    <main className="max-w-[1000px] mx-auto px-3 md:px-6 lg:px-8 pt-24 md:pt-36 pb-32 md:pb-48">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="mb-10">
-          <h1 className="text-display text-foreground font-serif flex items-center gap-4">
-            <User className="w-10 h-10 text-primary" />
-            আপনার <span className="text-primary">প্রোফাইল</span>
-          </h1>
-          <p className="text-body text-muted-foreground mt-2">
-            আপনার সেটিংস, এপিআই কি (BYOK) এবং ব্যক্তিগত পছন্দসমূহ পরিচালনা করুন।
-          </p>
-        </div>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="space-y-6"
+    >
+      <div>
+        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <p className="text-muted-foreground mt-1">
+          Welcome back, {session?.user?.name || "User"}. Here's an overview of your activity.
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Sidebar Nav */}
-          <div className="space-y-2">
-            <Button variant="secondary" className="w-full justify-start gap-2">
-              <Settings className="w-4 h-4" /> সাধারণ সেটিংস
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-2 text-muted-foreground">
-              <Key className="w-4 h-4" /> এপিআই কি (BYOK)
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-2 text-muted-foreground">
-              <LayoutGrid className="w-4 h-4" /> পছন্দনীয় ক্যাটাগরি
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-2 text-muted-foreground">
-              <Shield className="w-4 h-4" /> নিরাপত্তা
-            </Button>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="bg-card/50 backdrop-blur-sm border-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Processed</CardTitle>
+            <FileAudio className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">128</div>
+            <p className="text-xs text-muted-foreground">+14% from last month</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 backdrop-blur-sm border-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">API Calls</CardTitle>
+            <Activity className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">1,204</div>
+            <p className="text-xs text-muted-foreground">+201 since yesterday</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 backdrop-blur-sm border-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Time Saved</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">34h</div>
+            <p className="text-xs text-muted-foreground">Estimated manual editing time</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 backdrop-blur-sm border-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Team Members</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-muted-foreground">Pro Plan Limit: 5</p>
+          </CardContent>
+        </Card>
+      </div>
 
-          {/* Main Content Area */}
-          <div className="md:col-span-2 space-y-6">
-            <Card className="bg-card/50 backdrop-blur-sm border-border">
-              <CardHeader>
-                <CardTitle>Bring Your Own Key (BYOK)</CardTitle>
-                <CardDescription>
-                  আপনার নিজস্ব এপিআই কি ব্যবহার করে প্রিমিয়াম এআই ফিচারসমূহ আনলক করুন।
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Gemini API Key</label>
-                  <Input type="password" placeholder="AIzaSy..." className="font-mono text-sm" />
-                  <p className="text-xs text-muted-foreground">
-                    আপনার কি শুধুমাত্র আপনার ব্রাউজারে লোকালি সেভ থাকবে।
-                  </p>
+      <Card className="bg-card/50 backdrop-blur-sm border-border">
+        <CardHeader>
+          <CardTitle>Recent Activity</CardTitle>
+          <CardDescription>Your latest interactions and processes.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+                <div>
+                  <p className="text-sm font-medium">Processed `vocal_track_0{i}.wav`</p>
+                  <p className="text-xs text-muted-foreground">Successfully removed background noise</p>
                 </div>
-                <Button>সেভ করুন</Button>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-card/50 backdrop-blur-sm border-border">
-              <CardHeader>
-                <CardTitle>পার্সোনালাইজেশন</CardTitle>
-                <CardDescription>
-                  আপনার পছন্দের খবরের বিষয় নির্বাচন করুন।
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {["জাতীয়", "রাজনীতি", "খেলাধুলা", "প্রযুক্তি", "অর্থনীতি", "আন্তর্জাতিক"].map((category) => (
-                    <Button key={category} variant="outline" className="rounded-full">
-                      {category}
-                    </Button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                <div className="text-xs text-muted-foreground">{i * 2} hours ago</div>
+              </div>
+            ))}
           </div>
-        </div>
-      </motion.div>
-    </main>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
