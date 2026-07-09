@@ -58,7 +58,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex-1 flex items-center justify-center py-12 pt-36">
-      <Card className="w-full max-w-md bg-card/50 backdrop-blur-xl border-border">
+      <Card className="w-full max-w-md bg-slate-950 border-slate-800 rounded-[24px] p-2">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>Enter your details below to create your account</CardDescription>
@@ -66,37 +66,37 @@ export default function RegisterPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium leading-none" htmlFor="name">Full Name</label>
-              <Input id="name" placeholder="John Doe" {...register("name")} className="bg-background" />
+              <label className="text-sm font-medium leading-none text-slate-200" htmlFor="name">Full Name</label>
+              <Input id="name" placeholder="John Doe" {...register("name")} className="bg-black border-slate-800 focus-visible:ring-slate-700 h-12 rounded-xl text-white placeholder:text-slate-500" />
               {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium leading-none" htmlFor="email">Email</label>
-              <Input id="email" type="email" placeholder="name@example.com" {...register("email")} className="bg-background" />
+              <label className="text-sm font-medium leading-none text-slate-200" htmlFor="email">Email</label>
+              <Input id="email" type="email" placeholder="name@example.com" {...register("email")} className="bg-black border-slate-800 focus-visible:ring-slate-700 h-12 rounded-xl text-white placeholder:text-slate-500" />
               {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium leading-none" htmlFor="password">Password</label>
-              <Input id="password" type="password" {...register("password")} className="bg-background" />
+              <label className="text-sm font-medium leading-none text-slate-200" htmlFor="password">Password</label>
+              <Input id="password" type="password" {...register("password")} className="bg-black border-slate-800 focus-visible:ring-slate-700 h-12 rounded-xl text-white" />
               {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium leading-none" htmlFor="confirmPassword">Confirm Password</label>
-              <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="bg-background" />
+              <label className="text-sm font-medium leading-none text-slate-200" htmlFor="confirmPassword">Confirm Password</label>
+              <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="bg-black border-slate-800 focus-visible:ring-slate-700 h-12 rounded-xl text-white" />
               {errors.confirmPassword && <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>}
             </div>
             
             {error && <p className="text-sm text-red-500 text-center font-medium">{error}</p>}
             
-            <Button className="w-full" type="submit" disabled={isSubmitting}>
+            <Button className="w-full bg-white text-black hover:bg-slate-200 h-12 rounded-xl font-bold text-[15px] mt-2" type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Creating account..." : "Sign up"}
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
+        <CardFooter className="flex justify-center pb-6">
+          <p className="text-sm text-slate-400">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline font-medium">
+            <Link href="/login" className="text-white hover:underline font-medium">
               Sign in
             </Link>
           </p>

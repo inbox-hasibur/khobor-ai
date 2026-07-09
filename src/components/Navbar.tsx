@@ -13,7 +13,9 @@ import {
   Search, 
   Sun, 
   Moon,
-  Command
+  Command,
+  LogOut,
+  ChevronDown
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
@@ -22,6 +24,7 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -175,25 +178,67 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
           >
             {status === "authenticated" ? (
-              <>
-                <Link href="/profile">
+              <div className="flex items-center gap-2">
+                <div className="relative">
                   <motion.button 
-                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted flex items-center gap-2"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                    className="w-9 h-9 rounded-full bg-[#1e293b] flex items-center justify-center text-white font-bold hover:bg-[#334155] transition-colors border border-[#334155]"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    Profile
+                    {session?.user?.name ? session.user.name.charAt(0).toUpperCase() : "U"}
                   </motion.button>
-                </Link>
+                  
+                  <AnimatePresence>
+                    {isProfileDropdownOpen && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-3 w-64 rounded-2xl border border-border bg-card shadow-[0_8px_30px_rgb(0,0,0,0.12)] overflow-hidden py-2 z-50 flex flex-col"
+                      >
+                        <div className="px-5 py-3 border-b border-border bg-muted/30">
+                          <p className="text-[14px] font-bold text-foreground">{session?.user?.name}</p>
+                          <p className="text-[12px] text-muted-foreground truncate">{session?.user?.email}</p>
+                        </div>
+                        <div className="p-2 flex flex-col gap-1">
+                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                              Dashboard
+                            </div>
+                          </Link>
+                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                              BYOK Management
+                            </div>
+                          </Link>
+                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                              API Management
+                            </div>
+                          </Link>
+                          <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
+                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-muted rounded-xl cursor-pointer transition-colors text-muted-foreground hover:text-foreground">
+                              Preferences
+                            </div>
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                
                 <motion.button 
                   onClick={() => signOut()}
-                  className="px-5 py-2.5 bg-destructive/10 text-destructive rounded-xl text-[12px] font-bold hover:bg-destructive hover:text-destructive-foreground transition-all shadow-sm"
-                  whileHover={{ scale: 1.02, y: -1 }}
+                  className="px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-2 h-9"
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
+                  <LogOut className="w-4 h-4" />
                   Logout
                 </motion.button>
-              </>
+              </div>
             ) : (
               <>
                 <Link href="/login">
