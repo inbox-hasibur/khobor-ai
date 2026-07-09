@@ -90,10 +90,9 @@ const Navbar = () => {
 
             {/* Links - Desktop */}
             <div className="hidden md:flex items-center gap-1">
-              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="Home" active />
-              <NavLink href="/discover" icon={<Globe className="w-4 h-4" />} label="Discover" />
+              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active />
+              <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" />
               <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" />
-              <NavLink href="/categories" icon={<LayoutGrid className="w-4 h-4" />} label="Categories" />
             </div>
 
             <div className="flex items-center gap-1 pr-2">
@@ -173,20 +172,24 @@ const Navbar = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.3 }}
           >
-            <motion.button 
-              className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Login
-            </motion.button>
-            <motion.button 
-              className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
-              whileHover={{ scale: 1.02, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Sign&nbsp;up
-            </motion.button>
+            <Link href="/login">
+              <motion.button 
+                className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Login
+              </motion.button>
+            </Link>
+            <Link href="/register">
+              <motion.button 
+                className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Sign&nbsp;up
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
 
@@ -237,24 +240,27 @@ const Navbar = () => {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="Home" active onClick={() => setIsMenuOpen(false)} />
-              <NavLink href="/discover" icon={<Globe className="w-4 h-4" />} label="Discover" onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" onClick={() => setIsMenuOpen(false)} />
               <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" onClick={() => setIsMenuOpen(false)} />
-              <NavLink href="/categories" icon={<LayoutGrid className="w-4 h-4" />} label="Categories" onClick={() => setIsMenuOpen(false)} />
               <div className="h-px bg-border my-1" />
               <div className="flex gap-2 mt-1">
-                <motion.button 
-                  className="flex-1 py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Login
-                </motion.button>
-                <motion.button 
-                  className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap min-h-[44px]"
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Sign&nbsp;up
-                </motion.button>
+                <Link href="/login" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                  <motion.button 
+                    className="w-full py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Login
+                  </motion.button>
+                </Link>
+                <Link href="/register" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                  <motion.button 
+                    className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap min-h-[44px]"
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Sign&nbsp;up
+                  </motion.button>
+                </Link>
               </div>
             </motion.div>
           )}
