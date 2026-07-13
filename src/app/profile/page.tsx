@@ -24,10 +24,12 @@ export default function ProfileDashboard() {
             Welcome back, {session?.user?.name || "User"}. Here's an overview of your activity.
           </p>
         </div>
-        <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white border-0">
-          <Star className="w-4 h-4 mr-2" />
-          Upgrade to Premium
-        </Button>
+        <Link href="/pricing">
+          <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white border-0">
+            <Star className="w-4 h-4 mr-2" />
+            Upgrade to Premium
+          </Button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

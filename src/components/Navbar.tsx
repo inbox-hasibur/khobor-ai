@@ -16,7 +16,8 @@ import {
   Command,
   LogOut,
   ChevronDown,
-  Cpu
+  Cpu,
+  CreditCard
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";

@@ -147,17 +147,29 @@ export default function Home() {
           </div>
           
           {/* Quick Stats & Weather */}
-          <div className="flex flex-col items-end gap-4">
-            {/* Weather widget */}
-            {weather && (
-              <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full border border-blue-500/20 shadow-sm">
-                <CloudSun className="w-5 h-5 text-blue-500" />
-                <div className="flex flex-col">
-                  <span className="text-[14px] font-bold text-foreground leading-none">{weather.temp}°C</span>
-                  <span className="text-[10px] font-medium text-muted-foreground capitalize">{weather.description}</span>
+          <div className="flex flex-col items-end gap-3 md:gap-4">
+            <div className="flex items-center gap-3">
+              {/* Premium CTA */}
+              <Link href="/pricing" className="group hidden sm:block">
+                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500/10 to-orange-600/10 hover:from-amber-500/20 hover:to-orange-600/20 rounded-full border border-amber-500/20 shadow-sm transition-all cursor-pointer">
+                  <Sparkles className="w-4 h-4 text-amber-500" />
+                  <span className="text-[12px] font-bold text-amber-500 group-hover:text-amber-400 transition-colors">
+                    Upgrade to premium for personalized news
+                  </span>
                 </div>
-              </div>
-            )}
+              </Link>
+              
+              {/* Weather widget */}
+              {weather && (
+                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full border border-blue-500/20 shadow-sm">
+                  <CloudSun className="w-5 h-5 text-blue-500" />
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-bold text-foreground leading-none">{weather.temp}°C</span>
+                    <span className="text-[10px] font-medium text-muted-foreground capitalize">{weather.description}</span>
+                  </div>
+                </div>
+              )}
+            </div>
             
             <div className="flex items-center gap-4 md:gap-6">
               <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
