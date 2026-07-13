@@ -29,33 +29,12 @@ export default function PricingPage() {
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
 
         <motion.div className="text-center max-w-3xl mx-auto mb-16 z-10" {...fadeIn}>
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
-            Choose Your <span className="text-primary">Plan</span>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            Choose Your Plan
           </h1>
           <p className="text-lg md:text-xl text-slate-400 font-medium">
             Join the personalized news ecosystem. Automate your daily briefings and enjoy an ad-free, halal audio experience.
           </p>
-          
-          <div className="flex items-center justify-center mt-10 gap-4">
-            <span className={`text-sm md:text-base font-bold transition-colors ${!isYearly ? "text-white" : "text-slate-500"}`}>Monthly</span>
-            <button 
-              onClick={() => setIsYearly(!isYearly)}
-              className="relative w-20 h-10 bg-slate-800/80 backdrop-blur-sm rounded-full p-1.5 border border-slate-700/50 shadow-inner hover:bg-slate-700 transition-all cursor-pointer"
-            >
-              <div 
-                className="w-7 h-7 bg-gradient-to-br from-primary to-purple-600 rounded-full transition-transform duration-300 ease-out shadow-[0_0_15px_rgba(139,92,246,0.6)]"
-                style={{ transform: isYearly ? "translateX(40px)" : "translateX(0)" }}
-              />
-            </button>
-            <div className="flex flex-col items-start relative">
-              <span className={`text-sm md:text-base font-bold transition-colors ${isYearly ? "text-white" : "text-slate-500"}`}>
-                Yearly
-              </span>
-              <span className="absolute -top-6 -right-12 text-[10px] text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full font-bold border border-emerald-400/20 shadow-sm whitespace-nowrap rotate-[-5deg]">
-                Save 16%
-              </span>
-            </div>
-          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full z-10">
@@ -65,13 +44,13 @@ export default function PricingPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-xl h-full flex flex-col rounded-3xl overflow-hidden hover:border-slate-700 transition-all duration-300">
+            <Card className="bg-black border-slate-800 h-full flex flex-col rounded-[24px] overflow-hidden p-2">
               <CardHeader className="pb-8 pt-8 px-8">
                 <CardTitle className="text-2xl font-bold">Free</CardTitle>
                 <CardDescription className="text-slate-400 text-sm mt-2">Perfect for getting started with automated news.</CardDescription>
-                <div className="mt-6 flex items-baseline text-5xl font-black font-sans">
+                <div className="mt-6 flex items-baseline text-4xl font-bold">
                   <span className="text-3xl mr-1 font-bold">৳</span>0
-                  <span className="text-lg text-slate-500 font-medium ml-2">/mo</span>
+                  <span className="text-base text-slate-500 font-medium ml-2">/mo</span>
                 </div>
               </CardHeader>
               <CardContent className="px-8 flex-1">
@@ -100,12 +79,12 @@ export default function PricingPage() {
               </CardContent>
               <CardFooter className="px-8 pb-8 pt-4">
                 {status === "authenticated" ? (
-                  <Button variant="outline" className="w-full rounded-xl h-12 border-slate-700 bg-slate-800 hover:bg-slate-700 text-white font-bold" disabled>
+                  <Button variant="outline" className="w-full rounded-xl h-12 border-slate-800 bg-slate-950 hover:bg-slate-800 text-white font-medium" disabled>
                     Current Plan
                   </Button>
                 ) : (
                   <Link href="/register" className="w-full">
-                    <Button variant="outline" className="w-full rounded-xl h-12 border-slate-700 bg-slate-800 hover:bg-slate-700 text-white font-bold">
+                    <Button variant="outline" className="w-full rounded-xl h-12 border-slate-800 bg-slate-950 hover:bg-slate-800 text-white font-medium">
                       Sign Up Free
                     </Button>
                   </Link>
@@ -121,34 +100,57 @@ export default function PricingPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="relative"
           >
-            <div className="absolute -inset-[2px] bg-gradient-to-br from-primary via-purple-500 to-amber-500 rounded-3xl opacity-75 blur-md" />
-            <Card className="bg-slate-900 border border-slate-700 backdrop-blur-xl h-full flex flex-col rounded-3xl overflow-hidden relative shadow-2xl z-10">
-              <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg shadow-amber-500/20 border border-amber-400/30">
+            <Card className="bg-slate-950 border border-slate-800 h-full flex flex-col rounded-[24px] overflow-hidden relative p-2">
+              <div className="absolute top-4 right-4 bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
                 Most Popular
               </div>
-              <CardHeader className="pb-8 pt-8 px-8 relative overflow-hidden">
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-                <CardTitle className="text-3xl font-black flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">
-                  <Star className="w-7 h-7 fill-amber-400 text-amber-400 drop-shadow-md" />
+              <CardHeader className="pb-6 pt-6 px-8 relative overflow-hidden">
+                <CardTitle className="text-2xl font-bold flex items-center gap-2 text-white">
+                  <Star className="w-5 h-5" />
                   Premium
                 </CardTitle>
-                <CardDescription className="text-slate-300 text-sm mt-3 font-medium max-w-[90%] relative z-10 leading-relaxed">
+                <CardDescription className="text-slate-400 text-sm mt-2 font-medium max-w-[85%] relative z-10 leading-relaxed">
                   Unlock the full power of AI for your personalized news ecosystem.
                 </CardDescription>
-                <div className="mt-6 flex items-baseline text-5xl font-black font-sans relative z-10">
-                  <span className="text-3xl mr-1 font-bold text-amber-500">৳</span>{isYearly ? "4,999" : "499"}
-                  <span className="text-lg text-slate-400 font-medium ml-2">/{isYearly ? "yr" : "mo"}</span>
+
+                {/* Minimalist Toggle Inside Card */}
+                <div className="mt-6 mb-2">
+                  <div className="relative flex w-56 h-10 bg-black rounded-full p-1 border border-slate-800">
+                    <div 
+                      className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-800 rounded-full transition-all duration-300 ease-in-out"
+                      style={{ left: isYearly ? "calc(50%)" : "4px" }}
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setIsYearly(false)}
+                      className={`relative z-10 flex-1 flex items-center justify-center text-xs font-medium transition-colors ${!isYearly ? "text-white" : "text-slate-400"}`}
+                    >
+                      Monthly
+                    </button>
+                    <button 
+                      type="button"
+                      onClick={() => setIsYearly(true)}
+                      className={`relative z-10 flex-1 flex items-center justify-center text-xs font-medium transition-colors ${isYearly ? "text-white" : "text-slate-400"}`}
+                    >
+                      Yearly
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-baseline text-4xl font-bold relative z-10">
+                  <span className="text-3xl mr-1 font-bold text-white">৳</span>{isYearly ? "4,999" : "499"}
+                  <span className="text-base text-slate-400 font-medium ml-2">/{isYearly ? "yr" : "mo"}</span>
                 </div>
               </CardHeader>
               <CardContent className="px-8 flex-1">
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <Zap className="w-4 h-4 text-white shrink-0 mt-0.5" />
                     <span className="text-slate-200 text-sm font-medium">Personalized News Generation</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span className="text-slate-200 text-sm font-medium">Halal Mode (MDX-Net Music Filtering)</span>
+                    <Shield className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                    <span className="text-slate-200 text-sm font-medium">Halal Mode (MDX-Net Filtering)</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
@@ -166,7 +168,7 @@ export default function PricingPage() {
               </CardContent>
               <CardFooter className="px-8 pb-8 pt-4">
                 <Link href={status === "authenticated" ? "/profile" : "/register"} className="w-full">
-                  <Button className="w-full rounded-xl h-12 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white font-bold shadow-lg shadow-primary/25">
+                  <Button className="w-full bg-white text-black hover:bg-slate-200 h-12 rounded-xl font-bold text-[15px]">
                     {status === "authenticated" ? "Upgrade Now" : "Get Premium"}
                   </Button>
                 </Link>
