@@ -90,7 +90,7 @@ const Navbar = () => {
                 <span className="text-[14px] font-black text-white italic">K</span>
               </motion.div>
               <span className="text-sm font-black tracking-tighter text-foreground hidden sm:block">
-                Khobor<span className="text-primary">AI</span>
+                Kahf<span className="text-primary">Studio</span>
               </span>
             </Link>
 
@@ -222,12 +222,7 @@ const Navbar = () => {
                           </Link>
                           <Link href="/profile/byok" onClick={() => setIsProfileDropdownOpen(false)}>
                             <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
-                              BYOK Management
-                            </div>
-                          </Link>
-                          <Link href="/profile/api" onClick={() => setIsProfileDropdownOpen(false)}>
-                            <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
-                              API Management
+                              BYOK & API Management
                             </div>
                           </Link>
                           <Link href="/profile/preferences" onClick={() => setIsProfileDropdownOpen(false)}>

@@ -1,12 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 
 export default function PreferencesPage() {
+  const { data: session } = useSession();
   const categories = ["Technology", "Politics", "Sports", "Entertainment", "Science", "Business", "Health", "World"];
+
+  const [name, setName] = useState(session?.user?.name || "");
+  const [email, setEmail] = useState(session?.user?.email || "");
 
   return (
     <motion.div
@@ -18,9 +23,43 @@ export default function PreferencesPage() {
       <div>
         <h1 className="text-3xl font-bold">Preferences</h1>
         <p className="text-muted-foreground mt-1">
-          Customize your experience, news feed, and UI settings.
+          Customize your experience, manage your profile, and UI settings.
         </p>
       </div>
+
+      <Card className="bg-card/50 backdrop-blur-sm border-border">
+        <CardHeader>
+          <CardTitle>Profile Details</CardTitle>
+          <CardDescription>
+            Update your personal information.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Full Name</label>
+            <input 
+              type="text" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your Name"
+              className="w-full bg-muted/50 border border-border rounded-xl py-2 px-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary/30"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Email Address</label>
+            <input 
+              type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full bg-muted/50 border border-border rounded-xl py-2 px-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary/30"
+            />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button variant="default">Save Changes</Button>
+        </CardFooter>
+      </Card>
 
       <Card className="bg-card/50 backdrop-blur-sm border-border">
         <CardHeader>
@@ -69,12 +108,37 @@ export default function PreferencesPage() {
             </div>
             <input type="checkbox" defaultChecked className="w-4 h-4 rounded accent-primary" />
           </div>
-          <div className="flex items-center justify-between py-2">
+          <div className="flex items-center justify-between py-2 border-b border-border">
             <div>
               <p className="font-medium">Marketing & Promotions</p>
-              <p className="text-sm text-muted-foreground">Updates about new Khobor AI features and offers.</p>
+              <p className="text-sm text-muted-foreground">Updates about new features and offers.</p>
             </div>
             <input type="checkbox" className="w-4 h-4 rounded accent-primary" />
+          </div>
+          <div className="flex items-center justify-between py-2">
+            <div>
+              <p className="font-medium">Halal Mode Default</p>
+              <p className="text-sm text-muted-foreground">Automatically enable Halal Mode (Music Remover) for videos.</p>
+            </div>
+            <input type="checkbox" defaultChecked className="w-4 h-4 rounded accent-primary" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-card/50 backdrop-blur-sm border-destructive/20 mt-8">
+        <CardHeader>
+          <CardTitle className="text-destructive">Danger Zone</CardTitle>
+          <CardDescription>
+            Irreversible and destructive actions.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="font-medium">Delete Account</p>
+              <p className="text-sm text-muted-foreground">Permanently delete your account and all data.</p>
+            </div>
+            <Button variant="destructive" className="whitespace-nowrap">Delete Account</Button>
           </div>
         </CardContent>
       </Card>

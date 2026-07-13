@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -21,6 +22,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [role, setRole] = useState<"user" | "admin">("user");
   
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -32,12 +34,17 @@ export default function LoginPage() {
       redirect: false,
       email: data.email,
       password: data.password,
+      role: role,
     });
 
     if (result?.error) {
-      setError("Invalid email or password");
+      setError("Invalid credentials or role mismatch");
     } else {
-      router.push("/");
+      if (role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
       router.refresh();
     }
   };
@@ -45,11 +52,34 @@ export default function LoginPage() {
   return (
     <div className="flex-1 flex items-center justify-center py-12 pt-36">
       <Card className="w-full max-w-md bg-slate-950 border-slate-800 rounded-[24px] p-2">
-        <CardHeader className="text-center">
+        <CardHeader className="text-center pb-2 pt-6">
           <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
           <CardDescription>Enter your credentials to access your account</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="flex justify-center mb-6">
+            <div className="relative flex w-48 h-10 bg-black rounded-full p-1 border border-slate-800">
+              <div 
+                className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-800 rounded-full transition-all duration-300 ease-in-out"
+                style={{ left: role === "user" ? "4px" : "calc(50%)" }}
+              />
+              <button 
+                type="button"
+                onClick={() => setRole("user")}
+                className={`relative z-10 flex-1 flex items-center justify-center text-sm font-medium transition-colors ${role === "user" ? "text-white" : "text-slate-400"}`}
+              >
+                User
+              </button>
+              <button 
+                type="button"
+                onClick={() => setRole("admin")}
+                className={`relative z-10 flex-1 flex items-center justify-center text-sm font-medium transition-colors ${role === "admin" ? "text-white" : "text-slate-400"}`}
+              >
+                Admin
+              </button>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium leading-none text-slate-200" htmlFor="email">Email</label>

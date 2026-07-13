@@ -16,7 +16,7 @@ export default function BYOKPage() {
       className="space-y-6"
     >
       <div>
-        <h1 className="text-3xl font-bold">BYOK Management</h1>
+        <h1 className="text-3xl font-bold">BYOK & API Management</h1>
         <p className="text-muted-foreground mt-1">
           Bring Your Own Key - configure your personal API keys for third-party AI services.
         </p>

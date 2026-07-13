@@ -4,21 +4,37 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LayoutDashboard, Key, Cpu, Settings, User } from "lucide-react";
+import { LayoutDashboard, Users, Cpu, Database, Library, User } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default function ProfileLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
+
+  if (status === "loading") {
+    return <div className="pt-32 text-center text-muted-foreground">Loading...</div>;
+  }
+
+  if ((session?.user as any)?.role !== "admin") {
+    redirect("/profile");
+  }
 
   const navItems = [
-    { name: "Dashboard", href: "/profile", icon: LayoutDashboard },
-    { name: "BYOK & API Management", href: "/profile/byok", icon: Key },
-    { name: "Preferences", href: "/profile/preferences", icon: Settings },
+    { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "User Management", href: "/admin/users", icon: Users },
+    { name: "API & Source Management", href: "/admin/api", icon: Cpu },
+    { name: "Scraping Pipeline", href: "/admin/scraping", icon: Database },
+    { name: "News Library", href: "/admin/library", icon: Library },
   ];
 
   return (
@@ -28,24 +44,24 @@ export default function ProfileLayout({
         {/* Sidebar */}
         <div className="w-full md:w-64 shrink-0 space-y-6">
           <div className="flex items-center gap-4 px-2">
-            <div className="w-14 h-14 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xl font-bold">
+            <div className="w-14 h-14 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center text-xl font-bold">
               {session?.user?.name ? session.user.name.charAt(0).toUpperCase() : <User />}
             </div>
             <div>
-              <h2 className="font-bold text-lg leading-tight">{session?.user?.name || "User"}</h2>
-              <p className="text-xs text-muted-foreground">{session?.user?.email || "user@example.com"}</p>
+              <h2 className="font-bold text-lg leading-tight">{session?.user?.name || "Admin"}</h2>
+              <p className="text-[10px] uppercase font-bold text-red-500 tracking-wider">System Administrator</p>
             </div>
           </div>
           
           <nav className="flex flex-col gap-2">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/admin");
               return (
                 <Link key={item.name} href={item.href}>
                   <motion.div
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive 
-                        ? "bg-primary text-primary-foreground shadow-md" 
+                        ? "bg-red-500 text-white shadow-md" 
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                     whileHover={{ x: 2 }}
