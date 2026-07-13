@@ -36,20 +36,25 @@ export default function PricingPage() {
             Join the personalized news ecosystem. Automate your daily briefings and enjoy an ad-free, halal audio experience.
           </p>
           
-          <div className="flex items-center justify-center mt-10 gap-3">
-            <span className={`text-sm font-bold ${!isYearly ? "text-white" : "text-slate-500"}`}>Monthly</span>
+          <div className="flex items-center justify-center mt-10 gap-4">
+            <span className={`text-sm md:text-base font-bold transition-colors ${!isYearly ? "text-white" : "text-slate-500"}`}>Monthly</span>
             <button 
               onClick={() => setIsYearly(!isYearly)}
-              className="relative w-16 h-8 bg-slate-800 rounded-full p-1 border border-slate-700 transition-colors"
+              className="relative w-20 h-10 bg-slate-800/80 backdrop-blur-sm rounded-full p-1.5 border border-slate-700/50 shadow-inner hover:bg-slate-700 transition-all cursor-pointer"
             >
               <div 
-                className="w-6 h-6 bg-primary rounded-full transition-transform duration-300 ease-in-out shadow-lg"
-                style={{ transform: isYearly ? "translateX(32px)" : "translateX(0)" }}
+                className="w-7 h-7 bg-gradient-to-br from-primary to-purple-600 rounded-full transition-transform duration-300 ease-out shadow-[0_0_15px_rgba(139,92,246,0.6)]"
+                style={{ transform: isYearly ? "translateX(40px)" : "translateX(0)" }}
               />
             </button>
-            <span className={`text-sm font-bold ${isYearly ? "text-white" : "text-slate-500"}`}>
-              Yearly <span className="text-[10px] text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full ml-1">Save 16%</span>
-            </span>
+            <div className="flex flex-col items-start relative">
+              <span className={`text-sm md:text-base font-bold transition-colors ${isYearly ? "text-white" : "text-slate-500"}`}>
+                Yearly
+              </span>
+              <span className="absolute -top-6 -right-12 text-[10px] text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full font-bold border border-emerald-400/20 shadow-sm whitespace-nowrap rotate-[-5deg]">
+                Save 16%
+              </span>
+            </div>
           </div>
         </motion.div>
 
@@ -64,8 +69,8 @@ export default function PricingPage() {
               <CardHeader className="pb-8 pt-8 px-8">
                 <CardTitle className="text-2xl font-bold">Free</CardTitle>
                 <CardDescription className="text-slate-400 text-sm mt-2">Perfect for getting started with automated news.</CardDescription>
-                <div className="mt-6 flex items-baseline text-5xl font-black">
-                  $0
+                <div className="mt-6 flex items-baseline text-5xl font-black font-sans">
+                  <span className="text-3xl mr-1 font-bold">৳</span>0
                   <span className="text-lg text-slate-500 font-medium ml-2">/mo</span>
                 </div>
               </CardHeader>
@@ -116,20 +121,23 @@ export default function PricingPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="relative"
           >
-            <div className="absolute -inset-[1px] bg-gradient-to-b from-primary via-primary/50 to-purple-600 rounded-3xl opacity-50 blur-[2px]" />
-            <Card className="bg-slate-900 border-0 backdrop-blur-xl h-full flex flex-col rounded-3xl overflow-hidden relative shadow-2xl">
-              <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+            <div className="absolute -inset-[2px] bg-gradient-to-br from-primary via-purple-500 to-amber-500 rounded-3xl opacity-75 blur-md" />
+            <Card className="bg-slate-900 border border-slate-700 backdrop-blur-xl h-full flex flex-col rounded-3xl overflow-hidden relative shadow-2xl z-10">
+              <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg shadow-amber-500/20 border border-amber-400/30">
                 Most Popular
               </div>
-              <CardHeader className="pb-8 pt-8 px-8">
-                <CardTitle className="text-2xl font-bold flex items-center gap-2 text-primary">
-                  <Star className="w-5 h-5 fill-primary" />
+              <CardHeader className="pb-8 pt-8 px-8 relative overflow-hidden">
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+                <CardTitle className="text-3xl font-black flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">
+                  <Star className="w-7 h-7 fill-amber-400 text-amber-400 drop-shadow-md" />
                   Premium
                 </CardTitle>
-                <CardDescription className="text-slate-400 text-sm mt-2">Unlock the full power of AI for your news ecosystem.</CardDescription>
-                <div className="mt-6 flex items-baseline text-5xl font-black">
-                  ${isYearly ? "49.99" : "4.99"}
-                  <span className="text-lg text-slate-500 font-medium ml-2">/{isYearly ? "yr" : "mo"}</span>
+                <CardDescription className="text-slate-300 text-sm mt-3 font-medium max-w-[90%] relative z-10 leading-relaxed">
+                  Unlock the full power of AI for your personalized news ecosystem.
+                </CardDescription>
+                <div className="mt-6 flex items-baseline text-5xl font-black font-sans relative z-10">
+                  <span className="text-3xl mr-1 font-bold text-amber-500">৳</span>{isYearly ? "4,999" : "499"}
+                  <span className="text-lg text-slate-400 font-medium ml-2">/{isYearly ? "yr" : "mo"}</span>
                 </div>
               </CardHeader>
               <CardContent className="px-8 flex-1">
