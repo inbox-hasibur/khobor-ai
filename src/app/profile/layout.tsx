@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, redirect } from "next/navigation";
 import { motion } from "framer-motion";
 import { LayoutDashboard, Key, Cpu, Settings, User } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -13,7 +13,16 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
+
+  if (status === "loading") {
+    return <div className="pt-32 text-center text-muted-foreground">Loading Profile...</div>;
+  }
 
   const navItems = [
     { name: "Dashboard", href: "/profile", icon: LayoutDashboard },

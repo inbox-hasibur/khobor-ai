@@ -11,7 +11,9 @@ export async function GET() {
     const existingAdmin = await User.findOne({ email: adminEmail });
 
     if (existingAdmin) {
-      return NextResponse.json({ message: "Admin user already exists." });
+      existingAdmin.role = "admin";
+      await existingAdmin.save();
+      return NextResponse.json({ message: "Admin user already existed but role was updated to admin.", user: existingAdmin });
     }
 
     const hashedPassword = await bcrypt.hash("admin998877", 10);
