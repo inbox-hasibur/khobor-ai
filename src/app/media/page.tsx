@@ -62,18 +62,18 @@ export default function MediaPage() {
   };
 
   return (
-    <main className="max-w-[1400px] mx-auto px-3 md:px-6 lg:px-8 pt-24 md:pt-36 pb-32 md:pb-48">
+    <main className="max-w-[1400px] mx-auto px-3 md:px-6 lg:px-8 pt-4 pb-32 md:pb-48">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="mb-10">
-          <h1 className="text-display text-foreground font-serif flex items-center gap-4">
-            <Video className="w-10 h-10 text-primary" />
+        <div className="mb-4">
+          <h1 className="text-3xl text-foreground font-serif flex items-center gap-2">
+            <Video className="w-8 h-8 text-primary" />
             নিউজ <span className="text-primary">মিডিয়া</span> ভিডিও
           </h1>
-          <p className="text-body text-muted-foreground mt-2 max-w-2xl">
+          <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
             ভিডিও নিউজ দেখুন এবং আমাদের এআই মিউজিক ফিল্টার ব্যবহার করে মিউজিক-মুক্ত (হালাল) খবর শুনুন। সোয়াইপ করে পরের ভিডিওতে যান।
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function MediaPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Video Area */}
           <Card className="lg:col-span-2 bg-card/50 backdrop-blur-sm border-border overflow-hidden">
-            <div className="relative aspect-video bg-black overflow-hidden flex flex-col justify-end">
+            <div className="relative aspect-video bg-black overflow-hidden flex flex-col justify-end rounded-2xl m-2">
               
               <AnimatePresence mode="popLayout">
                 <motion.div
@@ -108,7 +108,7 @@ export default function MediaPage() {
               <div className="relative z-10 w-full p-4 flex flex-col gap-4">
                 
                 {/* Center Play/Pause Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none -mt-32">
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <motion.div 
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: isPlaying ? 0 : 1 }}
@@ -165,43 +165,9 @@ export default function MediaPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-muted-foreground leading-relaxed">
                 {currentVideo.description}
               </p>
-              
-              <div className="mt-8 border-t border-border pt-6">
-                <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                  <Video className="w-5 h-5 text-primary" />
-                  আরও দেখুন (Aro Dekhun)
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {mockVideos.map((video, idx) => (
-                    <div 
-                      key={video.id} 
-                      className={`flex gap-3 group cursor-pointer p-2 rounded-lg transition-colors ${idx === currentIndex ? 'bg-primary/10 border border-primary/20' : 'hover:bg-muted/50'}`}
-                      onClick={() => {
-                        setCurrentIndex(idx);
-                        setIsPlaying(true);
-                        setProgress(0);
-                      }}
-                    >
-                      <div className="relative w-32 h-20 rounded-md overflow-hidden flex-shrink-0">
-                        <img src={video.thumbnail} alt="Thumbnail" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Play className="w-6 h-6 text-white" />
-                        </div>
-                        <div className="absolute bottom-1 right-1 bg-black/80 px-1 rounded text-[10px] text-white">{video.duration}</div>
-                      </div>
-                      <div className="flex flex-col justify-center">
-                        <h4 className={`font-semibold text-sm line-clamp-2 transition-colors ${idx === currentIndex ? 'text-primary' : 'group-hover:text-primary'}`}>
-                          {video.title}
-                        </h4>
-                        <p className="text-xs text-muted-foreground mt-1">{video.category}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </CardContent>
           </Card>
 
@@ -231,6 +197,45 @@ export default function MediaPage() {
                     <span className="text-xs text-muted-foreground">মিউজিক সহ অরিজিনাল অডিও</span>
                   </div>
                   <Button variant="default" size="sm">সক্রিয়</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Aro Dekhun Sidebar */}
+            <Card className="bg-card/50 backdrop-blur-sm border-border sticky top-[340px]">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Video className="w-5 h-5 text-primary" />
+                  আরও দেখুন (Aro Dekhun)
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-4">
+                  {mockVideos.map((video, idx) => (
+                    <div 
+                      key={video.id} 
+                      className={`flex gap-3 group cursor-pointer p-2 rounded-lg transition-colors ${idx === currentIndex ? 'bg-primary/10 border border-primary/20' : 'hover:bg-muted/50'}`}
+                      onClick={() => {
+                        setCurrentIndex(idx);
+                        setIsPlaying(true);
+                        setProgress(0);
+                      }}
+                    >
+                      <div className="relative w-28 h-16 rounded-md overflow-hidden flex-shrink-0">
+                        <img src={video.thumbnail} alt="Thumbnail" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Play className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="absolute bottom-1 right-1 bg-black/80 px-1 rounded text-[9px] text-white">{video.duration}</div>
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <h4 className={`font-semibold text-sm line-clamp-2 transition-colors ${idx === currentIndex ? 'text-primary' : 'group-hover:text-primary'}`}>
+                          {video.title}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mt-1">{video.category}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>

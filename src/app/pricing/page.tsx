@@ -10,7 +10,6 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 export default function PricingPage() {
-  const [isYearly, setIsYearly] = useState(false);
   const { status } = useSession();
 
   const fadeIn = {
@@ -80,7 +79,7 @@ export default function PricingPage() {
               </CardContent>
               <CardFooter className="px-8 pb-8 pt-4">
                 <Link href="/register" className="w-full">
-                  <Button variant="outline" className="w-full border-slate-700 text-white hover:bg-slate-800 h-12 rounded-xl font-bold text-[15px]">
+                  <Button className="w-full bg-white text-black hover:bg-slate-200 h-12 rounded-xl font-bold text-[15px]">
                     Current Plan
                   </Button>
                 </Link>
@@ -109,33 +108,11 @@ export default function PricingPage() {
                   Everything you need. Full power of AI for your personalized news ecosystem.
                 </CardDescription>
 
-                {/* Minimalist Toggle Inside Card */}
-                <div className="mt-6 mb-2">
-                  <div className="relative flex w-56 h-10 bg-black rounded-full p-1 border border-slate-800">
-                    <div 
-                      className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-800 rounded-full transition-all duration-300 ease-in-out"
-                      style={{ left: isYearly ? "calc(50%)" : "4px" }}
-                    />
-                    <button 
-                      type="button"
-                      onClick={() => setIsYearly(false)}
-                      className={`relative z-10 flex-1 flex items-center justify-center text-xs font-medium transition-colors ${!isYearly ? "text-white" : "text-slate-400"}`}
-                    >
-                      Monthly
-                    </button>
-                    <button 
-                      type="button"
-                      onClick={() => setIsYearly(true)}
-                      className={`relative z-10 flex-1 flex items-center justify-center text-xs font-medium transition-colors ${isYearly ? "text-white" : "text-slate-400"}`}
-                    >
-                      Yearly
-                    </button>
-                  </div>
-                </div>
+                <div className="mt-6 mb-2 h-10"></div> {/* Spacer to match layout */}
 
                 <div className="mt-4 flex items-baseline text-4xl font-bold relative z-10">
-                  <span className="text-3xl mr-1 font-bold text-white">৳</span>{isYearly ? "1,000" : "100"}
-                  <span className="text-base text-slate-400 font-medium ml-2">/{isYearly ? "yr" : "mo"}</span>
+                  <span className="text-3xl mr-1 font-bold text-white">৳</span>1,000
+                  <span className="text-base text-slate-400 font-medium ml-2">/yr</span>
                 </div>
               </CardHeader>
               
@@ -164,7 +141,7 @@ export default function PricingPage() {
               </CardContent>
               <CardFooter className="px-8 pb-8 pt-4">
                 <Link href={status === "authenticated" ? "/profile" : "/register"} className="w-full">
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 rounded-xl font-bold text-[15px]">
+                  <Button className="w-full bg-white text-black hover:bg-slate-200 h-12 rounded-xl font-bold text-[15px]">
                     {status === "authenticated" ? "Upgrade Now" : "Get Premium"}
                   </Button>
                 </Link>
