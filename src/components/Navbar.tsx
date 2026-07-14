@@ -91,7 +91,7 @@ const Navbar = () => {
                 <span className="text-[14px] font-black text-white italic">K</span>
               </motion.div>
               <span className="text-sm font-black tracking-tighter text-foreground hidden sm:block">
-                Kahf<span className="text-primary">Studio</span>
+                Kahf<span className="text-primary">News</span>
               </span>
             </Link>
 
@@ -106,25 +106,13 @@ const Navbar = () => {
             <div className="flex items-center gap-1 pr-2">
               {/* Theme Toggle - With animation */}
               {mounted && (
-                <motion.button 
+                <button 
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                   aria-label="Toggle theme"
-                  whileHover={{ scale: 1.1, rotate: 15 }}
-                  whileTap={{ scale: 0.9 }}
                 >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={theme}
-                      initial={{ y: -10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 10, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                    </motion.div>
-                  </AnimatePresence>
-                </motion.button>
+                  {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </button>
               )}
 
               {/* Search Icon - With keyboard shortcut hint */}
@@ -360,11 +348,10 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-// Sub-component for individual links - Enhanced with animations
 const NavLink = ({ 
   href, 
   icon, 
@@ -381,33 +368,20 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className="relative group"
+    className="relative group block"
   >
-    <motion.div
-      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 ${
+    <div
+      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-colors w-full md:w-auto min-h-[44px] md:min-h-0 hover:bg-white dark:hover:bg-slate-800 ${
         active 
-          ? "text-foreground" 
+          ? "text-primary" 
           : "text-muted-foreground hover:text-foreground"
       }`}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
     >
-      {/* Active indicator background */}
-      {active && (
-        <motion.div
-          layoutId="activeNav"
-          className="absolute inset-0 bg-muted rounded-xl"
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-        />
-      )}
-      
-      <span className="relative z-10 flex items-center gap-2">
-        <span className={active ? "text-primary" : "group-hover:text-primary transition-colors"}>
-          {icon}
-        </span>
-        {label}
-      </span>
-    </motion.div>
+      <div className="flex items-center gap-2 relative z-10">
+        {icon}
+        <span>{label}</span>
+      </div>
+    </div>
   </Link>
 );
 

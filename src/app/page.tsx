@@ -173,11 +173,11 @@ export default function Home() {
             </div>
             
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
+              <div className="flex items-center gap-2 px-4 py-2 glass rounded-full shadow-sm">
                 <Radio className="w-4 h-4 text-primary" />
                 <span className="text-[12px] font-semibold">লাইভ আপডেট</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
+              <div className="flex items-center gap-2 px-4 py-2 glass rounded-full shadow-sm">
                 <TrendingUp className="w-4 h-4 text-primary" />
                 <span className="text-[12px] font-semibold">ট্রেন্ডিং</span>
               </div>
