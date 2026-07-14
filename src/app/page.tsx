@@ -82,8 +82,52 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Fallback dummy news if API fails or returns empty
+  const displayNews = news.length > 0 ? news : [
+    {
+      _id: "1",
+      title: "স্মার্ট সিটি প্রকল্প: যানজট নিরসনে নতুন উদ্যোগ",
+      category: "জাতীয়",
+      source: "প্রথম আলো",
+      summary: "রাজধানীর যানজট নিরসনে সরকার নতুন 'স্মার্ট ট্রাফিক ম্যানেজমেন্ট' সিস্টেম চালু করেছে, যা এআই ব্যবহার করে সিগন্যাল নিয়ন্ত্রণ করবে।",
+      imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+      priority: "high",
+      publishedAt: new Date().toISOString()
+    },
+    {
+      _id: "2",
+      title: "বিশ্ব অর্থনীতি: মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন পলিসি",
+      category: "অর্থনীতি",
+      source: "ডেইলি স্টার",
+      summary: "কেন্দ্রীয় ব্যাংক মুদ্রাস্ফীতি নিয়ন্ত্রণে সুদের হার আরও ০.৫% বাড়ানোর সিদ্ধান্ত নিয়েছে, যা আগামী মাস থেকে কার্যকর হবে।",
+      imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop",
+      priority: "medium",
+      publishedAt: new Date(Date.now() - 3600000).toISOString()
+    },
+    {
+      _id: "3",
+      title: "প্রযুক্তির বিশ্ব: এআই কীভাবে আমাদের ভবিষ্যৎ বদলাচ্ছে",
+      category: "প্রযুক্তি",
+      source: "ইত্তেফাক",
+      summary: "কৃত্রিম বুদ্ধিমত্তার নতুন মডেলগুলো স্বাস্থ্যসেবা থেকে শুরু করে শিক্ষা খাতে যুগান্তকারী পরিবর্তন আনছে বলে জানিয়েছেন বিশেষজ্ঞরা।",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop",
+      priority: "high",
+      publishedAt: new Date(Date.now() - 7200000).toISOString()
+    },
+    {
+      _id: "4",
+      title: "টি-টোয়েন্টি বিশ্বকাপ: ফাইনালে উত্তেজনা",
+      category: "খেলাধুলা",
+      source: "যুগান্তর",
+      summary: "রুদ্ধশ্বাস ম্যাচে শেষ বলে জয় পেল বাংলাদেশ। গ্যালারি জুড়ে দর্শকদের উল্লাস।",
+      imageUrl: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=2067&auto=format&fit=crop",
+      priority: "low",
+      publishedAt: new Date(Date.now() - 86400000).toISOString()
+    }
+  ];
+
   // Transform news for headlines (top 3 with images)
-  const headlines = news.slice(0, 3).map((item: any) => ({
+  const headlines = displayNews.slice(0, 3).map((item: any) => ({
     id: item._id || item.id,
     title: item.title,
     category: item.category,
@@ -92,7 +136,7 @@ export default function Home() {
   }));
 
   // Transform news for main feed
-  const feedItems = news.map((item: any, index: number) => ({
+  const feedItems = displayNews.map((item: any, index: number) => ({
     id: item._id || `news-${index}`,
     title: item.title,
     summary: item.summary || "সংক্ষিপ্ত বিবরণ পাওয়া যায়নি।",
@@ -138,7 +182,7 @@ export default function Home() {
               <Calendar className="w-4 h-4" />
               <span className="text-[13px] font-medium">{currentDate}</span>
             </div>
-            <h1 className="text-display text-foreground font-serif">
+            <h1 className="text-3xl md:text-4xl lg:text-[2.5rem] text-foreground font-serif leading-tight">
               আপনার <span className="text-primary">দৈনিক সারসংক্ষেপ</span>
             </h1>
             <p className="text-body text-muted-foreground mt-2 max-w-lg">

@@ -74,8 +74,8 @@ export default function AIModelsPage() {
                 <div className="w-20 h-20 bg-white dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl flex items-center justify-center shadow-lg group-hover:border-emerald-500 transition-colors z-10 relative">
                   <Play className="w-8 h-8 text-zinc-700 dark:text-zinc-300 group-hover:text-emerald-600 transition-colors" />
                 </div>
-                <span className="mt-4 font-semibold text-sm">Raw Audio Input</span>
-                <span className="text-xs text-zinc-500">Mixed vocals & music</span>
+                <span className="mt-4 font-semibold text-sm text-center">Raw News Video/Audio Input</span>
+                <span className="text-xs text-zinc-500">Mixed news & noise</span>
               </div>
 
               <div className="hidden md:flex flex-1 max-w-[100px] h-0.5 bg-gradient-to-r from-zinc-300 to-emerald-500 dark:from-zinc-700 dark:to-emerald-500 relative">
@@ -123,7 +123,7 @@ export default function AIModelsPage() {
                     <div className="absolute inset-0 bg-emerald-500/20 animate-ping rounded-xl" />
                   </div>
                   <div>
-                    <div className="font-bold text-emerald-600 dark:text-emerald-400">Clean Vocals</div>
+                    <div className="font-bold text-emerald-600 dark:text-emerald-400">Natural Sound</div>
                     <div className="text-xs text-zinc-500">Filtered & isolated</div>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ export default function AIModelsPage() {
               </CardContent>
               <CardFooter>
                 <Button className="w-full gap-2 font-bold bg-emerald-600 hover:bg-emerald-700 text-white">
-                  <Download className="w-4 h-4" /> Download Model Weights
+                  <Download className="w-4 h-4" /> Request Model Access
                 </Button>
               </CardFooter>
             </Card>
