@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Activity, Headphones, Play, Star, ShieldCheck } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-
+import Link from "next/link";
 export default function ProfileDashboard() {
   const { data: session } = useSession();
 
