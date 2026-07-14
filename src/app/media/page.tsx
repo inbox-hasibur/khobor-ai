@@ -62,7 +62,7 @@ export default function MediaPage() {
   };
 
   return (
-    <main className="max-w-[1400px] mx-auto px-3 md:px-6 lg:px-8 pt-4 pb-32 md:pb-48">
+    <main className="max-w-[1400px] mx-auto px-3 md:px-6 lg:px-8 pt-24 md:pt-28 pb-32 md:pb-48">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function MediaPage() {
                     transition={{ duration: 0.2 }}
                   >
                     <div className="w-20 h-20 bg-black/50 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10 pointer-events-auto cursor-pointer" onClick={() => setIsPlaying(!isPlaying)}>
-                      <Play className="w-10 h-10 text-white ml-2" />
+                      <Play className="w-10 h-10 text-white ml-1" />
                     </div>
                   </motion.div>
                 </div>
