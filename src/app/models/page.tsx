@@ -41,7 +41,7 @@ export default function AIModelsPage() {
           </div>
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 flex flex-col md:flex-row items-center justify-center gap-3 text-zinc-900 dark:text-white">
             <Cpu className="w-12 h-12 text-emerald-600 dark:text-emerald-500" />
-            Khobor <span className="text-emerald-600 dark:text-emerald-500">AI Models</span>
+            KahfStudio <span className="text-emerald-600 dark:text-emerald-500">AI Models</span>
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
             Discover the inner workings of our advanced neural networks. Download and integrate our raw AI models, datasets, and native apps for unparalleled audio processing.
@@ -148,7 +148,7 @@ export default function AIModelsPage() {
           
           {/* Raw Model */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full glass hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-4">
                   <Terminal className="w-6 h-6" />
@@ -179,7 +179,7 @@ export default function AIModelsPage() {
 
           {/* Dataset */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full glass hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mb-4">
                   <Database className="w-6 h-6" />
@@ -213,7 +213,7 @@ export default function AIModelsPage() {
 
           {/* Chrome Extension */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full glass hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-2xl flex items-center justify-center mb-4">
                   <Chrome className="w-6 h-6" />
@@ -236,7 +236,7 @@ export default function AIModelsPage() {
 
           {/* Desktop App */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
-            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full glass hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center mb-4">
                   <Monitor className="w-6 h-6" />

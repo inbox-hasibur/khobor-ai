@@ -58,7 +58,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex-1 flex items-center justify-center py-12 pt-36">
-      <Card className="w-full max-w-md bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-slate-200 dark:border-slate-800 rounded-[24px] p-2 shadow-xl">
+      <Card className="w-full max-w-md glass rounded-[24px] p-2 shadow-xl">
         <CardHeader className="text-center pt-6 pb-2">
           <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>Enter your details below to create your account</CardDescription>
