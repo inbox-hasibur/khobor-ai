@@ -188,128 +188,64 @@ export default function Home() {
       
       {/* AI Daily Briefing / Video Podcast Section */}
       <motion.section variants={itemVariants} className="mb-10 md:mb-16">
-        <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden">
+        <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center justify-between relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
           {/* Background Decorative */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
           
-          {/* Left: Simple Audio Trigger */}
-          <div className="w-full md:w-1/3 flex-shrink-0 flex items-center justify-center p-6">
-            <div 
-              className="relative w-24 h-24 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 cursor-pointer hover:scale-105 transition-transform group"
-              onClick={() => {
-                // Trigger the global audio player
-                const audioPlayerTrigger = document.getElementById("global-audio-trigger");
-                if (audioPlayerTrigger) audioPlayerTrigger.click();
-              }}
-            >
-              <Play className="w-10 h-10 text-white ml-2" fill="currentColor" />
-            </div>
-          </div>
-
-          {/* Right: Textual Archive / Content */}
-          <div className="w-full md:w-7/12 flex flex-col justify-center z-10">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider border border-primary/20">
-                আজকের সারসংক্ষেপ
-              </span>
-              <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5" />
-                {currentDate}
-              </span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4 leading-tight">
-              এআই পডকাস্ট: আজকের খবরের সম্পূর্ণ বিশ্লেষণ
-            </h2>
-            <p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
-              আজকের প্রধান খবরগুলোতে থাকছে স্মার্ট সিটি প্রকল্পের নতুন উদ্যোগ, বিশ্ব অর্থনীতিতে মুদ্রাস্ফীতির প্রভাব এবং প্রযুক্তিতে এআই এর নতুন দিগন্ত। ভিডিওটি প্লে করে পুরো ব্রিফিং শুনুন অথবা নিচে স্ক্রল করে বিস্তারিত পড়ুন।
-            </p>
-            
-            {/* Scraped News Archive */}
-            <div className="space-y-4 mt-6">
-              <h4 className="text-lg font-serif font-bold text-foreground mb-4 border-b border-border pb-2 flex items-center justify-between">
-                <span>আজকের সংগৃহীত খবর (আর্কাইভ)</span>
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-sans">৩টি খবর</span>
-              </h4>
-              {[
-                { 
-                  time: "09:00 AM", 
-                  source: "প্রথম আলো",
-                  title: "স্মার্ট সিটি প্রকল্প: যানজট নিরসনে নতুন উদ্যোগ",
-                  summary: "রাজধানীর যানজট নিরসনে সরকার নতুন 'স্মার্ট ট্রাফিক ম্যানেজমেন্ট' সিস্টেম চালু করেছে, যা এআই ব্যবহার করে সিগন্যাল নিয়ন্ত্রণ করবে।"
-                },
-                { 
-                  time: "11:30 AM", 
-                  source: "ডেইলি স্টার",
-                  title: "বিশ্ব অর্থনীতি: মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন পলিসি",
-                  summary: "কেন্দ্রীয় ব্যাংক মুদ্রাস্ফীতি নিয়ন্ত্রণে সুদের হার আরও ০.৫% বাড়ানোর সিদ্ধান্ত নিয়েছে, যা আগামী মাস থেকে কার্যকর হবে।"
-                },
-                { 
-                  time: "02:15 PM", 
-                  source: "ইত্তেফাক",
-                  title: "প্রযুক্তির বিশ্ব: এআই কীভাবে আমাদের ভবিষ্যৎ বদলাচ্ছে",
-                  summary: "কৃত্রিম বুদ্ধিমত্তার নতুন মডেলগুলো স্বাস্থ্যসেবা থেকে শুরু করে শিক্ষা খাতে যুগান্তকারী পরিবর্তন আনছে বলে জানিয়েছেন বিশেষজ্ঞরা।"
-                }
-              ].map((news, i) => (
-                <div key={i} className="flex flex-col gap-3 p-4 rounded-xl bg-card border border-border/60 hover:border-primary/50 transition-colors shadow-sm">
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded">{news.source}</span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Calendar className="w-3 h-3" /> {news.time}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h5 className="font-semibold text-foreground text-[15px] mb-1.5 leading-snug">{news.title}</h5>
-                    <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{news.summary}</p>
-                  </div>
-                  
-                  <div className="flex items-center gap-3 mt-1 pt-3 border-t border-border/40">
-                    <button className="flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors bg-secondary px-3 py-1.5 rounded-full" onClick={() => {
-                        const audioPlayerTrigger = document.getElementById("global-audio-trigger");
-                        if (audioPlayerTrigger) audioPlayerTrigger.click();
-                      }}>
-                      <Play className="w-3.5 h-3.5" />
-                      শুনুন
-                    </button>
-                    <Link href={`/news/${i}`} className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors px-2 py-1.5 rounded-full">
-                      <FileText className="w-3.5 h-3.5" />
-                      পড়ুন
-                    </Link>
-                  </div>
+          <div className="flex-1 z-10 flex flex-col md:flex-row items-center gap-6">
+             <div 
+                className="relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 cursor-pointer hover:scale-105 transition-transform group"
+                onClick={() => {
+                  const audioPlayerTrigger = document.getElementById("global-audio-trigger");
+                  if (audioPlayerTrigger) audioPlayerTrigger.click();
+                }}
+              >
+                <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" />
+              </div>
+              
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/20">
+                    আজকের সারসংক্ষেপ
+                  </span>
+                  <span className="text-[10px] text-muted-foreground font-medium flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {currentDate}
+                  </span>
                 </div>
-              ))}
-            </div>
+                <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground mb-2 leading-tight">
+                  এআই পডকাস্ট: আজকের খবরের সম্পূর্ণ বিশ্লেষণ
+                </h2>
+                <p className="text-muted-foreground text-sm max-w-2xl">
+                  আজকের প্রধান খবরগুলোতে থাকছে স্মার্ট সিটি প্রকল্পের নতুন উদ্যোগ, বিশ্ব অর্থনীতিতে মুদ্রাস্ফীতির প্রভাব এবং প্রযুক্তিতে এআই এর নতুন দিগন্ত।
+                </p>
+              </div>
+          </div>
+          
+          <div className="flex-shrink-0 z-10 mt-4 md:mt-0">
+             <Link href="/news/daily-summary" className="px-6 py-3 bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:text-foreground font-semibold text-sm rounded-xl transition-all shadow-sm flex items-center gap-2 border border-border">
+               <FileText className="w-4 h-4" />
+               পড়ুন
+             </Link>
           </div>
         </div>
       </motion.section>
 
-      {/* 1. HERO SECTION - Headlines */}
-      <motion.section variants={itemVariants} className="mb-10 md:mb-16">
-        <HeadlineSlider headlines={headlines} />
-      </motion.section>
-
-      {/* 2. MAIN CONTENT: 2-Column Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      {/* 1. HERO SECTION & SIDEBAR */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-10 md:mb-16">
+        <motion.section variants={itemVariants} className="lg:col-span-8">
+          <HeadlineSlider headlines={headlines} />
+        </motion.section>
         
-        {/* Section 2.1: Left Column (Main Feed - 8 Cols) */}
-        <motion.div 
-          className="lg:col-span-8"
-          variants={itemVariants}
-        >
-          <MainFeed newsItems={feedItems} />
-        </motion.div>
-
-        {/* Section 2.2: Right Column (Live Feed - 4 Cols) */}
-        <motion.div 
-          className="lg:col-span-4"
-          variants={itemVariants}
-        >
+        <motion.div variants={itemVariants} className="lg:col-span-4">
           <LiveFeedSidebar updates={LIVE_UPDATES} />
         </motion.div>
-
       </div>
+
+      {/* 2. MAIN CONTENT: ALL NEWS GRID */}
+      <motion.div variants={itemVariants} className="w-full">
+        <MainFeed newsItems={feedItems} />
+      </motion.div>
 
       {/* 3. FLOATING AUDIO PLAYER */}
       <AudioPlayer storiesCount={totalStories || 7} newsItems={feedItems} />

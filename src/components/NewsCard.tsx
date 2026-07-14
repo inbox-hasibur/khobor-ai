@@ -41,10 +41,10 @@ const NewsCard = ({ news, isSaved = false, onToggleSave }: NewsCardProps) => {
       {/* Animated Gradient Border on Hover */}
       <div className="absolute -inset-[1px] bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-[28px] opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm" />
       
-      <Card className="relative bg-card border-border group-hover:border-primary/20 rounded-[28px] overflow-hidden flex flex-col md:flex-row p-4 md:p-5 gap-5 md:gap-6 transition-all duration-500 shadow-sm hover:shadow-xl hover:shadow-primary/5">
+      <Card className="relative bg-card border-border group-hover:border-primary/20 rounded-[28px] overflow-hidden flex flex-col p-4 md:p-5 gap-5 md:gap-6 transition-all duration-500 shadow-sm hover:shadow-xl hover:shadow-primary/5 h-full">
         
         {/* Image Section - Golden ratio sizing */}
-        <div className="relative w-full md:w-[240px] lg:w-[280px] h-[200px] md:h-[180px] lg:h-[200px] shrink-0 overflow-hidden rounded-[20px]">
+        <div className="relative w-full h-[180px] lg:h-[200px] shrink-0 overflow-hidden rounded-[20px]">
           <Link href={`/news/${news.id}`}>
             <motion.img 
               src={news.imageUrl} 

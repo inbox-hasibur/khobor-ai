@@ -46,7 +46,7 @@ const MainFeed = ({ newsItems }: MainFeedProps) => {
 
   return (
     <motion.div 
-      className="lg:col-span-8 space-y-8"
+      className="w-full space-y-8"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -65,7 +65,7 @@ const MainFeed = ({ newsItems }: MainFeedProps) => {
               <Sparkles className="w-5 h-5 text-primary opacity-50" />
             </div>
           </div>
-          <h2 className="text-headline text-foreground font-serif">দৈনিক সারসংক্ষেপ</h2>
+          <h2 className="text-headline text-foreground font-serif">সব খবর</h2>
         </div>
         
         {/* Category Navigation - Improved visual hierarchy */}
@@ -102,7 +102,7 @@ const MainFeed = ({ newsItems }: MainFeedProps) => {
       <AnimatePresence mode="wait">
         <motion.div 
           key={activeCategory}
-          className="grid gap-6 md:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
           initial="hidden"
           animate="visible"
           exit="hidden"

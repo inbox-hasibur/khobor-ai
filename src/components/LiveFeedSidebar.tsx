@@ -136,7 +136,7 @@ const LiveFeedSidebar = ({ updates }: LiveFeedSidebarProps) => {
         {/* View All Button - Enhanced with hover effect */}
         <Link href="/alerts" className="block">
           <motion.div 
-            className="w-full mt-8 py-4 bg-secondary hover:bg-secondary/80 rounded-2xl text-caption text-secondary-foreground transition-all border border-border group flex items-center justify-center gap-2 font-serif"
+            className="w-full mt-8 py-4 bg-white hover:bg-zinc-100 rounded-2xl text-caption text-zinc-900 transition-all border border-border group flex items-center justify-center gap-2 font-serif font-bold shadow-sm"
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
           >
