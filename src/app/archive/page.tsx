@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-  Archive as ArchiveIcon, ArrowLeft, Clock, Search, Calendar, Filter
-} from "lucide-react";
+import { Archive as ArchiveIcon, ArrowLeft, Clock, Search, Calendar, Filter } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 
 const MOCK_ARCHIVE = [
