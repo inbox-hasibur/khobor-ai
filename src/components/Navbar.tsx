@@ -83,7 +83,7 @@ const Navbar = () => {
             {/* Logo Section */}
             <Link href="/" className="flex items-center gap-2 pl-2 md:pl-4 pr-3 md:pr-6 border-r border-border">
               <motion.div 
-                className="w-8 h-8 bg-gradient-to-br from-primary to-purple-600 rounded-xl flex items-center justify-center shadow-lg"
+                className="w-8 h-8 bg-gradient-to-br from-primary to-primary/60 rounded-xl flex items-center justify-center shadow-lg"
                 whileHover={{ scale: 1.05, rotate: 3 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}

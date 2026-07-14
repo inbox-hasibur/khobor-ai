@@ -520,7 +520,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
           >
-            <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/10 via-purple-500/10 to-primary/10 backdrop-blur border border-primary/10 text-[10px] text-muted-foreground flex items-center gap-2">
+            <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/10 via-primary/10 to-primary/10 backdrop-blur border border-primary/10 text-[10px] text-muted-foreground flex items-center gap-2">
               <Sparkles className="w-3 h-3 text-primary" />
               <span className="font-medium text-primary">AI Curated</span>
               <span className="w-px h-3 bg-border" />
@@ -695,7 +695,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                           <div key={i} className="flex flex-col items-center gap-1">
                             <span className="text-[9px] text-muted-foreground font-mono">{value > 0 ? `+${value}` : value}</span>
                             <motion.div 
-                              className="w-8 md:w-10 rounded-full bg-gradient-to-t from-primary to-purple-500"
+                              className="w-8 md:w-10 rounded-full bg-gradient-to-t from-primary to-primary/500"
                               animate={{ height: `${Math.max(8, heightPercent)}%` }}
                               transition={{ type: "spring", stiffness: 100, damping: 15 }}
                             />
@@ -775,7 +775,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                   <h3 className="text-base font-bold text-foreground mb-2">About This Track</h3>
                   <div className="bg-muted/50 rounded-2xl p-5 border border-border/50">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/30 to-purple-600/30 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/30 to-primary/600/30 flex items-center justify-center">
                         <Sparkles className="w-6 h-6 text-primary" />
                       </div>
                       <div>
@@ -812,14 +812,14 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                   <div className="relative w-full max-w-[240px] mx-auto mb-6 flex flex-col items-center gap-6">
                     {/* Robot Avatar */}
                     <motion.div
-                      className="w-32 h-32 rounded-[2rem] bg-gradient-to-br from-primary/10 to-purple-600/10 border border-primary/20 flex items-center justify-center shadow-[0_0_40px_rgba(59,130,246,0.15)]"
+                      className="w-32 h-32 rounded-[2rem] bg-gradient-to-br from-primary/10 to-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_15px_var(--glow-primary)]"
                       animate={isPlaying ? { y: [0, -8, 0] } : {}}
                       transition={isPlaying ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : {}}
                     >
                       <motion.div
-                        className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg relative overflow-hidden"
+                        className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg relative overflow-hidden"
                         animate={isPlaying ? { 
-                          boxShadow: ["0 0 15px rgba(59,130,246,0.4)", "0 0 35px rgba(147,51,234,0.6)", "0 0 15px rgba(59,130,246,0.4)"]
+                          boxShadow: ["0 0 15px rgba(16,185,129,0.4)", "0 0 35px rgba(16,185,129,0.6)", "0 0 15px rgba(16,185,129,0.4)"]
                         } : {}}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
@@ -875,7 +875,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                       {isShuffled && <span className="text-[9px] text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded-full">🔀 Shuffled</span>}
                       {repeatMode === "one" && <span className="text-[9px] text-amber-500 font-semibold bg-amber-500/10 px-2 py-0.5 rounded-full">🔂 One</span>}
                       {repeatMode === "all" && <span className="text-[9px] text-emerald-500 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full">🔁 All</span>}
-                      {sleepTimer !== "off" && <span className="text-[9px] text-purple-500 font-semibold bg-purple-500/10 px-2 py-0.5 rounded-full">⏰ {formatTime(sleepTimerRemaining)}</span>}
+                      {sleepTimer !== "off" && <span className="text-[9px] text-primary font-semibold border border-primary/50 px-2 py-0.5 rounded-full">⏰ {formatTime(sleepTimerRemaining)}</span>}
                       {playbackRate !== 1 && <span className="text-[9px] text-cyan-500 font-semibold bg-cyan-500/10 px-2 py-0.5 rounded-full">{playbackRate}x</span>}
                       {equalizerPreset !== "flat" && <span className="text-[9px] text-green-500 font-semibold bg-green-500/10 px-2 py-0.5 rounded-full">🎛️ {equalizerPreset}</span>}
                     </div>
@@ -969,7 +969,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                     <motion.button
                       onClick={togglePlay}
                       disabled={!isLoaded || hasError}
-                      className="w-16 h-16 bg-gradient-to-br from-primary to-purple-600 text-primary-foreground rounded-full flex items-center justify-center shadow-xl shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-16 h-16 bg-gradient-to-br from-primary to-primary/600 text-primary-foreground rounded-full flex items-center justify-center shadow-xl shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
                       whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(59, 130, 246, 0.4)" }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -1066,7 +1066,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                       <motion.button
                         onClick={() => setShowSleepMenu(s => !s)}
                         className={`p-2 rounded-full transition-colors ${
-                          sleepTimer !== "off" ? "text-purple-500 bg-purple-500/10" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          sleepTimer !== "off" ? "text-primary/500 bg-primary/500/10" : "text-muted-foreground hover:text-foreground hover:bg-muted"
                         }`}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
@@ -1095,7 +1095,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                               </button>
                             ))}
                             {sleepTimerRemaining > 0 && (
-                              <p className="text-[10px] text-purple-500 px-2 pt-1">{formatTime(sleepTimerRemaining)} remaining</p>
+                              <p className="text-[10px] text-primary/500 px-2 pt-1">{formatTime(sleepTimerRemaining)} remaining</p>
                             )}
                           </motion.div>
                         )}
@@ -1177,7 +1177,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
           <div className="absolute top-0 left-4 right-4 h-[3px] bg-muted rounded-full overflow-hidden">
             <div className="absolute inset-y-0 left-0 bg-muted-foreground/10 rounded-full" style={{ width: `${bufferedPercent}%` }} />
             <motion.div 
-              className="h-full bg-gradient-to-r from-primary to-purple-500 rounded-full relative"
+              className="h-full bg-gradient-to-r from-primary to-primary/500 rounded-full relative"
               style={{ width: `${progressPercent}%` }}
             >
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full shadow-lg shadow-primary/50 animate-pulse" />
@@ -1193,7 +1193,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
               whileTap={{ scale: 0.95 }}
             >
               <motion.div
-                className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center"
+                className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-primary/600 flex items-center justify-center"
                 animate={isPlaying ? { rotate: 360 } : {}}
                 transition={isPlaying ? { duration: 6, repeat: Infinity, ease: "linear" } : {}}
               >
@@ -1254,7 +1254,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
               <motion.button 
                 onClick={togglePlay}
                 disabled={!isLoaded || hasError}
-                className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary to-purple-600 text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/20 flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary to-primary/600 text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/20 flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
               >

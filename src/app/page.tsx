@@ -152,9 +152,9 @@ export default function Home() {
             <div className="flex items-center gap-3">
               {/* Premium CTA */}
               <Link href="/pricing" className="group hidden sm:block">
-                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500/10 to-orange-600/10 hover:from-amber-500/20 hover:to-orange-600/20 rounded-full border border-amber-500/20 shadow-sm transition-all cursor-pointer">
-                  <Sparkles className="w-4 h-4 text-amber-500" />
-                  <span className="text-[12px] font-bold text-amber-500 group-hover:text-amber-400 transition-colors">
+                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/20 hover:from-primary/20 hover:to-primary/30 rounded-full border border-primary/20 shadow-sm transition-all cursor-pointer">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-[12px] font-bold text-primary group-hover:text-primary/80 transition-colors">
                     Upgrade to premium for personalized news
                   </span>
                 </div>
@@ -162,8 +162,8 @@ export default function Home() {
               
               {/* Weather widget */}
               {weather && (
-                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full border border-blue-500/20 shadow-sm">
-                  <CloudSun className="w-5 h-5 text-blue-500" />
+                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full border border-primary/20 shadow-sm">
+                  <CloudSun className="w-5 h-5 text-primary" />
                   <div className="flex flex-col">
                     <span className="text-[14px] font-bold text-foreground leading-none">{weather.temp}°C</span>
                     <span className="text-[10px] font-medium text-muted-foreground capitalize">{weather.description}</span>
@@ -178,7 +178,7 @@ export default function Home() {
                 <span className="text-[12px] font-semibold">লাইভ আপডেট</span>
               </div>
               <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
-                <TrendingUp className="w-4 h-4 text-emerald-500" />
+                <TrendingUp className="w-4 h-4 text-primary" />
                 <span className="text-[12px] font-semibold">ট্রেন্ডিং</span>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function Home() {
           {/* Left: Simple Audio Trigger */}
           <div className="w-full md:w-1/3 flex-shrink-0 flex items-center justify-center p-6">
             <div 
-              className="relative w-32 h-32 rounded-full border-4 border-primary/30 bg-background flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)] cursor-pointer hover:scale-105 transition-transform group"
+              className="relative w-32 h-32 rounded-full border-4 border-primary/30 bg-background flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.3)] cursor-pointer hover:scale-105 transition-transform group"
               onClick={() => {
                 // Trigger the global audio player
                 const audioPlayerTrigger = document.getElementById("global-audio-trigger");

@@ -55,17 +55,17 @@ const LiveFeedSidebar = ({ updates }: LiveFeedSidebarProps) => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
             <motion.div 
-              className="relative w-10 h-10 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20"
+              className="relative w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20"
               animate={{ 
                 boxShadow: [
-                  "0 0 0 0 rgba(245, 158, 11, 0.4)",
-                  "0 0 20px 5px rgba(245, 158, 11, 0.2)",
-                  "0 0 0 0 rgba(245, 158, 11, 0.4)"
+                  "0 0 0 0 var(--glow-primary)",
+                  "0 0 20px 5px var(--glow-secondary)",
+                  "0 0 0 0 var(--glow-primary)"
                 ]
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Zap className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <Zap className="w-5 h-5 text-primary fill-primary" />
             </motion.div>
             <div>
               <h2 className="text-caption text-foreground font-bold font-serif">লাইভ আপডেট</h2>
@@ -73,7 +73,7 @@ const LiveFeedSidebar = ({ updates }: LiveFeedSidebarProps) => {
             </div>
           </div>
           <motion.div 
-            className="w-2 h-2 rounded-full bg-red-500"
+            className="w-2 h-2 rounded-full bg-primary"
             animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           />
