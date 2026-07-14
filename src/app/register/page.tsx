@@ -58,8 +58,8 @@ export default function RegisterPage() {
 
   return (
     <div className="flex-1 flex items-center justify-center py-12 pt-36">
-      <Card className="w-full max-w-md bg-card border-border rounded-[24px] p-2">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-md bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-[24px] p-2 shadow-xl">
+        <CardHeader className="text-center pt-6 pb-2">
           <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>Enter your details below to create your account</CardDescription>
         </CardHeader>
@@ -88,7 +88,7 @@ export default function RegisterPage() {
             
             {error && <p className="text-sm text-red-500 text-center font-medium">{error}</p>}
             
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 rounded-xl font-bold text-[15px] mt-2" type="submit" disabled={isSubmitting}>
+            <Button className="w-full bg-white text-zinc-900 border border-zinc-200 dark:border-transparent hover:bg-zinc-100 h-12 rounded-xl font-bold text-[15px] mt-2 shadow-sm" type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Creating account..." : "Sign up"}
             </Button>
           </form>
