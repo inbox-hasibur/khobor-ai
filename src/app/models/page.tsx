@@ -148,7 +148,7 @@ export default function AIModelsPage() {
           
           {/* Raw Model */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <Card className="h-full bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-4">
                   <Terminal className="w-6 h-6" />
@@ -179,13 +179,13 @@ export default function AIModelsPage() {
 
           {/* Dataset */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-            <Card className="h-full bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mb-4">
                   <Database className="w-6 h-6" />
                 </div>
                 <CardTitle className="text-2xl text-zinc-900 dark:text-white">Training Dataset</CardTitle>
-                <CardDescription className="text-zinc-500">Open-source dataset used to train the Khobor AI models.</CardDescription>
+                <CardDescription className="text-zinc-500">Open-source dataset used to train the KahfStudio AI models.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
@@ -213,7 +213,7 @@ export default function AIModelsPage() {
 
           {/* Chrome Extension */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-            <Card className="h-full bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-2xl flex items-center justify-center mb-4">
                   <Chrome className="w-6 h-6" />
@@ -236,7 +236,7 @@ export default function AIModelsPage() {
 
           {/* Desktop App */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
-            <Card className="h-full bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
+            <Card className="h-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md">
               <CardHeader>
                 <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center mb-4">
                   <Monitor className="w-6 h-6" />

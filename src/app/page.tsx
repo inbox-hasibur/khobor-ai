@@ -9,7 +9,7 @@ import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 import AudioPlayer from "@/components/AudioPlayer";
 import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import { useNews, useWeather } from "@/hooks/useNews";
-import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun, Play } from "lucide-react";
+import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun, Play, FileText } from "lucide-react";
 
 const LIVE_UPDATES = [
   {
@@ -225,20 +225,60 @@ export default function Home() {
               আজকের প্রধান খবরগুলোতে থাকছে স্মার্ট সিটি প্রকল্পের নতুন উদ্যোগ, বিশ্ব অর্থনীতিতে মুদ্রাস্ফীতির প্রভাব এবং প্রযুক্তিতে এআই এর নতুন দিগন্ত। ভিডিওটি প্লে করে পুরো ব্রিফিং শুনুন অথবা নিচে স্ক্রল করে বিস্তারিত পড়ুন।
             </p>
             
-            {/* Scraped News Demo / Highlights */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-primary" />
-                গুরুত্বপূর্ণ পয়েন্টসমূহ:
+            {/* Scraped News Archive */}
+            <div className="space-y-4 mt-6">
+              <h4 className="text-lg font-serif font-bold text-foreground mb-4 border-b border-border pb-2 flex items-center justify-between">
+                <span>আজকের সংগৃহীত খবর (আর্কাইভ)</span>
+                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-sans">৩টি খবর</span>
               </h4>
               {[
-                { time: "09:00 AM", title: "স্মার্ট সিটি প্রকল্প: যানজট নিরসনে নতুন উদ্যোগ" },
-                { time: "11:30 AM", title: "বিশ্ব অর্থনীতি: মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন পলিসি" },
-                { time: "02:15 PM", title: "প্রযুক্তির বিশ্ব: এআই কীভাবে আমাদের ভবিষ্যৎ বদলাচ্ছে" }
+                { 
+                  time: "09:00 AM", 
+                  source: "প্রথম আলো",
+                  title: "স্মার্ট সিটি প্রকল্প: যানজট নিরসনে নতুন উদ্যোগ",
+                  summary: "রাজধানীর যানজট নিরসনে সরকার নতুন 'স্মার্ট ট্রাফিক ম্যানেজমেন্ট' সিস্টেম চালু করেছে, যা এআই ব্যবহার করে সিগন্যাল নিয়ন্ত্রণ করবে।"
+                },
+                { 
+                  time: "11:30 AM", 
+                  source: "ডেইলি স্টার",
+                  title: "বিশ্ব অর্থনীতি: মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন পলিসি",
+                  summary: "কেন্দ্রীয় ব্যাংক মুদ্রাস্ফীতি নিয়ন্ত্রণে সুদের হার আরও ০.৫% বাড়ানোর সিদ্ধান্ত নিয়েছে, যা আগামী মাস থেকে কার্যকর হবে।"
+                },
+                { 
+                  time: "02:15 PM", 
+                  source: "ইত্তেফাক",
+                  title: "প্রযুক্তির বিশ্ব: এআই কীভাবে আমাদের ভবিষ্যৎ বদলাচ্ছে",
+                  summary: "কৃত্রিম বুদ্ধিমত্তার নতুন মডেলগুলো স্বাস্থ্যসেবা থেকে শুরু করে শিক্ষা খাতে যুগান্তকারী পরিবর্তন আনছে বলে জানিয়েছেন বিশেষজ্ঞরা।"
+                }
               ].map((news, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-background/50 hover:bg-background border border-border/50 hover:border-border transition-colors cursor-pointer">
-                  <span className="text-xs font-mono text-muted-foreground w-16 flex-shrink-0">{news.time}</span>
-                  <p className="text-sm font-medium text-foreground line-clamp-1">{news.title}</p>
+                <div key={i} className="flex flex-col gap-3 p-4 rounded-xl bg-card border border-border/60 hover:border-primary/50 transition-colors shadow-sm">
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded">{news.source}</span>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Calendar className="w-3 h-3" /> {news.time}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-semibold text-foreground text-[15px] mb-1.5 leading-snug">{news.title}</h5>
+                    <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{news.summary}</p>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 mt-1 pt-3 border-t border-border/40">
+                    <button className="flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors bg-secondary px-3 py-1.5 rounded-full" onClick={() => {
+                        const audioPlayerTrigger = document.getElementById("global-audio-trigger");
+                        if (audioPlayerTrigger) audioPlayerTrigger.click();
+                      }}>
+                      <Play className="w-3.5 h-3.5" />
+                      শুনুন
+                    </button>
+                    <Link href={`/news/${i}`} className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors px-2 py-1.5 rounded-full">
+                      <FileText className="w-3.5 h-3.5" />
+                      পড়ুন
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
