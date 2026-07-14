@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Khobor AI",
-  description: "Privacy Policy for Khobor AI",
+  title: "Privacy Policy | KahfNews",
+  description: "Privacy Policy for KahfNews",
 };
 
 export default function PrivacyPage() {
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
 
       <div className="glass-strong rounded-2xl p-6 md:p-8 space-y-8">
         <p className="text-muted-foreground leading-relaxed text-lg">
-          আপনার গোপনীয়তা আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ। "খবর এআই" (Khobor AI) পোর্টালে আপনার তথ্য
+          আপনার গোপনীয়তা আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ। "খবর এআই" (KahfNews) পোর্টালে আপনার তথ্য
           কীভাবে সংগ্রহ ও ব্যবহার করা হয়, তা এই নীতিমালায় বর্ণনা করা হলো।
         </p>
 

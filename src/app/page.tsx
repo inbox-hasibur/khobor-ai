@@ -96,7 +96,7 @@ export default function Home() {
     id: item._id || `news-${index}`,
     title: item.title,
     summary: item.summary || "সংক্ষিপ্ত বিবরণ পাওয়া যায়নি।",
-    source: item.source || "Khobor AI",
+    source: item.source || "KahfNews",
     category: item.category || "General",
     priority: item.priority || "medium" as const,
     publishedAt: item.publishedAt 

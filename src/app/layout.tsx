@@ -18,7 +18,7 @@ const notoSerif = Noto_Serif_Bengali({
 });
 
 export const metadata: Metadata = {
-  title: "Khobor AI | খবর এআই",
+  title: "KahfNews | খবর এআই",
   description: "AI-powered personalized news briefing for Bangladesh",
 };
 

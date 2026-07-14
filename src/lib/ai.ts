@@ -12,7 +12,7 @@ export async function summarizeNews(title: string, content: string) {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
     const prompt = `
-      You are an expert news editor for "Khobor AI". 
+      You are an expert news editor for "KahfNews". 
       Summarize the following news article into a concise, engaging, and conversational summary in Bangla.
       The summary should be suitable for an audio briefing and should be between 60-90 words.
       
@@ -60,7 +60,7 @@ export async function summarizeWithGemini(
 "${introText || 'আসসালামু আলাইকুম! আজকের গুরুত্বপূর্ণ সংবাদগুলো শুনুন।'}"
 
 তারপর প্রতিটি সংবাদ সংক্ষেপ করো। প্রতিটির মাঝে বলো "এবার পরবর্তী সংবাদ।"
-শেষে বলো "আজকের সংবাদ এখানেই শেষ। ধন্যবাদ Khobor AI শোনার জন্য।"
+শেষে বলো "আজকের সংবাদ এখানেই শেষ। ধন্যবাদ KahfNews শোনার জন্য।"
 
 সংবাদসমূহ:
 ${articlesText}
@@ -79,7 +79,7 @@ ${articlesText}
     return articles.map((article, index) => ({
       title: article.title,
       summary: index === 0 ? script : article.summary,
-      source: article.source || 'Khobor AI',
+      source: article.source || 'KahfNews',
       category: article.category || 'general',
       priority: index === 0 ? 'high' : 'medium',
       audioUrl: null,

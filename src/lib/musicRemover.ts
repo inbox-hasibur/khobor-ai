@@ -29,7 +29,7 @@ export async function removeMusic(audioBuffer: ArrayBuffer): Promise<ArrayBuffer
   // Try UVR model first (smaller, faster)
   try {
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/KahfStudio/uvr-mdx-net-inst-hq-3",
+      "https://api-inference.huggingface.co/models/KahfNews/uvr-mdx-net-inst-hq-3",
       {
         method: "POST",
         headers: {
@@ -75,12 +75,12 @@ export async function removeMusic(audioBuffer: ArrayBuffer): Promise<ArrayBuffer
  * MDX Model URLs for HuggingFace deployment
  * 
  * UVR-MDX-NET-Inst_HQ_3:
- *   - Source: https://huggingface.co/KahfStudio/uvr-mdx-net-inst-hq-3
+ *   - Source: https://huggingface.co/KahfNews/uvr-mdx-net-inst-hq-3
  *   - Size: ~80MB
  *   - Best for: General music removal
  * 
  * MDX23C-8KFFT-InstVoc_HQ:
- *   - Source: https://huggingface.co/KahfStudio/mdx23c-8kfft-instvoc-hq
+ *   - Source: https://huggingface.co/KahfNews/mdx23c-8kfft-instvoc-hq
  *   - Size: ~150MB
  *   - Best for: High quality vocal extraction
  * 

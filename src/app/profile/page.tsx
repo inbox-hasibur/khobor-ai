@@ -78,7 +78,7 @@ export default function ProfileDashboard() {
       <Card className="bg-card/50 backdrop-blur-sm border-border">
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
-          <CardDescription>Your latest interactions with KahfStudio.</CardDescription>
+          <CardDescription>Your latest interactions with KahfNews.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">

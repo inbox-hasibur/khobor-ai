@@ -160,7 +160,7 @@ export default function MediaPage() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <CardTitle className="text-2xl">{currentVideo.title}</CardTitle>
-                  <CardDescription className="mt-1">Khobor AI Studio • {currentVideo.category}</CardDescription>
+                  <CardDescription className="mt-1">KahfNews Studio • {currentVideo.category}</CardDescription>
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" onClick={handlePrev}><SkipBack className="w-4 h-4 mr-2" /> Prev</Button>

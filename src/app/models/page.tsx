@@ -41,7 +41,7 @@ export default function AIModelsPage() {
           </div>
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 flex flex-col md:flex-row items-center justify-center gap-3 text-zinc-900 dark:text-white">
             <Cpu className="w-12 h-12 text-emerald-600 dark:text-emerald-500" />
-            KahfStudio <span className="text-emerald-600 dark:text-emerald-500">AI Models</span>
+            KahfNews <span className="text-emerald-600 dark:text-emerald-500">AI Models</span>
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
             Discover the inner workings of our advanced neural networks. Download and integrate our raw AI models, datasets, and native apps for unparalleled audio processing.
@@ -185,7 +185,7 @@ export default function AIModelsPage() {
                   <Database className="w-6 h-6" />
                 </div>
                 <CardTitle className="text-2xl text-zinc-900 dark:text-white">Training Dataset</CardTitle>
-                <CardDescription className="text-zinc-500">Open-source dataset used to train the KahfStudio AI models.</CardDescription>
+                <CardDescription className="text-zinc-500">Open-source dataset used to train the KahfNews AI models.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">

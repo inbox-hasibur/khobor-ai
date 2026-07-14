@@ -61,7 +61,7 @@ const DEFAULT_PLAYLIST = [
   {
     id: 1,
     title: "AI News Briefing",
-    artist: "Khobor AI",
+    artist: "KahfNews",
     src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     duration: 372,
     category: "Technology",
@@ -162,7 +162,7 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
       return newsItems.map((item: any, i: number) => ({
         id: item.id || `news-${i}`,
         title: item.title,
-        artist: item.source || "Khobor AI",
+        artist: item.source || "KahfNews",
         src: `/api/audio/tts?text=${encodeURIComponent(item.summary || item.title)}`,
         duration: 30, // TTS audio duration placeholder
         category: item.category || "News",
@@ -233,12 +233,12 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
 
   // === LOAD FAVORITES ===
   useEffect(() => {
-    const saved = localStorage.getItem("khobor-favorites");
+    const saved = localStorage.getItem("kahfnews-favorites");
     if (saved) setFavoriteTracks(JSON.parse(saved));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("khobor-favorites", JSON.stringify(favoriteTracks));
+    localStorage.setItem("kahfnews-favorites", JSON.stringify(favoriteTracks));
   }, [favoriteTracks]);
 
   // === TRACK INDEX HELPERS ===
@@ -355,12 +355,12 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
 
   // === VOLUME PERSISTENCE ===
   useEffect(() => {
-    const saved = localStorage.getItem("khobor-audio-volume");
+    const saved = localStorage.getItem("kahfnews-audio-volume");
     if (saved) setVolume(parseFloat(saved));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("khobor-audio-volume", volume.toString());
+    localStorage.setItem("kahfnews-audio-volume", volume.toString());
   }, [volume]);
 
   // === CLICK OUTSIDE ===
