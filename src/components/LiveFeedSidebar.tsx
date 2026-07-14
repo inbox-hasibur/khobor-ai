@@ -43,47 +43,7 @@ const itemVariants = {
 const LiveFeedSidebar = ({ updates }: LiveFeedSidebarProps) => {
   return (
     <aside className="lg:col-span-4 flex flex-col gap-8">
-      {/* Radio & Live TV Section */}
-      <motion.div 
-        className="glass rounded-[32px] p-6 md:p-8 shadow-sm border border-border"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
-              <Zap className="w-5 h-5 text-red-500 fill-red-500" />
-            </div>
-            <div>
-              <h2 className="text-caption text-foreground font-bold font-serif">রেডিও এবং লাইভ টিভি</h2>
-              <p className="text-[10px] text-muted-foreground">সরাসরি সম্প্রচার</p>
-            </div>
-          </div>
-          <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse-glow" />
-        </div>
-        
-        <div className="flex flex-col gap-3">
-          <button className="w-full flex items-center justify-between bg-secondary/50 hover:bg-secondary p-4 rounded-2xl transition-colors border border-border/50 group">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="text-primary font-bold text-xs">📻</span>
-              </div>
-              <span className="font-semibold text-sm group-hover:text-primary transition-colors">খবর শুনবি রেডিও</span>
-            </div>
-            <span className="text-xs bg-red-500/20 text-red-500 px-2 py-1 rounded-full font-bold">লাইভ</span>
-          </button>
-          <button className="w-full flex items-center justify-between bg-secondary/50 hover:bg-secondary p-4 rounded-2xl transition-colors border border-border/50 group">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                <span className="text-blue-500 font-bold text-xs">📺</span>
-              </div>
-              <span className="font-semibold text-sm group-hover:text-blue-500 transition-colors">লাইভ নিউজ টিভি</span>
-            </div>
-            <span className="text-xs bg-red-500/20 text-red-500 px-2 py-1 rounded-full font-bold">লাইভ</span>
-          </button>
-        </div>
-      </motion.div>
+
 
       <motion.div 
         className="sticky top-24 glass rounded-[32px] p-6 md:p-8 shadow-sm border border-border"

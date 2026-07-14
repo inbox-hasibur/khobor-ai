@@ -26,13 +26,7 @@ const LinuxIcon = () => (
 
 export default function AIModelsPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-32 pt-28 md:pt-36">
-      {/* Green & White Theme Accents */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] -mr-40 -mt-40" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-400/10 rounded-full blur-[100px] -ml-40 -mb-40" />
-      </div>
-
+    <main className="min-h-screen bg-background text-foreground pb-32 pt-28 md:pt-36">
       <div className="max-w-[1200px] mx-auto px-4 md:px-8 relative z-10">
         
         {/* Hero Section */}

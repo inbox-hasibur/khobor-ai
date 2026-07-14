@@ -14,24 +14,24 @@ import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun, Pl
 const LIVE_UPDATES = [
   {
     id: "l1",
-    title: "Shahbag Intersection Blocked",
-    summary: "Protestors gathered; traffic halted completely. Alternative routes advised.",
-    category: "Traffic",
-    publishedAt: "10M AGO"
+    title: "শাহবাগ মোড়ে যানজট",
+    summary: "বিক্ষোভকারীরা সমবেত হয়েছেন; যান চলাচল পুরোপুরি বন্ধ। বিকল্প রাস্তা ব্যবহারের পরামর্শ দেওয়া হচ্ছে।",
+    category: "ট্রাফিক",
+    publishedAt: "১০ মি. আগে"
   },
   {
     id: "l2",
-    title: "Power Outage in Rampura",
-    summary: "Maintenance work ongoing; expected to return in 2 hours.",
-    category: "Utility",
-    publishedAt: "25M AGO"
+    title: "রামপুরায় বিদ্যুৎ বিভ্রাট",
+    summary: "রক্ষণাবেক্ষণের কাজ চলছে; ২ ঘণ্টার মধ্যে বিদ্যুৎ ফেরার সম্ভাবনা রয়েছে।",
+    category: "বিদ্যুৎ",
+    publishedAt: "২৫ মি. আগে"
   },
   {
     id: "l3",
-    title: "Metro Rail Service Update",
-    summary: "Normal operations resume on the Green Line after brief technical delay.",
-    category: "Transport",
-    publishedAt: "35M AGO"
+    title: "মেট্রোরেল পরিষেবা আপডেট",
+    summary: "সংক্ষিপ্ত যান্ত্রিক ত্রুটির পর গ্রিন লাইনে স্বাভাবিক চলাচল শুরু হয়েছে।",
+    category: "পরিবহন",
+    publishedAt: "৩৫ মি. আগে"
   },
 ];
 
@@ -192,20 +192,18 @@ export default function Home() {
           {/* Background Decorative */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
           
-          {/* Left: Video Player */}
-          <div className="w-full md:w-5/12 flex-shrink-0 relative group rounded-xl overflow-hidden aspect-video bg-black/80 border border-white/10 shadow-lg">
-            <img src="https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop" alt="AI Briefing" className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 bg-primary/90 text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/20 backdrop-blur-md cursor-pointer hover:scale-105 transition-transform">
-                <Play className="w-8 h-8 ml-1" />
-              </div>
-            </div>
-            <div className="absolute bottom-3 left-3 bg-black/60 px-2 py-1 rounded text-xs font-medium text-white flex items-center gap-1 backdrop-blur-sm border border-white/10">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              AI নিউজ ব্রিফিং
-            </div>
-            <div className="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-xs font-medium text-white backdrop-blur-sm">
-              05:30
+          {/* Left: Simple Audio Trigger */}
+          <div className="w-full md:w-1/3 flex-shrink-0 flex items-center justify-center p-6">
+            <div 
+              className="relative w-32 h-32 rounded-full border-4 border-primary/30 bg-background flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)] cursor-pointer hover:scale-105 transition-transform group"
+              onClick={() => {
+                // Trigger the global audio player
+                const audioPlayerTrigger = document.getElementById("global-audio-trigger");
+                if (audioPlayerTrigger) audioPlayerTrigger.click();
+              }}
+            >
+              <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-[spin_3s_linear_infinite] opacity-50 group-hover:opacity-100 transition-opacity" />
+              <Play className="w-12 h-12 text-primary ml-2 group-hover:text-primary/80 transition-colors fill-primary" />
             </div>
           </div>
 
