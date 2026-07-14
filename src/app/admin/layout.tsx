@@ -32,7 +32,6 @@ export default function AdminLayout({
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "User Management", href: "/admin/users", icon: Users },
-    { name: "API & Source Management", href: "/admin/api", icon: Cpu },
     { name: "Scraping Pipeline", href: "/admin/scraping", icon: Database },
     { name: "News Library", href: "/admin/library", icon: Library },
   ];
@@ -44,12 +43,12 @@ export default function AdminLayout({
         {/* Sidebar */}
         <div className="w-full md:w-64 shrink-0 space-y-6">
           <div className="flex items-center gap-4 px-2">
-            <div className="w-14 h-14 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center text-xl font-bold">
+            <div className="w-14 h-14 rounded-full bg-slate-800 text-white flex items-center justify-center text-xl font-bold">
               {session?.user?.name ? session.user.name.charAt(0).toUpperCase() : <User />}
             </div>
             <div>
               <h2 className="font-bold text-lg leading-tight">{session?.user?.name || "Admin"}</h2>
-              <p className="text-[10px] uppercase font-bold text-red-500 tracking-wider">System Administrator</p>
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">System Administrator</p>
             </div>
           </div>
           
@@ -61,7 +60,7 @@ export default function AdminLayout({
                   <motion.div
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive 
-                        ? "bg-red-500 text-white shadow-md" 
+                        ? "bg-white text-black shadow-md" 
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                     whileHover={{ x: 2 }}
