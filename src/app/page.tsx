@@ -9,7 +9,7 @@ import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 import AudioPlayer from "@/components/AudioPlayer";
 import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import { useNews, useWeather } from "@/hooks/useNews";
-import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun } from "lucide-react";
+import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun, Play } from "lucide-react";
 
 const LIVE_UPDATES = [
   {
@@ -186,6 +186,68 @@ export default function Home() {
         </div>
       </motion.section>
       
+      {/* AI Daily Briefing / Video Podcast Section */}
+      <motion.section variants={itemVariants} className="mb-10 md:mb-16">
+        <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden">
+          {/* Background Decorative */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+          
+          {/* Left: Video Player */}
+          <div className="w-full md:w-5/12 flex-shrink-0 relative group rounded-xl overflow-hidden aspect-video bg-black/80 border border-white/10 shadow-lg">
+            <img src="https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop" alt="AI Briefing" className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 bg-primary/90 text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/20 backdrop-blur-md cursor-pointer hover:scale-105 transition-transform">
+                <Play className="w-8 h-8 ml-1" />
+              </div>
+            </div>
+            <div className="absolute bottom-3 left-3 bg-black/60 px-2 py-1 rounded text-xs font-medium text-white flex items-center gap-1 backdrop-blur-sm border border-white/10">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              AI নিউজ ব্রিফিং
+            </div>
+            <div className="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-xs font-medium text-white backdrop-blur-sm">
+              05:30
+            </div>
+          </div>
+
+          {/* Right: Textual Archive / Content */}
+          <div className="w-full md:w-7/12 flex flex-col justify-center z-10">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider border border-primary/20">
+                আজকের সারসংক্ষেপ
+              </span>
+              <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5" />
+                {currentDate}
+              </span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4 leading-tight">
+              এআই পডকাস্ট: আজকের খবরের সম্পূর্ণ বিশ্লেষণ
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
+              আজকের প্রধান খবরগুলোতে থাকছে স্মার্ট সিটি প্রকল্পের নতুন উদ্যোগ, বিশ্ব অর্থনীতিতে মুদ্রাস্ফীতির প্রভাব এবং প্রযুক্তিতে এআই এর নতুন দিগন্ত। ভিডিওটি প্লে করে পুরো ব্রিফিং শুনুন অথবা নিচে স্ক্রল করে বিস্তারিত পড়ুন।
+            </p>
+            
+            {/* Scraped News Demo / Highlights */}
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-primary" />
+                গুরুত্বপূর্ণ পয়েন্টসমূহ:
+              </h4>
+              {[
+                { time: "09:00 AM", title: "স্মার্ট সিটি প্রকল্প: যানজট নিরসনে নতুন উদ্যোগ" },
+                { time: "11:30 AM", title: "বিশ্ব অর্থনীতি: মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন পলিসি" },
+                { time: "02:15 PM", title: "প্রযুক্তির বিশ্ব: এআই কীভাবে আমাদের ভবিষ্যৎ বদলাচ্ছে" }
+              ].map((news, i) => (
+                <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-background/50 hover:bg-background border border-border/50 hover:border-border transition-colors cursor-pointer">
+                  <span className="text-xs font-mono text-muted-foreground w-16 flex-shrink-0">{news.time}</span>
+                  <p className="text-sm font-medium text-foreground line-clamp-1">{news.title}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
       {/* 1. HERO SECTION - Headlines */}
       <motion.section variants={itemVariants} className="mb-10 md:mb-16">
         <HeadlineSlider headlines={headlines} />

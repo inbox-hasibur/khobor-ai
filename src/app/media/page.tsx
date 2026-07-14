@@ -108,20 +108,27 @@ export default function MediaPage() {
               <div className="relative z-10 w-full p-4 flex flex-col gap-4">
                 
                 {/* Center Play/Pause Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div 
                     initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: isPlaying ? 0 : 1 }}
+                    animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="w-20 h-20 bg-black/50 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10 pointer-events-auto cursor-pointer" onClick={() => setIsPlaying(!isPlaying)}>
-                      <Play className="w-10 h-10 text-white ml-1" />
+                    <div 
+                      className={`w-20 h-20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10 cursor-pointer transition-all ${isPlaying ? 'bg-black/20 opacity-0 hover:opacity-100' : 'bg-black/50 opacity-100'}`}
+                      onClick={() => setIsPlaying(!isPlaying)}
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-10 h-10 text-white" />
+                      ) : (
+                        <Play className="w-10 h-10 text-white ml-1" />
+                      )}
                     </div>
                   </motion.div>
                 </div>
 
                 {/* Bottom Controls Bar */}
-                <div className="flex flex-col gap-2 w-full mt-auto">
+                <div className="flex flex-col gap-2 w-full mt-auto pointer-events-auto relative z-20">
                   {/* Progress Bar */}
                   <div className="w-full h-1.5 bg-white/30 rounded-full overflow-hidden cursor-pointer">
                     <div className="h-full bg-primary" style={{ width: `${progress}%` }} />
@@ -129,9 +136,6 @@ export default function MediaPage() {
                   
                   <div className="flex items-center justify-between text-white">
                     <div className="flex items-center gap-4">
-                      <button onClick={() => setIsPlaying(!isPlaying)} className="hover:text-primary transition-colors">
-                        {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
-                      </button>
                       <button className="hover:text-primary transition-colors"><Rewind className="w-5 h-5" /></button>
                       <button className="hover:text-primary transition-colors"><FastForward className="w-5 h-5" /></button>
                       <span className="text-xs font-medium">01:12 / {currentVideo.duration}</span>
@@ -206,7 +210,7 @@ export default function MediaPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Video className="w-5 h-5 text-primary" />
-                  আরও দেখুন (Aro Dekhun)
+                  আরও দেখুন
                 </CardTitle>
               </CardHeader>
               <CardContent>
