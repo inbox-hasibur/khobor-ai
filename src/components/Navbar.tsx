@@ -21,8 +21,10 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -97,10 +99,10 @@ const Navbar = () => {
 
             {/* Links - Desktop */}
             <div className="hidden md:flex items-center gap-1">
-              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active />
-              <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" />
-              <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" />
-              <NavLink href="/models" icon={<Cpu className="w-4 h-4" />} label="AI Models" />
+              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active={pathname === "/"} />
+              <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" active={pathname === "/media"} />
+              <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" active={pathname === "/archive"} />
+              <NavLink href="/models" icon={<Cpu className="w-4 h-4" />} label="AI Models" active={pathname === "/models"} />
             </div>
 
             <div className="flex items-center gap-1 pr-2">
@@ -238,7 +240,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/register">
                   <motion.button 
-                    className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
+                    className="px-5 py-2.5 bg-white text-zinc-900 rounded-xl text-[12px] font-bold hover:bg-zinc-100 transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
                     whileHover={{ scale: 1.02, y: -1 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -297,10 +299,10 @@ const Navbar = () => {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active onClick={() => setIsMenuOpen(false)} />
-              <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" onClick={() => setIsMenuOpen(false)} />
-              <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" onClick={() => setIsMenuOpen(false)} />
-              <NavLink href="/models" icon={<Cpu className="w-4 h-4" />} label="AI Models" onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/" icon={<Headphones className="w-4 h-4" />} label="News" active={pathname === "/"} onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/media" icon={<Globe className="w-4 h-4" />} label="Media" active={pathname === "/media"} onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/archive" icon={<Archive className="w-4 h-4" />} label="Archive" active={pathname === "/archive"} onClick={() => setIsMenuOpen(false)} />
+              <NavLink href="/models" icon={<Cpu className="w-4 h-4" />} label="AI Models" active={pathname === "/models"} onClick={() => setIsMenuOpen(false)} />
               <div className="h-px bg-border my-1" />
               <div className="flex gap-2 mt-1">
                 {status === "authenticated" ? (
@@ -335,8 +337,8 @@ const Navbar = () => {
                     </Link>
                     <Link href="/register" className="flex-1" onClick={() => setIsMenuOpen(false)}>
                       <motion.button 
-                        className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:opacity-90 transition-all shadow-lg whitespace-nowrap min-h-[44px]"
-                        whileTap={{ scale: 0.98 }}
+                        className="px-6 py-2.5 bg-white text-zinc-900 rounded-xl text-[13px] font-bold hover:bg-zinc-100 transition-all shadow-lg min-w-[90px]"
+                        whileTap={{ scale: 0.95 }}
                       >
                         Sign&nbsp;up
                       </motion.button>

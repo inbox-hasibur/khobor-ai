@@ -162,11 +162,11 @@ export default function Home() {
               
               {/* Weather widget */}
               {weather && (
-                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full border border-primary/20 shadow-sm">
-                  <CloudSun className="w-5 h-5 text-primary" />
-                  <div className="flex flex-col">
-                    <span className="text-[14px] font-bold text-foreground leading-none">{weather.temp}°C</span>
-                    <span className="text-[10px] font-medium text-muted-foreground capitalize">{weather.description}</span>
+                <div className="flex items-center gap-3 px-4 py-2 glass rounded-full shadow-sm">
+                  <CloudSun className="w-6 h-6 text-primary" />
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xl font-bold text-foreground leading-none">{weather.temp}°C</span>
+                    <span className="text-sm font-medium text-muted-foreground capitalize">{weather.description}</span>
                   </div>
                 </div>
               )}
@@ -195,15 +195,14 @@ export default function Home() {
           {/* Left: Simple Audio Trigger */}
           <div className="w-full md:w-1/3 flex-shrink-0 flex items-center justify-center p-6">
             <div 
-              className="relative w-32 h-32 rounded-full border-4 border-primary/30 bg-background flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.3)] cursor-pointer hover:scale-105 transition-transform group"
+              className="relative w-24 h-24 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 cursor-pointer hover:scale-105 transition-transform group"
               onClick={() => {
                 // Trigger the global audio player
                 const audioPlayerTrigger = document.getElementById("global-audio-trigger");
                 if (audioPlayerTrigger) audioPlayerTrigger.click();
               }}
             >
-              <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-[spin_3s_linear_infinite] opacity-50 group-hover:opacity-100 transition-opacity" />
-              <Play className="w-12 h-12 text-primary ml-2 group-hover:text-primary/80 transition-colors fill-primary" />
+              <Play className="w-10 h-10 text-white ml-2" fill="currentColor" />
             </div>
           </div>
 

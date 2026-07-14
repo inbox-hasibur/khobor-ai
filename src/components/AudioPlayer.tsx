@@ -811,30 +811,23 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                   {/* === AI ROBOT / VISUALIZER === */}
                   <div className="relative w-full max-w-[240px] mx-auto mb-6 flex flex-col items-center gap-6">
                     {/* Robot Avatar */}
-                    <motion.div
-                      className="w-32 h-32 rounded-[2rem] bg-gradient-to-br from-primary/10 to-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_15px_var(--glow-primary)]"
-                      animate={isPlaying ? { y: [0, -8, 0] } : {}}
-                      transition={isPlaying ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : {}}
-                    >
-                      <motion.div
-                        className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg relative overflow-hidden"
-                        animate={isPlaying ? { 
-                          boxShadow: ["0 0 15px rgba(16,185,129,0.4)", "0 0 35px rgba(16,185,129,0.6)", "0 0 15px rgba(16,185,129,0.4)"]
-                        } : {}}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        <Bot className="w-12 h-12 text-white" />
-                        
+                    <div className="relative w-32 h-32 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-3xl overflow-hidden shadow-lg shadow-primary/20 relative bg-black border border-primary/20">
+                        <img 
+                          src="https://media.giphy.com/media/L8K62iDadb194Q62yE/giphy.gif" 
+                          alt="AI Robot"
+                          className="w-full h-full object-cover opacity-90 mix-blend-screen"
+                        />
                         {/* Scanning line effect */}
                         {isPlaying && (
                           <motion.div 
-                            className="absolute inset-0 bg-gradient-to-b from-transparent via-white/25 to-transparent h-1/2"
+                            className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/30 to-transparent h-1/2 pointer-events-none"
                             animate={{ top: ["-50%", "150%"] }}
                             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                           />
                         )}
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
 
                     {/* Sound Cloud style Waveform Below */}
                     <div className="w-full flex justify-center items-end h-16 bg-muted/30 rounded-2xl px-6 pb-2 border border-border/50">
@@ -881,9 +874,9 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                     </div>
                   </div>
 
-                  {/* === WAVEFORM SEEK BAR === */}
-                  <div className="mb-3">
-                    <div className="relative h-14 bg-muted/30 rounded-2xl overflow-hidden cursor-pointer group mb-2"
+                  {/* === CONTINUOUS PROGRESS BAR === */}
+                  <div className="mb-6 mt-4 px-2">
+                    <div className="relative h-2 bg-muted/50 rounded-full overflow-hidden cursor-pointer group mb-2 hover:h-3 transition-all"
                       onClick={(e) => {
                         const rect = e.currentTarget.getBoundingClientRect();
                         const percent = (e.clientX - rect.left) / rect.width;
@@ -893,38 +886,17 @@ const AudioPlayer = ({ storiesCount, newsItems = [] }: AudioPlayerProps) => {
                       }}
                     >
                       {/* Buffered */}
-                      <div className="absolute inset-0 flex items-end gap-[2px] p-2">
-                        {track.waveform.map((height, i) => {
-                          const segmentProgress = (i / track.waveform.length) * 100;
-                          const isActiveSegment = segmentProgress <= progressPercent;
-                          const isBuffered = segmentProgress <= bufferedPercent;
-                          return (
-                            <div
-                              key={i}
-                              className={`flex-1 rounded-t-full transition-all duration-200 ${
-                                isActiveSegment 
-                                  ? "bg-gradient-to-t from-primary/90 to-primary" 
-                                  : isBuffered 
-                                    ? "bg-primary/20" 
-                                    : "bg-muted-foreground/10"
-                              }`}
-                              style={{ height: `${height * 0.6}%` }}
-                            />
-                          );
-                        })}
-                      </div>
-                      {/* Time indicators */}
-                      <div className="absolute bottom-1 left-3 text-[9px] text-white/80 font-medium drop-shadow-lg">
-                        {formatTime(progress)}
-                      </div>
-                      <div className="absolute bottom-1 right-3 text-[9px] text-white/80 font-medium drop-shadow-lg">
-                        {formatTime(durationToUse)}
+                      <div className="absolute inset-y-0 left-0 bg-primary/20 transition-all duration-200" style={{ width: `${bufferedPercent}%` }} />
+                      
+                      {/* Played Progress */}
+                      <div className="absolute inset-y-0 left-0 bg-primary transition-all duration-100 ease-linear flex justify-end items-center" style={{ width: `${progressPercent}%` }}>
+                         <div className="w-3 h-3 bg-white rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity translate-x-1.5" />
                       </div>
                     </div>
                     {/* Time labels */}
-                    <div className="flex justify-between text-xs text-muted-foreground px-1">
+                    <div className="flex justify-between text-[11px] font-medium text-muted-foreground px-1">
                       <span>{formatTime(progress)}</span>
-                      <span className="text-[9px] text-muted-foreground/60">-{formatTime(Math.max(0, durationToUse - progress))}</span>
+                      <span>{formatTime(durationToUse)}</span>
                     </div>
                   </div>
 
