@@ -104,7 +104,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-1 pr-2">
-              {/* Theme Toggle - With animation */}
+              {/* Theme Toggle - Without animation */}
               {mounted && (
                 <button 
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -348,10 +348,11 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
+// Sub-component for individual links - Enhanced with animations
 const NavLink = ({ 
   href, 
   icon, 
@@ -368,19 +369,19 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className="relative group block"
+    className="relative group"
   >
     <div
-      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-colors w-full md:w-auto min-h-[44px] md:min-h-0 hover:bg-white dark:hover:bg-slate-800 ${
+      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 hover:bg-white dark:hover:bg-slate-800 ${
         active 
           ? "text-primary" 
           : "text-muted-foreground hover:text-foreground"
       }`}
     >
-      <div className="flex items-center gap-2 relative z-10">
+      <span className={active ? "text-primary" : "group-hover:text-primary transition-colors"}>
         {icon}
-        <span>{label}</span>
-      </div>
+      </span>
+      {label}
     </div>
   </Link>
 );
