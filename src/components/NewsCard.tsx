@@ -19,6 +19,8 @@ interface NewsCardProps {
     imageUrl?: string;
     originalUrl?: string;
   };
+  isSaved?: boolean;
+  onToggleSave?: () => void;
 }
 
 const priorityColors = {
@@ -27,7 +29,7 @@ const priorityColors = {
   low: "bg-emerald-500",
 };
 
-const NewsCard = ({ news }: NewsCardProps) => {
+const NewsCard = ({ news, isSaved = false, onToggleSave }: NewsCardProps) => {
   return (
     <motion.div 
       className="relative group"
@@ -130,12 +132,13 @@ const NewsCard = ({ news }: NewsCardProps) => {
             {/* Secondary Actions - Subtle but accessible */}
             <div className="flex items-center gap-1">
               <motion.button
-                className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted"
+                className={`p-2 transition-colors rounded-full hover:bg-muted ${isSaved ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Bookmark"
+                onClick={onToggleSave}
               >
-                <Bookmark className="w-4 h-4" />
+                <Bookmark className="w-4 h-4" fill={isSaved ? "currentColor" : "none"} />
               </motion.button>
               <motion.button
                 className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted"
