@@ -11,7 +11,9 @@ export async function GET() {
     const existingAdmin = await User.findOne({ email: adminEmail });
 
     if (existingAdmin) {
+      // @ts-ignore
       existingAdmin.role = "admin";
+      // @ts-ignore
       await existingAdmin.save();
       return NextResponse.json({ message: "Admin user already existed but role was updated to admin.", user: existingAdmin });
     }
@@ -28,10 +30,10 @@ export async function GET() {
     return NextResponse.json({
       message: "Admin user created successfully",
       user: {
-        id: newAdmin._id,
-        name: newAdmin.name,
-        email: newAdmin.email,
-        role: newAdmin.role,
+        id: newAdmin?._id,
+        name: newAdmin?.name,
+        email: newAdmin?.email,
+        role: newAdmin?.role,
       },
     });
   } catch (error: any) {

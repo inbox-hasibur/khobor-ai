@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Check, Star, Zap, Shield, Headphones, Archive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-client";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 

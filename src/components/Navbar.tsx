@@ -20,7 +20,7 @@ import {
   CreditCard
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {

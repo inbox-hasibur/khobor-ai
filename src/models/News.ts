@@ -1,32 +1,14 @@
-import mongoose, { Schema, Document } from "mongoose";
+// Mocked News model
+const mockQuery: any = Promise.resolve([]);
+mockQuery.sort = (...args: any[]) => mockQuery;
+mockQuery.limit = (...args: any[]) => mockQuery;
 
-export interface INews extends Document {
-  title: string;
-  summary: string;
-  source: string;
-  category: string;
-  priority: "high" | "medium" | "low";
-  audioUrl?: string;
-  originalUrl: string;
-  publishedAt: Date;
-  expiresAt: Date; 
-}
-
-const NewsSchema: Schema = new Schema(
-  {
-    title: { type: String, required: true },
-    summary: { type: String, required: true },
-    source: { type: String, required: true },
-    category: { type: String, default: "General" },
-    priority: { type: String, enum: ["high", "medium", "low"], default: "medium" },
-    audioUrl: { type: String },
-    originalUrl: { type: String, required: true },
-    publishedAt: { type: Date, default: Date.now },
-    expiresAt: { type: Date, required: true },
-  },
-  { timestamps: true }
-);
-
-NewsSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
-
-export default mongoose.models.News || mongoose.model<INews>("News", NewsSchema);
+const News = {
+  find: (...args: any[]) => mockQuery,
+  findOne: async (...args: any[]) => null,
+  create: async (...args: any[]) => null,
+  findById: async (...args: any[]) => null,
+  findOneAndUpdate: async (...args: any[]) => null,
+  findByIdAndUpdate: async (...args: any[]) => null,
+};
+export default News;

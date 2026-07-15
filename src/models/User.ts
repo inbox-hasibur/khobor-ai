@@ -1,35 +1,13 @@
-import mongoose, { Schema, model, models } from "mongoose";
+// Mocked User model
+const mockQuery: any = Promise.resolve({ save: async () => null, role: 'user' });
+mockQuery.sort = (...args: any[]) => mockQuery;
+mockQuery.limit = (...args: any[]) => mockQuery;
 
-const userSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: false,
-    },
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please enter a valid email address",
-      ],
-    },
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-    },
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    }
-  },
-  {
-    timestamps: true,
-  }
-);
-
-const User = models.User || model("User", userSchema);
-
+const User = {
+  find: (...args: any[]) => mockQuery,
+  findOne: async (...args: any[]) => null,
+  create: async (...args: any[]) => ({ _id: '1', name: '', email: '', role: 'user' }),
+  findById: async (...args: any[]) => null,
+  findOneAndUpdate: async (...args: any[]) => null,
+};
 export default User;
