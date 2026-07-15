@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import News from '@/models/News';
+import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,11 +38,14 @@ export async function POST(req: NextRequest) {
 
     // DB তে audioUrl update করো (newsId থাকলে)
     if (newsId) {
-      await connectDB();
-      await News.findByIdAndUpdate(newsId, {
-        audioUrl: `data:audio/mp3;base64,${audioBase64}`,
-        audioGeneratedAt: new Date()
-      });
+      const supabase = await createClient();
+      await supabase
+        .from('news_articles')
+        .update({
+          audio_url: `data:audio/mp3;base64,${audioBase64}`,
+          audio_generated_at: new Date().toISOString()
+        })
+        .eq('id', newsId);
     }
 
     // Audio সরাসরি পাঠাও
