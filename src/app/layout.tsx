@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Hind_Siliguri, Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/Navbar"; // Import Navbar
+import { AuthProvider } from "@/components/auth-provider";
+import Navbar from "@/components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const hindSiliguri = Hind_Siliguri({ 
+  subsets: ["bengali", "latin"], 
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-hind",
+});
+
+const notoSerif = Noto_Serif_Bengali({ 
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-noto-serif",
+});
 
 export const metadata: Metadata = {
-  title: "Khobor AI | খবর এআই",
+  title: "KahfNews | খবর এআই",
   description: "AI-powered personalized news briefing for Bangladesh",
 };
 
@@ -16,16 +27,18 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="bn" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar /> {/* Add it here */}
-          {children}
-        </ThemeProvider>
+      <body className={`${hindSiliguri.variable} ${notoSerif.variable} font-sans antialiased`} style={{ fontFamily: "var(--font-hind)" }}>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

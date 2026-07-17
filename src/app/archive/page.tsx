@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  Archive as ArchiveIcon, ArrowLeft, Clock, Search, Calendar, Filter
-} from "lucide-react";
+import { Archive as ArchiveIcon, ArrowLeft, Clock, Search, Calendar, Filter } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 
 const MOCK_ARCHIVE = [
@@ -85,13 +85,40 @@ const itemVariants = {
 };
 
 export default function ArchivePage() {
+  const { status } = useSession();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+  const [savedIds, setSavedIds] = useState<string[]>([]);
+
+  React.useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/register"); // Or /login if it exists
+    }
+  }, [status, router]);
+
+  const toggleSave = (id: string) => {
+    setSavedIds(prev => 
+      prev.includes(id) ? prev.filter(savedId => savedId !== id) : [...prev, id]
+    );
+  };
 
   const filteredArchive = MOCK_ARCHIVE.filter(
-    (item) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    (item) => {
+      const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            item.category.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTab = activeTab === "all" || (activeTab === "saved" && savedIds.includes(item.id));
+      return matchesSearch && matchesTab;
+    }
   );
+
+  if (status === "loading" || status === "unauthenticated") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <motion.main
@@ -141,6 +168,23 @@ export default function ArchivePage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
+        
+        {/* Tabs */}
+        <div className="flex items-center gap-2 mt-6">
+          <button
+            onClick={() => setActiveTab("all")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === "all" ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground hover:text-foreground"}`}
+          >
+            All Archive
+          </button>
+          <button
+            onClick={() => setActiveTab("saved")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${activeTab === "saved" ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground hover:text-foreground"}`}
+          >
+            <ArchiveIcon className="w-4 h-4" />
+            Saved List
+          </button>
+        </div>
       </motion.div>
 
       {/* Archive List */}
@@ -148,7 +192,11 @@ export default function ArchivePage() {
         {filteredArchive.length > 0 ? (
           filteredArchive.map((item) => (
             <motion.div key={item.id} variants={itemVariants}>
-              <NewsCard news={item} />
+              <NewsCard 
+                news={item} 
+                isSaved={savedIds.includes(item.id)} 
+                onToggleSave={() => toggleSave(item.id)} 
+              />
             </motion.div>
           ))
         ) : (

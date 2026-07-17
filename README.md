@@ -1,16 +1,16 @@
-# 🎙️ Khobor AI (খবর এআই)
+# 🎙️ KahfNews (খবর এআই)
 > **Your Smart, Audio-First Daily News Companion for Bangladesh.**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://khobor.vercel.app) 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://kahfnews.vercel.app) 
 
-**Khobor AI** is a revolutionary AI-driven news aggregator designed specifically for the busy Bangladeshi context. It solves the "information overload" problem by scraping trusted sources, summarizing key insights using Gemini AI, and converting them into a high-quality audio playlist for hands-free consumption.
+**KahfNews** is a revolutionary AI-driven news aggregator designed specifically for the busy Bangladeshi context. It solves the "information overload" problem by scraping trusted sources, summarizing key insights using Gemini AI, and converting them into a high-quality audio playlist for hands-free consumption.
 
-Whether you are walking to your office, stuck in Dhaka's legendary traffic, or preparing for your day—**Khobor AI** ensures you are always informed, without ever needing to look at a screen.
+Whether you are walking to your office, stuck in Dhaka's legendary traffic, or preparing for your day—**KahfNews** ensures you are always informed, without ever needing to look at a screen.
 
 ---
 
 ## 🌟 The Vision: "Listen, Don't Just Read"
-In Bangladesh, missing a sudden holiday notice or a road-block update can ruin your entire day. Traditional news apps are cluttered with noise and bias. **Khobor AI** acts as your personal "AI Editor-in-Chief," filtering out the noise and prioritizing utility news (Traffic, Holidays, National Alerts) over everything else.
+In Bangladesh, missing a sudden holiday notice or a road-block update can ruin your entire day. Traditional news apps are cluttered with noise and bias. **KahfNews** acts as your personal "AI Editor-in-Chief," filtering out the noise and prioritizing utility news (Traffic, Holidays, National Alerts) over everything else.
 
 ### 🎯 Key Problems We Solve:
 1. **Safety First:** Reading news while walking is dangerous. We provide a **Podcast-style briefing**.
@@ -23,7 +23,7 @@ In Bangladesh, missing a sudden holiday notice or a road-block update can ruin y
 ## 🚀 Core Features
 
 ### 🎧 1. Smart Audio Playlist (The "Walking" Mode)
-Instead of one long boring file, Khobor AI generates separate audio tracks for each news item. 
+Instead of one long boring file, KahfNews generates separate audio tracks for each news item. 
 - **Auto-play:** Just hit play and put your phone in your pocket.
 - **Skip Control:** Don't like a topic? Skip to the next one using your earphone buttons.
 
@@ -63,7 +63,7 @@ Using advanced Neural TTS technology (Microsoft Edge TTS), our news doesn't soun
 ---
 
 ## 🔗 Project Links
-- **Secondary Domain:** [khobor.vercel.app](https://khobor.vercel.app)
+- **Secondary Domain:** [kahfnews.vercel.app](https://kahfnews.vercel.app)
 
 ---
 

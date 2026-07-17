@@ -51,15 +51,15 @@ const HeadlineSlider = ({ headlines }: HeadlineSliderProps) => {
           </motion.div>
           <div className="flex items-center gap-2">
             <Flame className="w-4 h-4 text-red-500" />
-            <h2 className="text-caption text-foreground font-bold">
-              Top Headlines
+            <h2 className="text-caption text-foreground font-bold font-serif">
+              শীর্ষ খবর
             </h2>
           </div>
         </div>
         
         <div className="flex items-center gap-2 text-muted-foreground">
           <TrendingUp className="w-4 h-4" />
-          <span className="text-[12px] font-medium">Trending now</span>
+          <span className="text-[12px] font-medium font-serif">এখন ট্রেন্ডিং</span>
         </div>
       </motion.div>
       

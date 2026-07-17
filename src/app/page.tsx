@@ -1,102 +1,37 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import HeadlineSlider from "@/components/HeadlineSlider";
 import MainFeed from "@/components/MainFeed";
 import LiveFeedSidebar from "@/components/LiveFeedSidebar";
 import AudioPlayer from "@/components/AudioPlayer";
-import { Newspaper, Loader2, Radio, TrendingUp, Calendar } from "lucide-react";
-
-// Mock data for demo purposes
-const MOCK_HEADLINES = [
-  {
-    id: "1",
-    title: "Bangladesh Economy Shows Strong Growth in Q3 2024",
-    category: "Economy",
-    imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop",
-    source: "Financial Express",
-  },
-  {
-    id: "2",
-    title: "New Tech Innovations Transforming Dhaka's Startup Scene",
-    category: "Technology",
-    imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop",
-    source: "Tech Bangladesh",
-  },
-  {
-    id: "3",
-    title: "National Cricket Team Prepares for International Series",
-    category: "Sports",
-    imageUrl: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2070&auto=format&fit=crop",
-    source: "Sports Daily",
-  },
-];
-
-const MOCK_NEWS = [
-  {
-    id: "4",
-    title: "Government Announces New Infrastructure Projects for 2025",
-    summary: "Major development initiatives including highway expansion and bridge construction are set to begin early next year, promising to boost connectivity across the nation.",
-    source: "Daily Star",
-    category: "National",
-    priority: "high" as const,
-    publishedAt: "2 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "5",
-    title: "AI Revolution: How Local Businesses Are Adapting",
-    summary: "Small and medium enterprises across Bangladesh are increasingly adopting artificial intelligence tools to streamline operations and reach new markets.",
-    source: "Business Standard",
-    category: "Technology",
-    priority: "medium" as const,
-    publishedAt: "4 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "6",
-    title: "Weather Alert: Heavy Rain Expected in Coastal Regions",
-    summary: "Meteorological Department forecasts significant rainfall in the southern districts over the next 48 hours. Residents advised to take precautions.",
-    source: "Weather BD",
-    category: "Weather",
-    priority: "medium" as const,
-    publishedAt: "5 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1525088553748-01d6e210e00b?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "7",
-    title: "Education Ministry Reforms Curriculum for Digital Age",
-    summary: "New educational framework emphasizes coding, digital literacy, and critical thinking skills for students from primary to higher secondary levels.",
-    source: "Education Today",
-    category: "Education",
-    priority: "low" as const,
-    publishedAt: "6 hours ago",
-    imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2070&auto=format&fit=crop",
-  },
-];
+import BreakingNewsTicker from "@/components/BreakingNewsTicker";
+import { useNews, useWeather } from "@/hooks/useNews";
+import { Newspaper, Loader2, Radio, TrendingUp, Calendar, Sparkles, CloudSun, Play, FileText } from "lucide-react";
 
 const LIVE_UPDATES = [
   {
     id: "l1",
-    title: "Shahbag Intersection Blocked",
-    summary: "Protestors gathered; traffic halted completely. Alternative routes advised.",
-    category: "Traffic",
-    publishedAt: "10M AGO"
+    title: "শাহবাগ মোড়ে যানজট",
+    summary: "বিক্ষোভকারীরা সমবেত হয়েছেন; যান চলাচল পুরোপুরি বন্ধ। বিকল্প রাস্তা ব্যবহারের পরামর্শ দেওয়া হচ্ছে।",
+    category: "ট্রাফিক",
+    publishedAt: "১০ মি. আগে"
   },
   {
     id: "l2",
-    title: "Power Outage in Rampura",
-    summary: "Maintenance work ongoing; expected to return in 2 hours.",
-    category: "Utility",
-    publishedAt: "25M AGO"
+    title: "রামপুরায় বিদ্যুৎ বিভ্রাট",
+    summary: "রক্ষণাবেক্ষণের কাজ চলছে; ২ ঘণ্টার মধ্যে বিদ্যুৎ ফেরার সম্ভাবনা রয়েছে।",
+    category: "বিদ্যুৎ",
+    publishedAt: "২৫ মি. আগে"
   },
   {
     id: "l3",
-    title: "Metro Rail Service Update",
-    summary: "Normal operations resume on the Green Line after brief technical delay.",
-    category: "Transport",
-    publishedAt: "35M AGO"
+    title: "মেট্রোরেল পরিষেবা আপডেট",
+    summary: "সংক্ষিপ্ত যান্ত্রিক ত্রুটির পর গ্রিন লাইনে স্বাভাবিক চলাচল শুরু হয়েছে।",
+    category: "পরিবহন",
+    publishedAt: "৩৫ মি. আগে"
   },
 ];
 
@@ -126,6 +61,8 @@ const itemVariants = {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState("");
+  const { news, loading: newsLoading } = useNews();
+  const { weather } = useWeather();
 
   useEffect(() => {
     // Simulate loading
@@ -145,7 +82,76 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
+  // Fallback dummy news if API fails or returns empty
+  const displayNews = news.length > 0 ? news : [
+    {
+      _id: "1",
+      title: "স্মার্ট সিটি প্রকল্প: যানজট নিরসনে নতুন উদ্যোগ",
+      category: "জাতীয়",
+      source: "প্রথম আলো",
+      summary: "রাজধানীর যানজট নিরসনে সরকার নতুন 'স্মার্ট ট্রাফিক ম্যানেজমেন্ট' সিস্টেম চালু করেছে, যা এআই ব্যবহার করে সিগন্যাল নিয়ন্ত্রণ করবে।",
+      imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+      priority: "high",
+      publishedAt: new Date().toISOString()
+    },
+    {
+      _id: "2",
+      title: "বিশ্ব অর্থনীতি: মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন পলিসি",
+      category: "অর্থনীতি",
+      source: "ডেইলি স্টার",
+      summary: "কেন্দ্রীয় ব্যাংক মুদ্রাস্ফীতি নিয়ন্ত্রণে সুদের হার আরও ০.৫% বাড়ানোর সিদ্ধান্ত নিয়েছে, যা আগামী মাস থেকে কার্যকর হবে।",
+      imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop",
+      priority: "medium",
+      publishedAt: new Date(Date.now() - 3600000).toISOString()
+    },
+    {
+      _id: "3",
+      title: "প্রযুক্তির বিশ্ব: এআই কীভাবে আমাদের ভবিষ্যৎ বদলাচ্ছে",
+      category: "প্রযুক্তি",
+      source: "ইত্তেফাক",
+      summary: "কৃত্রিম বুদ্ধিমত্তার নতুন মডেলগুলো স্বাস্থ্যসেবা থেকে শুরু করে শিক্ষা খাতে যুগান্তকারী পরিবর্তন আনছে বলে জানিয়েছেন বিশেষজ্ঞরা।",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop",
+      priority: "high",
+      publishedAt: new Date(Date.now() - 7200000).toISOString()
+    },
+    {
+      _id: "4",
+      title: "টি-টোয়েন্টি বিশ্বকাপ: ফাইনালে উত্তেজনা",
+      category: "খেলাধুলা",
+      source: "যুগান্তর",
+      summary: "রুদ্ধশ্বাস ম্যাচে শেষ বলে জয় পেল বাংলাদেশ। গ্যালারি জুড়ে দর্শকদের উল্লাস।",
+      imageUrl: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=2067&auto=format&fit=crop",
+      priority: "low",
+      publishedAt: new Date(Date.now() - 86400000).toISOString()
+    }
+  ];
+
+  // Transform news for headlines (top 3 with images)
+  const headlines = displayNews.slice(0, 3).map((item: any) => ({
+    id: item._id || item.id,
+    title: item.title,
+    category: item.category,
+    imageUrl: item.imageUrl || "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+    source: item.source,
+  }));
+
+  // Transform news for main feed
+  const feedItems = displayNews.map((item: any, index: number) => ({
+    id: item._id || `news-${index}`,
+    title: item.title,
+    summary: item.summary || "সংক্ষিপ্ত বিবরণ পাওয়া যায়নি।",
+    source: item.source || "KahfNews",
+    category: item.category || "General",
+    priority: item.priority || "medium" as const,
+    publishedAt: item.publishedAt 
+      ? new Date(item.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      : "Today",
+    imageUrl: item.imageUrl || "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+  }));
+
+  const totalStories = news.length || 0;
+
+  if (isLoading || newsLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <motion.div
@@ -154,77 +160,139 @@ export default function Home() {
         >
           <Loader2 className="w-8 h-8 text-primary" />
         </motion.div>
-        <p className="text-muted-foreground text-sm">Loading your personalized briefing...</p>
+        <p className="text-muted-foreground text-sm">আপনার কাস্টমাইজড খবর লোড হচ্ছে...</p>
       </div>
     );
   }
 
   return (
     <motion.main 
-      className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 pt-28 md:pt-36 pb-40 md:pb-48"
+      className="max-w-[1400px] mx-auto px-3 md:px-6 lg:px-8 pt-24 md:pt-36 pb-32 md:pb-48"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {/* Welcome Header - Visual Hierarchy */}
       <motion.section variants={itemVariants} className="mb-10 md:mb-14">
+        <BreakingNewsTicker />
+        
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               <Calendar className="w-4 h-4" />
               <span className="text-[13px] font-medium">{currentDate}</span>
             </div>
-            <h1 className="text-display text-foreground">
-              Your <span className="gradient-text">Daily Briefing</span>
+            <h1 className="text-3xl md:text-4xl lg:text-[2.5rem] text-foreground font-serif leading-tight">
+              আপনার <span className="text-primary">দৈনিক সারসংক্ষেপ</span>
             </h1>
             <p className="text-body text-muted-foreground mt-2 max-w-lg">
-              Stay informed with AI-curated news personalized for you. 
-              <span className="text-foreground font-medium"> {MOCK_NEWS.length + MOCK_HEADLINES.length} stories</span> today.
+              এআই দ্বারা বাছাইকৃত খবরের সাথে আপডেট থাকুন। আজ 
+              <span className="text-foreground font-medium"> {totalStories}টি খবর</span> রয়েছে।
             </p>
           </div>
           
-          {/* Quick Stats - Design Theory: Repetition, Balance */}
-          <div className="flex items-center gap-4 md:gap-6">
-            <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
-              <Radio className="w-4 h-4 text-primary" />
-              <span className="text-[12px] font-semibold">Live Updates</span>
+          {/* Quick Stats & Weather */}
+          <div className="flex flex-col items-end gap-3 md:gap-4">
+            <div className="flex items-center gap-3">
+              {/* Premium CTA */}
+              <Link href="/pricing" className="group hidden sm:block">
+                <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/20 hover:from-primary/20 hover:to-primary/30 rounded-full border border-primary/20 shadow-sm transition-all cursor-pointer">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-[12px] font-bold text-primary group-hover:text-primary/80 transition-colors">
+                    Upgrade to premium for personalized news
+                  </span>
+                </div>
+              </Link>
+              
+              {/* Weather widget */}
+              {weather && (
+                <div className="flex items-center gap-3 px-4 py-2 glass rounded-full shadow-sm">
+                  <CloudSun className="w-6 h-6 text-primary" />
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xl font-bold text-foreground leading-none">{weather.temp}°C</span>
+                    <span className="text-sm font-medium text-muted-foreground capitalize">{weather.description}</span>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
-              <TrendingUp className="w-4 h-4 text-emerald-500" />
-              <span className="text-[12px] font-semibold">Trending</span>
+            
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="flex items-center gap-2 px-4 py-2 glass rounded-full shadow-sm">
+                <Radio className="w-4 h-4 text-primary" />
+                <span className="text-[12px] font-semibold">লাইভ আপডেট</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 glass rounded-full shadow-sm">
+                <TrendingUp className="w-4 h-4 text-primary" />
+                <span className="text-[12px] font-semibold">ট্রেন্ডিং</span>
+              </div>
             </div>
           </div>
         </div>
       </motion.section>
       
-      {/* 1. HERO SECTION - Headlines */}
+      {/* AI Daily Briefing / Video Podcast Section */}
       <motion.section variants={itemVariants} className="mb-10 md:mb-16">
-        <HeadlineSlider headlines={MOCK_HEADLINES} />
+        <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center justify-between relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          {/* Background Decorative */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="flex-1 z-10 flex flex-col md:flex-row items-center gap-6">
+             <div 
+                className="relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 cursor-pointer hover:scale-105 transition-transform group"
+                onClick={() => {
+                  const audioPlayerTrigger = document.getElementById("global-audio-trigger");
+                  if (audioPlayerTrigger) audioPlayerTrigger.click();
+                }}
+              >
+                <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" />
+              </div>
+              
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/20">
+                    আজকের সারসংক্ষেপ
+                  </span>
+                  <span className="text-[10px] text-muted-foreground font-medium flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {currentDate}
+                  </span>
+                </div>
+                <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground mb-2 leading-tight">
+                  এআই পডকাস্ট: আজকের খবরের সম্পূর্ণ বিশ্লেষণ
+                </h2>
+                <p className="text-muted-foreground text-sm max-w-2xl">
+                  আজকের প্রধান খবরগুলোতে থাকছে স্মার্ট সিটি প্রকল্পের নতুন উদ্যোগ, বিশ্ব অর্থনীতিতে মুদ্রাস্ফীতির প্রভাব এবং প্রযুক্তিতে এআই এর নতুন দিগন্ত।
+                </p>
+              </div>
+          </div>
+          
+          <div className="flex-shrink-0 z-10 mt-4 md:mt-0">
+             <Link href="/news/daily-summary" className="px-6 py-3 bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:text-foreground font-semibold text-sm rounded-xl transition-all shadow-sm flex items-center gap-2 border border-border">
+               <FileText className="w-4 h-4" />
+               পড়ুন
+             </Link>
+          </div>
+        </div>
       </motion.section>
 
-      {/* 2. MAIN CONTENT: 2-Column Grid - Design Theory: Balance, Alignment */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      {/* 1. HERO SECTION & SIDEBAR */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-10 md:mb-16">
+        <motion.section variants={itemVariants} className="lg:col-span-8">
+          <HeadlineSlider headlines={headlines} />
+        </motion.section>
         
-        {/* Section 2.1: Left Column (Main Feed - 8 Cols) */}
-        <motion.div 
-          className="lg:col-span-8"
-          variants={itemVariants}
-        >
-          <MainFeed newsItems={MOCK_NEWS} />
-        </motion.div>
-
-        {/* Section 2.2: Right Column (Live Feed - 4 Cols) */}
-        <motion.div 
-          className="lg:col-span-4"
-          variants={itemVariants}
-        >
+        <motion.div variants={itemVariants} className="lg:col-span-4">
           <LiveFeedSidebar updates={LIVE_UPDATES} />
         </motion.div>
-
       </div>
 
+      {/* 2. MAIN CONTENT: ALL NEWS GRID */}
+      <motion.div variants={itemVariants} className="w-full">
+        <MainFeed newsItems={feedItems} />
+      </motion.div>
+
       {/* 3. FLOATING AUDIO PLAYER */}
-      <AudioPlayer storiesCount={MOCK_NEWS.length + MOCK_HEADLINES.length} />
+      <AudioPlayer storiesCount={totalStories || 7} newsItems={feedItems} />
     </motion.main>
   );
 }

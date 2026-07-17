@@ -286,7 +286,7 @@ export default function NewsDetailPage() {
               {newsItem.author?.split(" ").map((n: string) => n[0]).join("") || "K"}
             </div>
             <div>
-              <p className="text-[14px] font-semibold text-foreground">{newsItem.author || "Khobor AI"}</p>
+              <p className="text-[14px] font-semibold text-foreground">{newsItem.author || "KahfNews"}</p>
               <p className="text-[12px] text-muted-foreground">{newsItem.source}</p>
             </div>
           </div>
