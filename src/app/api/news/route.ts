@@ -1,27 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import News from '@/models/News';
+import { createClient } from '@/utils/supabase/server';
 
 // GET — Frontend এ news পাঠাও
 export async function GET(req: NextRequest) {
   try {
-    await connectDB();
+    const supabase = await createClient();
 
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category');
     const limit = parseInt(searchParams.get('limit') || '20');
 
-    const query = category ? { category } : {};
+    let query = supabase
+      .from('news_articles')
+      .select('*')
+      .order('published_at', { ascending: false })
+      .limit(limit);
 
-    const news = await News.find(query)
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .lean();
+    if (category) {
+      query = query.eq('category', category); // Assuming you add category column or use another
+    }
+
+    const { data: news, error } = await query;
+
+    if (error) throw error;
 
     return NextResponse.json({ 
       success: true, 
       data: news,
-      count: news.length
+      count: news?.length || 0
     });
 
   } catch (error) {
@@ -35,10 +41,17 @@ export async function GET(req: NextRequest) {
 // POST — নতুন news save করো
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
+    const supabase = await createClient();
     const body = await req.json();
-    const newsItem = await News.create(body);
-    return NextResponse.json({ success: true, data: newsItem });
+    
+    const { data, error } = await supabase
+      .from('news_articles')
+      .insert([body])
+      .select();
+
+    if (error) throw error;
+
+    return NextResponse.json({ success: true, data: data?.[0] });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: 'Failed to save news' },

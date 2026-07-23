@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import News from '@/models/News';
+import { createClient } from '@/utils/supabase/server';
 import { scrapeJamunaTV } from '@/lib/scraper';
 import { summarizeNews } from '@/lib/ai';
 
@@ -22,7 +21,7 @@ export async function GET(req: NextRequest) {
   console.log(`🕖 Cron started: ${now.toISOString()} (Dhaka: ${period})`);
 
   try {
-    await connectDB();
+    const supabase = await createClient();
 
     // Step 1: Weather + Date + Traffic intro
     let introText = '';
@@ -39,9 +38,9 @@ export async function GET(req: NextRequest) {
     // Step 2: News scrape করো
     console.log('📰 Scraping news...');
     const rawArticles = await scrapeJamunaTV();
-    console.log(`✅ Scraped ${rawArticles.length} articles`);
+    console.log(`✅ Scraped ${rawArticles?.length || 0} articles`);
 
-    if (rawArticles.length === 0) {
+    if (!rawArticles || rawArticles.length === 0) {
       return NextResponse.json({
         success: true,
         scraped: 0,
@@ -59,24 +58,29 @@ export async function GET(req: NextRequest) {
     for (const item of rawArticles) {
       const aiSummary = await summarizeNews(item.title, item.summary);
       processedNews.push({
-        ...item,
-        summary: aiSummary,
+        headline: item.title,
+        raw_content: item.summary,
+        ai_summary: aiSummary,
+        original_url: item.originalUrl,
+        source: item.source || "Jamuna TV",
+        status: "published",
+        published_at: item.publishedAt || new Date().toISOString(),
       });
     }
 
-    // Step 4: MongoDB তে save করো (upsert to avoid duplicates)
+    // Step 4: Supabase তে save করো (upsert to avoid duplicates)
     console.log('💾 Saving to database...');
     let savedCount = 0;
     for (const item of processedNews) {
       try {
-        await News.findOneAndUpdate(
-          { originalUrl: item.originalUrl },
-          item,
-          { upsert: true, new: true }
-        );
-        savedCount++;
+        const { error } = await supabase
+          .from('news_articles')
+          .upsert(item, { onConflict: 'original_url' });
+          
+        if (!error) savedCount++;
+        else console.error('Failed to save item:', item.headline, error);
       } catch (e) {
-        console.error('Failed to save item:', item.title, e);
+        console.error('Failed to save item:', item.headline, e);
       }
     }
 
