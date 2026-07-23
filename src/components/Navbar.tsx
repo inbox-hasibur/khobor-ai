@@ -20,7 +20,7 @@ import {
   CreditCard
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
@@ -174,12 +174,12 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <motion.button 
                   onClick={() => signOut()}
-                  className="px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-2 h-9"
+                  className="px-2 md:px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-1 md:gap-2 h-9"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <LogOut className="w-4 h-4" />
-                  Logout
+                  <span className="hidden md:inline">Logout</span>
                 </motion.button>
                 
                 <div className="relative">
@@ -380,7 +380,7 @@ const NavLink = ({
           : "text-muted-foreground hover:text-foreground"
       }`}
     >
-      <span className={active ? "text-primary" : "group-hover:text-primary transition-colors"}>
+      <span className={active ? "text-primary" : "group-hover:text-foreground transition-colors"}>
         {icon}
       </span>
       {label}

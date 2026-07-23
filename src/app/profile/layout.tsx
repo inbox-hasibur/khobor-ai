@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, redirect } from "next/navigation";
 import { motion } from "framer-motion";
 import { LayoutDashboard, Key, Cpu, Settings, User } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-client";
 
 export default function ProfileLayout({
   children,
