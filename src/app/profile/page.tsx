@@ -1,14 +1,49 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, Headphones, Play, Star, ShieldCheck } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+
 export default function ProfileDashboard() {
   const { data: session } = useSession();
+  const supabase = createClient();
+  
+  const [stats, setStats] = useState({
+    audioCount: 0,
+    videoCount: 0,
+    apiCalls: 0,
+    tier: "Free"
+  });
+  const [recentActivities, setRecentActivities] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchUserData() {
+      if (!session?.user?.id) return;
+
+      const [profileRes, podcastsRes] = await Promise.all([
+        supabase.from('profiles').select('tier, gemini_api_key').eq('id', session.user.id).single(),
+        supabase.from('podcast_archives').select('title, generated_at').eq('user_id', session.user.id).order('generated_at', { ascending: false }).limit(5)
+      ]);
+
+      setStats({
+        audioCount: podcastsRes.data?.length || 0,
+        videoCount: 0, // Mock for now until VOD tracking is implemented
+        apiCalls: profileRes.data?.gemini_api_key ? 1 : 0, // Simplified mock for BYOK usage
+        tier: profileRes.data?.tier || "Free"
+      });
+
+      if (podcastsRes.data) {
+        setRecentActivities(podcastsRes.data);
+      }
+    }
+    
+    fetchUserData();
+  }, [session?.user?.id]);
 
   return (
     <motion.div
@@ -39,8 +74,8 @@ export default function ProfileDashboard() {
             <Headphones className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">42</div>
-            <p className="text-xs text-muted-foreground">+5 this week</p>
+            <div className="text-2xl font-bold">{stats.audioCount}</div>
+            <p className="text-xs text-muted-foreground">Generated podcasts</p>
           </CardContent>
         </Card>
         <Card className="bg-card/50 backdrop-blur-sm border-border">
@@ -49,18 +84,18 @@ export default function ProfileDashboard() {
             <Play className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">18</div>
-            <p className="text-xs text-muted-foreground">4 with Halal Mode</p>
+            <div className="text-2xl font-bold">{stats.videoCount}</div>
+            <p className="text-xs text-muted-foreground">Halal Mode VODs</p>
           </CardContent>
         </Card>
         <Card className="bg-card/50 backdrop-blur-sm border-border">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">API Calls</CardTitle>
+            <CardTitle className="text-sm font-medium">API Key Set</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,204</div>
-            <p className="text-xs text-muted-foreground">Using active BYOK key</p>
+            <div className="text-2xl font-bold">{stats.apiCalls > 0 ? "Yes" : "No"}</div>
+            <p className="text-xs text-muted-foreground">BYOK configuration</p>
           </CardContent>
         </Card>
         <Card className="bg-card/50 backdrop-blur-sm border-border">
@@ -69,8 +104,8 @@ export default function ProfileDashboard() {
             <ShieldCheck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">Free</div>
-            <p className="text-xs text-muted-foreground">Standard access</p>
+            <div className="text-2xl font-bold text-primary capitalize">{stats.tier}</div>
+            <p className="text-xs text-muted-foreground">Current tier</p>
           </CardContent>
         </Card>
       </div>
@@ -82,31 +117,21 @@ export default function ProfileDashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <div>
-                <p className="text-sm font-medium">Watched 'AI Revolution 2026'</p>
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
-                  <Play className="w-3 h-3" /> Video with Halal Mode enabled
-                </p>
+            {recentActivities.length > 0 ? recentActivities.map((activity, idx) => (
+              <div key={idx} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+                <div>
+                  <p className="text-sm font-medium">Listened to '{activity.title}'</p>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Headphones className="w-3 h-3" /> Audio News Podcast
+                  </p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {new Date(activity.generated_at).toLocaleDateString()}
+                </div>
               </div>
-              <div className="text-xs text-muted-foreground">2 hours ago</div>
-            </div>
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <div>
-                <p className="text-sm font-medium">Listened to 'Global Economy Briefing'</p>
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
-                  <Headphones className="w-3 h-3" /> Audio News Podcast
-                </p>
-              </div>
-              <div className="text-xs text-muted-foreground">Yesterday</div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium">Searched for 'Technology Trends'</p>
-                <p className="text-xs text-muted-foreground">News Archive</p>
-              </div>
-              <div className="text-xs text-muted-foreground">2 days ago</div>
-            </div>
+            )) : (
+              <div className="text-sm text-muted-foreground py-4 text-center">No recent activity found. Generate some podcasts!</div>
+            )}
           </div>
         </CardContent>
       </Card>

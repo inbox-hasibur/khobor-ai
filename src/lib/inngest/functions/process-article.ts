@@ -27,21 +27,25 @@ export const processArticle = inngest.createFunction(
     }
 
     // 2. Fetch System Prompts from DB
-    const { evaluatorPrompt, synthesizerPrompt } = await step.run("fetch-prompts", async () => {
+    const { evaluatorPrompt, synthesizerPrompt, autoApprove } = await step.run("fetch-prompts", async () => {
       const { data } = await supabase
         .from("system_settings")
         .select("setting_key, setting_value");
       
       let ePrompt = "Respond YES if valid news, otherwise NO.";
       let sPrompt = "Summarize the news.";
+      let autoApp = true; // By default auto-approve is on
       
       if (data) {
         const eSetting = data.find(s => s.setting_key === "evaluator_prompt");
         const sSetting = data.find(s => s.setting_key === "synthesizer_prompt");
+        const autoSetting = data.find(s => s.setting_key === "auto_approve_news");
+        
         if (eSetting) ePrompt = eSetting.setting_value;
         if (sSetting) sPrompt = sSetting.setting_value;
+        if (autoSetting) autoApp = autoSetting.setting_value === "true";
       }
-      return { evaluatorPrompt: ePrompt, synthesizerPrompt: sPrompt };
+      return { evaluatorPrompt: ePrompt, synthesizerPrompt: sPrompt, autoApprove: autoApp };
     });
 
     // 3. Layer 2.5: AI Evaluator
@@ -76,7 +80,7 @@ export const processArticle = inngest.createFunction(
           headline: title,
           raw_content: markdown,
           ai_summary: synthesizedContent,
-          status: "draft", // Saving as draft so admin can review
+          status: autoApprove ? "published" : "draft", // Depends on auto_approve_news setting
           original_url: url,
           source: url, // Could use source name instead
           published_at: new Date().toISOString()

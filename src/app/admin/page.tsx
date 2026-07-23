@@ -1,11 +1,50 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Activity, PlayCircle, Library } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 
 export default function AdminDashboard() {
+  const supabase = createClient();
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    premiumUsers: 0,
+    activeScrapers: 0,
+    newsLibrary: 0
+  });
+  const [recentLogs, setRecentLogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchAdminData() {
+      const [usersRes, premiumRes, scrapersRes, newsRes] = await Promise.all([
+        supabase.from('profiles').select('*', { count: 'exact', head: true }),
+        supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('tier', 'premium'),
+        supabase.from('scraping_sources').select('*', { count: 'exact', head: true }).eq('is_active', true),
+        supabase.from('news_articles').select('*', { count: 'exact', head: true }),
+      ]);
+      
+      const logsRes = await supabase.from('news_articles')
+        .select('headline, published_at, source')
+        .order('published_at', { ascending: false })
+        .limit(5);
+
+      setStats({
+        totalUsers: usersRes.count || 0,
+        premiumUsers: premiumRes.count || 0,
+        activeScrapers: scrapersRes.count || 0,
+        newsLibrary: newsRes.count || 0
+      });
+
+      if (logsRes.data) {
+        setRecentLogs(logsRes.data);
+      }
+    }
+    
+    fetchAdminData();
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -27,8 +66,8 @@ export default function AdminDashboard() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,245</div>
-            <p className="text-xs text-muted-foreground">340 Premium Subscriptions</p>
+            <div className="text-2xl font-bold">{stats.totalUsers}</div>
+            <p className="text-xs text-muted-foreground">{stats.premiumUsers} Premium Subscriptions</p>
           </CardContent>
         </Card>
         <Card className="bg-card/50 backdrop-blur-sm border-border">
@@ -38,7 +77,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-500">Online</div>
-            <p className="text-xs text-muted-foreground">MDX-Net model & TTS active</p>
+            <p className="text-xs text-muted-foreground">Inngest pipelines active</p>
           </CardContent>
         </Card>
         <Card className="bg-card/50 backdrop-blur-sm border-border">
@@ -47,8 +86,8 @@ export default function AdminDashboard() {
             <PlayCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">Running scheduled cron jobs</p>
+            <div className="text-2xl font-bold">{stats.activeScrapers}</div>
+            <p className="text-xs text-muted-foreground">Running scheduled jobs</p>
           </CardContent>
         </Card>
         <Card className="bg-card/50 backdrop-blur-sm border-border">
@@ -57,8 +96,8 @@ export default function AdminDashboard() {
             <Library className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8,432</div>
-            <p className="text-xs text-muted-foreground">Generated TTS & Videos</p>
+            <div className="text-2xl font-bold">{stats.newsLibrary}</div>
+            <p className="text-xs text-muted-foreground">Processed Articles</p>
           </CardContent>
         </Card>
       </div>
@@ -66,31 +105,23 @@ export default function AdminDashboard() {
       <Card className="bg-card/50 backdrop-blur-sm border-border">
         <CardHeader>
           <CardTitle>System Activity Log</CardTitle>
-          <CardDescription>Recent automated events and admin actions.</CardDescription>
+          <CardDescription>Recent automated events and scraped articles.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <div>
-                <p className="text-sm font-medium">Scraping Pipeline Completed</p>
-                <p className="text-xs text-muted-foreground">Fetched 45 new articles from DuckDuckGo RSS</p>
+            {recentLogs.length > 0 ? recentLogs.map((log, idx) => (
+              <div key={idx} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+                <div className="max-w-[70%]">
+                  <p className="text-sm font-medium truncate">{log.headline}</p>
+                  <p className="text-xs text-muted-foreground">Scraped from {log.source}</p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {new Date(log.published_at).toLocaleDateString()}
+                </div>
               </div>
-              <div className="text-xs text-muted-foreground">10 mins ago</div>
-            </div>
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <div>
-                <p className="text-sm font-medium">TTS Generation Batch #4092</p>
-                <p className="text-xs text-muted-foreground">Processed 12 news briefings successfully</p>
-              </div>
-              <div className="text-xs text-muted-foreground">45 mins ago</div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium">Admin: Source URL Added</p>
-                <p className="text-xs text-muted-foreground">Added aljazeera.com/xml/rss/all.xml</p>
-              </div>
-              <div className="text-xs text-muted-foreground">2 hours ago</div>
-            </div>
+            )) : (
+              <div className="text-sm text-muted-foreground py-4 text-center">No recent activity found.</div>
+            )}
           </div>
         </CardContent>
       </Card>

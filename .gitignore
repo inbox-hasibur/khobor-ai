@@ -42,3 +42,8 @@ next-env.d.ts
 
 # reference folder
 /reference_kahfnews_main
+
+# Documentation files
+Architecture.md
+Phase.md
+database.md
