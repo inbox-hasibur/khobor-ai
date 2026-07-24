@@ -30,6 +30,10 @@ export default function ProfileLayout({
     { name: "Preferences", href: "/profile/preferences", icon: Settings },
   ];
 
+  if ((session?.user as any)?.role === "admin") {
+    navItems.push({ name: "Admin Panel", href: "/admin", icon: Cpu });
+  }
+
   return (
     <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-28 md:pt-36 pb-32">
       <div className="flex flex-col md:flex-row gap-8">
@@ -54,8 +58,8 @@ export default function ProfileLayout({
                   <motion.div
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive 
-                        ? "bg-primary text-primary-foreground shadow-md" 
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        ? "bg-white text-slate-900 shadow-md border border-white/20" 
+                        : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
                     }`}
                     whileHover={{ x: 2 }}
                     whileTap={{ scale: 0.98 }}

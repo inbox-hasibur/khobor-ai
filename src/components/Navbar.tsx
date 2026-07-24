@@ -33,10 +33,36 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [language, setLanguage] = useState("BN");
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+
+  const handleLanguageChange = (lang: string) => {
+    setLanguage(lang);
+    setIsLangDropdownOpen(false);
+    
+    // Set Google Translate cookie (translating from Bengali)
+    if (lang === "EN") {
+      document.cookie = `googtrans=/bn/en; path=/`;
+      document.cookie = `googtrans=/bn/en; path=/; domain=${window.location.hostname}`;
+    } else {
+      document.cookie = `googtrans=/bn/bn; path=/`;
+      document.cookie = `googtrans=/bn/bn; path=/; domain=${window.location.hostname}`;
+      // Also clear it to revert to default
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+    window.location.reload();
+  };
 
   // Avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
+    
+    // Check initial language from cookie
+    if (document.cookie.includes('googtrans=/bn/en')) {
+      setLanguage('EN');
+    } else {
+      setLanguage('BN');
+    }
   }, []);
 
   // Track scroll for navbar appearance change
@@ -66,7 +92,7 @@ const Navbar = () => {
 
   return (
     <motion.div 
-      className="fixed top-2 md:top-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[980px] px-2 md:px-6"
+      className="fixed top-2 md:top-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[980px] px-2 md:px-6 notranslate"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -106,7 +132,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-1 pr-2">
-              {/* Theme Toggle - Without animation */}
+              {/* Theme Toggle */}
               {mounted && (
                 <button 
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -117,10 +143,49 @@ const Navbar = () => {
                 </button>
               )}
 
+              {/* Language Toggle Dropdown */}
+              <div className="relative">
+                {mounted && (
+                  <button 
+                    onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                    className="px-2.5 py-1.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800 flex items-center gap-1"
+                    aria-label="Toggle language"
+                  >
+                    {language}
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                )}
+                
+                {/* Dropdown Menu */}
+                <AnimatePresence>
+                  {isLangDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 5 }}
+                      className="absolute right-0 mt-2 w-24 bg-white dark:bg-slate-900 border border-border rounded-xl shadow-lg overflow-hidden flex flex-col z-50 py-1"
+                    >
+                      <button
+                        onClick={() => handleLanguageChange("BN")}
+                        className={`text-left px-4 py-2 text-[12px] font-bold hover:bg-muted transition-colors ${language === "BN" ? "text-primary" : "text-muted-foreground"}`}
+                      >
+                        বাংলা (BN)
+                      </button>
+                      <button
+                        onClick={() => handleLanguageChange("EN")}
+                        className={`text-left px-4 py-2 text-[12px] font-bold hover:bg-muted transition-colors ${language === "EN" ? "text-primary" : "text-muted-foreground"}`}
+                      >
+                        English (EN)
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
               {/* Search Icon - With keyboard shortcut hint */}
               <motion.button 
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="hidden sm:flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                className="hidden sm:flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -134,7 +199,7 @@ const Navbar = () => {
               {/* Mobile Search Button */}
               <motion.button 
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="sm:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                className="sm:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -145,7 +210,7 @@ const Navbar = () => {
               <div className="md:hidden">
                 <motion.button 
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800 min-w-[44px] min-h-[44px] flex items-center justify-center"
                   whileTap={{ scale: 0.9 }}
                 >
                   <AnimatePresence mode="wait">
@@ -174,7 +239,7 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <motion.button 
                   onClick={() => signOut()}
-                  className="px-2 md:px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-1 md:gap-2 h-9"
+                  className="px-2 md:px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-white dark:hover:bg-slate-800 hover:text-foreground transition-all flex items-center gap-1 md:gap-2 h-9"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -206,6 +271,13 @@ const Navbar = () => {
                           <p className="text-[12px] text-slate-400 truncate">{session?.user?.email}</p>
                         </div>
                         <div className="p-2 flex flex-col gap-1">
+                          {(session?.user as any)?.role === "admin" && (
+                            <Link href="/admin" onClick={() => setIsProfileDropdownOpen(false)}>
+                              <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
+                                Admin Panel
+                              </div>
+                            </Link>
+                          )}
                           <Link href="/profile" onClick={() => setIsProfileDropdownOpen(false)}>
                             <div className="px-3 py-2 text-[13px] font-medium hover:bg-slate-800 rounded-xl cursor-pointer transition-colors text-slate-300 hover:text-white">
                               Dashboard
@@ -231,7 +303,7 @@ const Navbar = () => {
               <>
                 <Link href="/login">
                   <motion.button 
-                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -267,7 +339,7 @@ const Navbar = () => {
                 <input 
                   type="text" 
                   placeholder="Search news, categories, or updates..."
-                  className="w-full bg-muted/50 border border-border rounded-xl py-3 pl-11 pr-4 text-[14px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                  className="w-full bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-800 border border-border rounded-xl py-3 pl-11 pr-4 text-[14px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
@@ -307,6 +379,16 @@ const Navbar = () => {
               <div className="flex gap-2 mt-1">
                 {status === "authenticated" ? (
                   <>
+                    {(session?.user as any)?.role === "admin" && (
+                      <Link href="/admin" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                        <motion.button 
+                          className="w-full py-3 text-[13px] font-bold text-white hover:text-white transition-colors rounded-xl bg-primary hover:bg-primary/90 min-h-[44px]"
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          Admin Panel
+                        </motion.button>
+                      </Link>
+                    )}
                     <Link href="/profile" className="flex-1" onClick={() => setIsMenuOpen(false)}>
                       <motion.button 
                         className="w-full py-3 text-[13px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-h-[44px]"
@@ -374,13 +456,13 @@ const NavLink = ({
     className="relative group"
   >
     <div
-      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 hover:bg-white dark:hover:bg-slate-800 ${
+      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 whitespace-nowrap ${
         active 
-          ? "text-primary" 
-          : "text-muted-foreground hover:text-foreground"
+          ? "bg-white dark:bg-slate-800 text-foreground shadow-sm" 
+          : "text-muted-foreground hover:text-foreground hover:bg-white dark:hover:bg-slate-800"
       }`}
     >
-      <span className={active ? "text-primary" : "group-hover:text-foreground transition-colors"}>
+      <span className={active ? "text-foreground" : "group-hover:text-foreground transition-colors"}>
         {icon}
       </span>
       {label}

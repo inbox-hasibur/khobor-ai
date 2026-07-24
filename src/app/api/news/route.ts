@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
     let query = supabase
       .from('news_articles')
       .select('*')
+      .eq('status', 'published')
       .order('published_at', { ascending: false })
       .limit(limit);
 
