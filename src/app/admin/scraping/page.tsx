@@ -95,10 +95,12 @@ export default function AdminScrapingPage() {
 
   const handleAddSource = async () => {
     if (!newSourceName || !newSourceUrl) return;
-    const { error } = await supabase.from("scraping_sources").insert({
-      name: newSourceName, url: newSourceUrl, category: newSourceCat, is_active: true
+    const res = await fetch("/api/sources", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "ADD", payload: { name: newSourceName, url: newSourceUrl, category: newSourceCat } })
     });
-    if (!error) {
+    if (res.ok) {
       setNewSourceName("");
       setNewSourceUrl("");
       fetchData();
@@ -106,12 +108,29 @@ export default function AdminScrapingPage() {
   };
 
   const handleDeleteSource = async (id: string) => {
-    await supabase.from("scraping_sources").delete().eq("id", id);
+    await fetch("/api/sources", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "DELETE", payload: { id } })
+    });
     fetchData();
   };
 
   const handleToggleSource = async (id: string, current: boolean) => {
-    await supabase.from("scraping_sources").update({ is_active: !current }).eq("id", id);
+    await fetch("/api/sources", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "TOGGLE", payload: { id, is_active: !current } })
+    });
+    fetchData();
+  };
+  
+  const handleLoadDefaultSources = async () => {
+    await fetch("/api/sources", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "SEED", payload: {} })
+    });
     fetchData();
   };
 
@@ -180,30 +199,7 @@ export default function AdminScrapingPage() {
     }
   };
 
-  const handleLoadDefaultSources = async () => {
-    const defaults = [
-      { name: "Prothom Alo (RSS)", url: "https://www.prothomalo.com/feed", category: "General", is_active: true },
-      { name: "Jugantor (RSS)", url: "https://www.jugantor.com/feed", category: "General", is_active: true },
-      { name: "Jamuna TV (RSS)", url: "https://www.jamuna.tv/feed", category: "General", is_active: true },
-      { name: "Daily Star (Bangla)", url: "https://bangla.thedailystar.net/feed", category: "General", is_active: true },
-      { name: "Dhaka Tribune", url: "https://www.dhakatribune.com/feed", category: "General", is_active: true },
-      { name: "Somoy News", url: "https://www.somoynews.tv/rss", category: "General", is_active: true },
-      { name: "Bangla Tribune", url: "https://www.banglatribune.com/feed", category: "General", is_active: true },
-      { name: "BBC Bangla", url: "https://www.bbc.com/bengali/index.xml", category: "General", is_active: true }
-    ];
-    
-    let errorCount = 0;
-    for (const src of defaults) {
-      const { error } = await supabase.from("scraping_sources").insert(src);
-      if (error) errorCount++;
-    }
-    if (errorCount === 0) {
-      alert("Default sources loaded!");
-    } else {
-      alert(`Loaded sources, but ${errorCount} failed. They might already exist or you don't have permission.`);
-    }
-    fetchData();
-  };
+
 
   return (
     <motion.div 
@@ -554,28 +550,26 @@ export default function AdminScrapingPage() {
                 </tr>
               </thead>
               <tbody>
-                {/* Default Sources Hardcoded per user request, alongside dynamic sources */}
-                <tr className="border-t border-border">
-                  <td className="px-4 py-2">Prothom Alo (RSS)</td>
-                  <td className="px-4 py-2 font-mono text-xs max-w-[200px] truncate" title="https://www.prothomalo.com/feed">https://www.prothomalo.com/feed</td>
-                  <td className="px-4 py-2">General</td>
-                </tr>
-                <tr className="border-t border-border">
-                  <td className="px-4 py-2">Jugantor (RSS)</td>
-                  <td className="px-4 py-2 font-mono text-xs max-w-[200px] truncate" title="https://www.jugantor.com/feed">https://www.jugantor.com/feed</td>
-                  <td className="px-4 py-2">General</td>
-                </tr>
-                <tr className="border-t border-border">
-                  <td className="px-4 py-2">Jamuna TV (RSS)</td>
-                  <td className="px-4 py-2 font-mono text-xs max-w-[200px] truncate" title="https://www.jamuna.tv/feed">https://www.jamuna.tv/feed</td>
-                  <td className="px-4 py-2">General</td>
-                </tr>
-                
+                {sources.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-4 py-8 text-center text-muted-foreground">
+                      No sources found. 
+                      <Button variant="link" onClick={handleLoadDefaultSources} className="text-primary p-0 h-auto ml-1">
+                        Load Defaults
+                      </Button>
+                    </td>
+                  </tr>
+                )}
                 {sources.map(source => (
                   <tr key={source.id} className="border-t border-border">
                     <td className="px-4 py-2">{source.name}</td>
                     <td className="px-4 py-2 font-mono text-xs max-w-[200px] truncate" title={source.url}>{source.url}</td>
-                    <td className="px-4 py-2">{source.category}</td>
+                    <td className="px-4 py-2 flex items-center justify-between">
+                      {source.category}
+                      <Button variant="ghost" size="icon" onClick={() => handleDeleteSource(source.id)} className="h-6 w-6 text-red-500 hover:text-red-600">
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
