@@ -9,7 +9,7 @@ export async function summarizeNews(title: string, content: string) {
       return content.slice(0, 150) + "...";
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
       You are an expert news editor for "KahfNews". 
@@ -44,7 +44,7 @@ export async function summarizeWithGemini(
       }));
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     // Articles গুলো text এ convert করো
     const articlesText = articles
@@ -100,7 +100,7 @@ export async function classifyNews(title: string, summary: string) {
   try {
     if (!process.env.GEMINI_API_KEY) return "medium";
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
       Classify the following news item into one of these priorities: "high", "medium", or "low".

@@ -1,9 +1,9 @@
 -- Seed popular news sources
 INSERT INTO public.scraping_sources (name, url, category, is_active)
 VALUES
-  ('Prothom Alo', 'https://www.prothomalo.com/feed', 'General', true),
-  ('Jugantor', 'https://www.jugantor.com/feed', 'General', true),
-  ('Jamuna TV', 'https://www.jamuna.tv/feed', 'General', true)
+  ('Prothom Alo (RSS)', 'https://www.prothomalo.com/feed', 'General', true),
+  ('BBC Bangla', 'https://feeds.bbci.co.uk/bengali/rss.xml', 'General', true),
+  ('VOA Bangla', 'https://www.voabangla.com/api/z--r-rymqv', 'General', true)
 ON CONFLICT (url) DO NOTHING;
 
 -- Seed default system settings
