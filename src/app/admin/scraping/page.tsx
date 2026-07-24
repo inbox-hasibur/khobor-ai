@@ -48,27 +48,37 @@ export default function AdminScrapingPage() {
   }, []);
 
   const fetchData = async () => {
-    const { data: sourcesData } = await supabase.from("scraping_sources").select("*");
-    if (sourcesData) setSources(sourcesData);
+    try {
+      const resSources = await fetch("/api/sources");
+      if (resSources.ok) {
+        const { sources: sourcesData } = await resSources.json();
+        if (sourcesData) setSources(sourcesData);
+      }
 
-    const { data: settingsData } = await supabase.from("system_settings").select("*").order("created_at", { ascending: false });
-    if (settingsData) {
-      const autoSetting = settingsData.find(s => s.setting_key === "auto_approve_news");
-      if (autoSetting) setAutoApprove(autoSetting.setting_value === "true");
+      const resSettings = await fetch("/api/settings");
+      if (resSettings.ok) {
+        const { settings: settingsData } = await resSettings.json();
+        if (settingsData) {
+          const autoSetting = settingsData.find((s: any) => s.setting_key === "auto_approve_news");
+          if (autoSetting) setAutoApprove(autoSetting.setting_value === "true");
 
-      const keySetting = settingsData.find(s => s.setting_key === "global_gemini_api_keys");
-      if (keySetting) {
-        try {
-          const parsed = JSON.parse(keySetting.setting_value);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setApiKeys(parsed);
-          } else {
-            setApiKeys([""]);
+          const keySetting = settingsData.find((s: any) => s.setting_key === "global_gemini_api_keys");
+          if (keySetting) {
+            try {
+              const parsed = JSON.parse(keySetting.setting_value);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                setApiKeys(parsed);
+              } else {
+                setApiKeys([""]);
+              }
+            } catch (e) {
+              setApiKeys([""]);
+            }
           }
-        } catch (e) {
-          setApiKeys([""]);
         }
       }
+    } catch (err) {
+      console.error("Error fetching data:", err);
     }
   };
 
