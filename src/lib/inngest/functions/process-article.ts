@@ -59,7 +59,7 @@ export const processArticle = inngest.createFunction(
       for (const apiKey of keys) {
         try {
           const genAI = new GoogleGenerativeAI(apiKey);
-          const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+          const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
           const prompt = `${evaluatorPrompt}\n\nArticle Markdown:\n${markdown}`;
           
           const result = await model.generateContent(prompt);
@@ -87,7 +87,7 @@ export const processArticle = inngest.createFunction(
       for (const apiKey of keys) {
         try {
           const genAI = new GoogleGenerativeAI(apiKey);
-          const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+          const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
           const prompt = `${synthesizerPrompt}\n\nTitle: ${title}\nCategory: ${category}\n\nArticle Content:\n${markdown}`;
           
           const result = await model.generateContent(prompt);

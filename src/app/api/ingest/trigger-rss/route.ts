@@ -94,7 +94,7 @@ export async function GET(req: Request) {
 
               // Use the first valid API key
               const genAI = new GoogleGenerativeAI(keys[0] || process.env.GEMINI_API_KEY!);
-              const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+              const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
               // 2. Evaluator
               sendLog(`[AI Evaluator] Checking if article is valid news...`);
