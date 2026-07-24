@@ -41,14 +41,14 @@ export default function AdminDashboard() {
         } catch(e) {}
       }
 
-      // Using the exact data from the image as requested for the demo
+      // Update stats dynamically from the database queries
       setStats({
-        totalUsers: 48,
-        premiumUsers: 18,
-        activeScrapers: 3,
-        newsLibrary: 0,
-        activeApis: 2,
-        onlineUsers: 10
+        totalUsers: usersRes.count || 0,
+        premiumUsers: premiumRes.count || 0,
+        activeScrapers: scrapersRes.count || 0,
+        newsLibrary: newsRes.count || 0,
+        activeApis: apiCount,
+        onlineUsers: Math.floor((usersRes.count || 0) * 0.2) // Estimate online users ~20%
       });
 
       if (logsRes.data) {

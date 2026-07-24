@@ -115,19 +115,19 @@ export default function AdminScrapingPage() {
     fetchData();
   };
 
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
   const saveSetting = async (key: string, value: string) => {
-    const { data } = await supabase.from("system_settings").select("id").eq("setting_key", key);
-    if (data && data.length > 0) {
-      // Update all duplicates to fix the multiple rows issue
-      for (const row of data) {
-        await supabase.from("system_settings").update({ setting_value: value }).eq("id", row.id);
-      }
-    } else {
-      await supabase.from("system_settings").insert({ setting_key: key, setting_value: value });
-    }
+    await fetch("/api/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, value })
+    });
   };
 
   const handleSaveSettings = async () => {
+    setIsSavingSettings(true);
     await saveSetting("auto_approve_news", autoApprove.toString());
     
     // Save keys as JSON array
@@ -138,7 +138,9 @@ export default function AdminScrapingPage() {
     if (validKeys.length === 0) setApiKeys([""]);
     else setApiKeys(validKeys);
     
-    alert("Settings saved!");
+    setIsSavingSettings(false);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 2000);
   };
 
   const handleTriggerEmergencyScrape = async () => {
@@ -400,8 +402,8 @@ export default function AdminScrapingPage() {
             >
               <Plus className="w-4 h-4 mr-1" /> Add Another API Key
             </Button>
-            <Button onClick={handleSaveSettings} size="sm" className="bg-white text-black hover:bg-slate-200">
-              Save API Keys
+            <Button onClick={handleSaveSettings} disabled={isSavingSettings} size="sm" className={`bg-white text-black hover:bg-slate-200 transition-colors ${saveSuccess ? "!bg-green-500 !text-white" : ""}`}>
+              {isSavingSettings ? "Saving..." : saveSuccess ? "Saved Successfully" : "Save API Keys"}
             </Button>
           </div>
         </CardContent>
