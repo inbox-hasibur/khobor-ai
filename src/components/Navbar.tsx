@@ -456,7 +456,7 @@ const NavLink = ({
     className="relative group"
   >
     <div
-      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 ${
+      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 whitespace-nowrap ${
         active 
           ? "bg-white dark:bg-slate-800 text-foreground shadow-sm" 
           : "text-muted-foreground hover:text-foreground hover:bg-white dark:hover:bg-slate-800"

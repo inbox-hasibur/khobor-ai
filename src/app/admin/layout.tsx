@@ -33,7 +33,7 @@ export default function AdminLayout({
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "User Management", href: "/admin/users", icon: Users },
-    { name: "Scraping Pipeline", href: "/admin/scraping", icon: Database },
+    { name: "Scraping Control", href: "/admin/scraping", icon: Database },
     { name: "News Library", href: "/admin/library", icon: Library },
   ];
 
@@ -62,7 +62,7 @@ export default function AdminLayout({
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive 
                         ? "bg-white text-black shadow-md" 
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
                     }`}
                     whileHover={{ x: 2 }}
                     whileTap={{ scale: 0.98 }}

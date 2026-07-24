@@ -8,6 +8,7 @@ import { createClient } from "@/utils/supabase/client";
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<"all" | "free" | "premium">("all");
   const supabase = createClient();
 
   useEffect(() => {
@@ -35,20 +36,44 @@ export default function AdminUsersPage() {
       </div>
 
       <Card className="bg-card/50 backdrop-blur-sm border-border">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-primary" />
-            Users List
-          </CardTitle>
-          <CardDescription>View Basic and Premium users.</CardDescription>
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-primary">
+              <Users className="w-5 h-5" />
+              Users List
+            </CardTitle>
+            <CardDescription className="mt-1">View Basic and Premium users.</CardDescription>
+          </div>
+          
+          {/* Integrated Tab Switcher */}
+          <div className="flex bg-[#0f172a] p-1 rounded-xl w-full sm:w-auto border border-[#1e293b]">
+            <button 
+              onClick={() => setActiveTab("all")}
+              className={`flex-1 sm:w-24 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${activeTab === "all" ? "bg-white text-black shadow-sm" : "text-white/70 hover:text-white"}`}
+            >
+              All Users
+            </button>
+            <button 
+              onClick={() => setActiveTab("free")}
+              className={`flex-1 sm:w-24 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${activeTab === "free" ? "bg-white text-black shadow-sm" : "text-white/70 hover:text-white"}`}
+            >
+              Free
+            </button>
+            <button 
+              onClick={() => setActiveTab("premium")}
+              className={`flex-1 sm:w-24 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${activeTab === "premium" ? "bg-white text-black shadow-sm" : "text-white/70 hover:text-white"}`}
+            >
+              Premium
+            </button>
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {loading ? (
             <div className="text-center py-12 text-muted-foreground">Loading users...</div>
           ) : (
-            <div className="border border-border rounded-xl overflow-hidden">
+            <div className="border border-border rounded-xl overflow-hidden shadow-sm">
               <table className="w-full text-sm text-left">
-                <thead className="bg-muted/50 text-muted-foreground">
+                <thead className="bg-[#0f172a] text-white">
                   <tr>
                     <th className="px-4 py-3 font-medium">User ID</th>
                     <th className="px-4 py-3 font-medium">Name</th>
@@ -58,7 +83,13 @@ export default function AdminUsersPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {users.map(user => (
+                  {users
+                    .filter(u => {
+                      if (activeTab === "free") return u.tier !== "premium";
+                      if (activeTab === "premium") return u.tier === "premium";
+                      return true;
+                    })
+                    .map(user => (
                     <tr key={user.id} className="hover:bg-muted/30 transition-colors">
                       <td className="px-4 py-3 font-mono text-xs max-w-[120px] truncate" title={user.id}>{user.id}</td>
                       <td className="px-4 py-3 font-medium flex items-center gap-2">
@@ -81,7 +112,11 @@ export default function AdminUsersPage() {
                       </td>
                     </tr>
                   ))}
-                  {users.length === 0 && (
+                  {users.filter(u => {
+                      if (activeTab === "free") return u.tier !== "premium";
+                      if (activeTab === "premium") return u.tier === "premium";
+                      return true;
+                    }).length === 0 && (
                     <tr>
                       <td colSpan={5} className="text-center py-8 text-muted-foreground">No users found.</td>
                     </tr>

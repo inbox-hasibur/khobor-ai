@@ -249,25 +249,25 @@ export default function AIModelsPage() {
                   Available for Windows, macOS, and Linux. Process gigabytes of audio using your system's GPU for maximum performance.
                 </p>
                 <div className="grid grid-cols-3 gap-3">
-                  <Button variant="outline" className="flex flex-col h-auto py-3 gap-2 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  <Button variant="outline" className="group flex flex-col h-auto py-3 gap-2 border-zinc-200 dark:border-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all">
                     <WindowsIcon />
                     <div className="flex flex-col items-center">
                       <span className="font-bold text-xs">Windows</span>
-                      <span className="text-[9px] text-zinc-400">.exe</span>
+                      <span className="text-[9px] text-zinc-400 group-hover:text-emerald-500/70 transition-colors">.exe</span>
                     </div>
                   </Button>
-                  <Button variant="outline" className="flex flex-col h-auto py-3 gap-2 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  <Button variant="outline" className="group flex flex-col h-auto py-3 gap-2 border-zinc-200 dark:border-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all">
                     <MacIcon />
                     <div className="flex flex-col items-center">
                       <span className="font-bold text-xs">Mac</span>
-                      <span className="text-[9px] text-zinc-400">.dmg</span>
+                      <span className="text-[9px] text-zinc-400 group-hover:text-emerald-500/70 transition-colors">.dmg</span>
                     </div>
                   </Button>
-                  <Button variant="outline" className="flex flex-col h-auto py-3 gap-2 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  <Button variant="outline" className="group flex flex-col h-auto py-3 gap-2 border-zinc-200 dark:border-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all">
                     <LinuxIcon />
                     <div className="flex flex-col items-center">
                       <span className="font-bold text-xs">Linux</span>
-                      <span className="text-[9px] text-zinc-400">.AppImage</span>
+                      <span className="text-[9px] text-zinc-400 group-hover:text-emerald-500/70 transition-colors">.AppImage</span>
                     </div>
                   </Button>
                 </div>
