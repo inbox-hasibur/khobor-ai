@@ -117,7 +117,7 @@ export async function GET(req: Request) {
                 headline: item.title,
                 raw_content: markdown,
                 ai_summary: summary,
-                status: autoApprove ? "published" : "draft",
+                status: autoApp ? "published" : "draft",
                 original_url: item.link,
                 source: source.name || item.link,
                 published_at: new Date().toISOString()
