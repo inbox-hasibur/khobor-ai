@@ -110,6 +110,16 @@ html {
   scroll-behavior: smooth;
 }
 
+html, body {
+  min-height: 100vh;
+  top: 0 !important;
+}
+
+/* Hide Google Translate Bar */
+.skiptranslate {
+  display: none !important;
+}
+
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
@@ -287,7 +297,7 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 25s linear infinite;
+  animation: marquee 21s linear infinite;
 }
 
 .animate-marquee:hover {

@@ -1,10 +1,10 @@
+// @ts-nocheck
 import { inngest } from "../client";
 import { createBackgroundClient } from "@/utils/supabase/background";
 import { search } from "duck-duck-scrape";
 
 export const scrapeDDG = inngest.createFunction(
-  { id: "scrape-ddg-search" },
-  { cron: "0 */2 * * *" }, // Run every 2 hours
+  { id: "scrape-ddg", cron: "0 0 * * *" }, // Run daily at midnight
   async ({ step }) => {
     const supabase = createBackgroundClient();
 

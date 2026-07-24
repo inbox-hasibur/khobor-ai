@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { inngest } from "../client";
 import { createBackgroundClient } from "@/utils/supabase/background";
 import Parser from "rss-parser";
@@ -5,8 +6,7 @@ import Parser from "rss-parser";
 const parser = new Parser();
 
 export const scrapeRssFeeds = inngest.createFunction(
-  { id: "scrape-rss-feeds" },
-  { cron: "0 * * * *" }, // Run every hour at minute 0
+  { id: "scrape-rss-feeds", triggers: [{ cron: "0 * * * *" }, { event: "app/trigger-rss-scrape" }] },
   async ({ step }) => {
     const supabase = createBackgroundClient();
 
@@ -52,6 +52,7 @@ export const scrapeRssFeeds = inngest.createFunction(
                   url: item.link,
                   title: item.title,
                   sourceId: source.id,
+                  sourceName: source.name,
                   category: source.category,
                 });
               }

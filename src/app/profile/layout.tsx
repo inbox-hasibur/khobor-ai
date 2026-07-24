@@ -30,6 +30,10 @@ export default function ProfileLayout({
     { name: "Preferences", href: "/profile/preferences", icon: Settings },
   ];
 
+  if ((session?.user as any)?.role === "admin") {
+    navItems.push({ name: "Admin Panel", href: "/admin", icon: Cpu });
+  }
+
   return (
     <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-28 md:pt-36 pb-32">
       <div className="flex flex-col md:flex-row gap-8">

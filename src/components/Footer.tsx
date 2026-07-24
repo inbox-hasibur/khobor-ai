@@ -13,7 +13,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-12 text-center md:text-left">
+    <footer className="border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-12 text-center md:text-left notranslate">
       <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-10 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           

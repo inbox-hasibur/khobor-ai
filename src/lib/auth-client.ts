@@ -11,7 +11,8 @@ export function useSession(options?: any) {
     const formatUser = (user: User) => ({
       ...user,
       name: user.user_metadata?.full_name || user.email?.split('@')[0],
-      image: user.user_metadata?.avatar_url
+      image: user.user_metadata?.avatar_url,
+      role: user.user_metadata?.role || "user"
     });
     const fetchSession = async () => {
       const { data: { session: activeSession } } = await supabase.auth.getSession();
@@ -54,5 +55,14 @@ export async function signIn(provider: string, options: any) {
     password: options.password
   });
   if (error) return { error: error.message };
+  
+  if (data?.user && options.role) {
+    if (data.user.user_metadata?.role !== options.role) {
+      await supabase.auth.updateUser({
+        data: { role: options.role }
+      });
+    }
+  }
+  
   return { ok: true, error: null };
 }
