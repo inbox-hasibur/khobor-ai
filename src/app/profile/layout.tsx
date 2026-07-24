@@ -54,8 +54,8 @@ export default function ProfileLayout({
                   <motion.div
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive 
-                        ? "bg-primary text-primary-foreground shadow-md" 
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        ? "bg-white text-slate-900 shadow-md border border-white/20" 
+                        : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
                     }`}
                     whileHover={{ x: 2 }}
                     whileTap={{ scale: 0.98 }}

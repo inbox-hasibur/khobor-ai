@@ -42,7 +42,7 @@ export default function PreferencesPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your Name"
-              className="w-full bg-muted/50 border border-border rounded-xl py-2 px-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="w-full bg-white/5 dark:bg-white/5 border border-white/10 hover:border-white/20 rounded-xl py-2 px-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-foreground"
             />
           </div>
           <div className="space-y-2">
@@ -52,12 +52,12 @@ export default function PreferencesPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full bg-muted/50 border border-border rounded-xl py-2 px-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="w-full bg-white/5 dark:bg-white/5 border border-white/10 hover:border-white/20 rounded-xl py-2 px-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-foreground"
             />
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="default">Save Changes</Button>
+          <Button className="bg-white text-slate-900 hover:bg-slate-200 font-bold px-6">Save Changes</Button>
         </CardFooter>
       </Card>
 
@@ -73,8 +73,12 @@ export default function PreferencesPage() {
             {categories.map((category, index) => (
               <Button 
                 key={category} 
-                variant={index % 3 === 0 ? "default" : "outline"} 
-                className="rounded-full"
+                variant="outline" 
+                className={`rounded-full transition-all ${
+                  index % 3 === 0 
+                    ? "bg-white/50 dark:bg-white/20 border-white/50 dark:border-white/30 text-foreground shadow-sm" 
+                    : "bg-transparent"
+                }`}
               >
                 {category}
               </Button>
@@ -82,7 +86,7 @@ export default function PreferencesPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="secondary">Save Interests</Button>
+          <Button className="bg-white text-slate-900 hover:bg-slate-200 font-bold px-6">Save Interests</Button>
         </CardFooter>
       </Card>
 

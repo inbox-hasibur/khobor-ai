@@ -60,8 +60,8 @@ export default function ProfileDashboard() {
           </p>
         </div>
         <Link href="/pricing">
-          <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white border-0">
-            <Star className="w-4 h-4 mr-2" />
+          <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white border-0 shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-all duration-300 hover:scale-105">
+            <Star className="w-4 h-4 mr-2 fill-white" />
             Upgrade to Premium
           </Button>
         </Link>

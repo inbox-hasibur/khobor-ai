@@ -120,7 +120,7 @@ const Navbar = () => {
               {/* Search Icon - With keyboard shortcut hint */}
               <motion.button 
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="hidden sm:flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                className="hidden sm:flex items-center gap-2 px-3 py-2 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -134,7 +134,7 @@ const Navbar = () => {
               {/* Mobile Search Button */}
               <motion.button 
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="sm:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                className="sm:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -145,7 +145,7 @@ const Navbar = () => {
               <div className="md:hidden">
                 <motion.button 
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  className="p-2.5 text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800 min-w-[44px] min-h-[44px] flex items-center justify-center"
                   whileTap={{ scale: 0.9 }}
                 >
                   <AnimatePresence mode="wait">
@@ -174,7 +174,7 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <motion.button 
                   onClick={() => signOut()}
-                  className="px-2 md:px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-muted hover:text-foreground transition-all flex items-center gap-1 md:gap-2 h-9"
+                  className="px-2 md:px-4 py-2 bg-transparent text-muted-foreground rounded-full text-[13px] font-bold hover:bg-white dark:hover:bg-slate-800 hover:text-foreground transition-all flex items-center gap-1 md:gap-2 h-9"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -231,7 +231,7 @@ const Navbar = () => {
               <>
                 <Link href="/login">
                   <motion.button 
-                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-muted"
+                    className="px-5 py-2.5 text-[12px] font-bold text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-white dark:hover:bg-slate-800"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -267,7 +267,7 @@ const Navbar = () => {
                 <input 
                   type="text" 
                   placeholder="Search news, categories, or updates..."
-                  className="w-full bg-muted/50 border border-border rounded-xl py-3 pl-11 pr-4 text-[14px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                  className="w-full bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-800 border border-border rounded-xl py-3 pl-11 pr-4 text-[14px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
@@ -374,13 +374,13 @@ const NavLink = ({
     className="relative group"
   >
     <div
-      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 hover:bg-white dark:hover:bg-slate-800 ${
+      className={`flex items-center gap-2 px-4 py-3 md:py-2.5 rounded-xl text-[13px] md:text-[12px] font-bold transition-all duration-300 w-full md:w-auto min-h-[44px] md:min-h-0 ${
         active 
-          ? "text-primary" 
-          : "text-muted-foreground hover:text-foreground"
+          ? "bg-white dark:bg-slate-800 text-foreground shadow-sm" 
+          : "text-muted-foreground hover:text-foreground hover:bg-white dark:hover:bg-slate-800"
       }`}
     >
-      <span className={active ? "text-primary" : "group-hover:text-foreground transition-colors"}>
+      <span className={active ? "text-foreground" : "group-hover:text-foreground transition-colors"}>
         {icon}
       </span>
       {label}

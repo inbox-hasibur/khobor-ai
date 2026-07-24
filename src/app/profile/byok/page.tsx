@@ -42,7 +42,7 @@ export default function BYOKPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button>Save Configuration</Button>
+          <Button className="bg-white text-slate-900 hover:bg-slate-200 font-bold px-6">Save Configuration</Button>
         </CardFooter>
       </Card>
       
@@ -63,7 +63,7 @@ export default function BYOKPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline">Save Configuration</Button>
+          <Button className="bg-white text-slate-900 hover:bg-slate-200 font-bold px-6">Save Configuration</Button>
         </CardFooter>
       </Card>
     </motion.div>
