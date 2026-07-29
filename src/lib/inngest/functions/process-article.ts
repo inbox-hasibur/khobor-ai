@@ -109,10 +109,12 @@ export const processArticle = inngest.createFunction(
           headline: title,
           raw_content: markdown,
           ai_summary: synthesizedContent,
-          status: autoApprove ? "published" : "draft", // Depends on auto_approve_news setting
+          status: autoApprove ? "published" : "pending",
           original_url: url,
           source: sourceName || url, 
-          published_at: new Date().toISOString()
+          published_at: new Date().toISOString(),
+          audio_url: `/api/audio/tts?text=${encodeURIComponent((title || "").substring(0, 200))}`,
+          summary_audio_url: `/api/audio/tts?text=${encodeURIComponent((synthesizedContent || "").substring(0, 200))}`
         });
       
       if (error) {

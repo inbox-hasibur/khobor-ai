@@ -24,24 +24,33 @@ export async function scrapeJamunaTV() {
 
 async function scrapeSource(url: string, selector: string) {
   try {
-    const { data } = await axios.get(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "none",
-        "Sec-Fetch-User": "?1",
-        "Cache-Control": "max-age=0",
-      },
-      timeout: 20000,
-    });
+    let htmlData = "";
+    try {
+      const { data } = await axios.get(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.5",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Connection": "keep-alive",
+          "Upgrade-Insecure-Requests": "1",
+          "Cache-Control": "max-age=0",
+        },
+        timeout: 20000,
+      });
+      htmlData = data;
+    } catch (axiosError) {
+      console.warn(`Axios failed for ${url}, trying native fetch fallback...`);
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+        }
+      });
+      if (!response.ok) throw new Error(`Fetch fallback also failed with status ${response.status}`);
+      htmlData = await response.text();
+    }
 
-    const $ = cheerio.load(data);
+    const $ = cheerio.load(htmlData);
     const newsItems: any[] = [];
 
     $(selector).each((i, element) => {
@@ -75,6 +84,49 @@ async function scrapeSource(url: string, selector: string) {
         }
       }
     });
+
+    // --- Jina AI Markdown Fallback ---
+    // If standard HTML scraping failed (e.g. DOM changed or blocked), try Jina AI Reader
+    if (newsItems.length === 0) {
+      console.warn(`HTML selectors failed for ${url}, trying Jina AI Markdown fallback...`);
+      try {
+        const jinaRes = await fetch(`https://r.jina.ai/${url}`);
+        if (jinaRes.ok) {
+          const text = await jinaRes.text();
+          const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g;
+          let match;
+          while ((match = linkRegex.exec(text)) !== null) {
+            // Clean up the title (remove image markdown and prefixes)
+            let title = match[1].replace(/!\[.*?\]/g, '').replace(/Image \d+:/g, '').trim();
+            const linkUrl = match[2];
+            
+            // Filter: Title must be decently long, link must belong to the site, and must not be an image file
+            if (
+              title.length > 15 && 
+              linkUrl.includes(new URL(url).hostname.replace('www.', '')) &&
+              !linkUrl.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)
+            ) {
+              if (!newsItems.some(item => item.originalUrl === linkUrl)) {
+                newsItems.push({
+                  title,
+                  summary: "সংক্ষিপ্ত বিবরণ এক্সট্রাক্ট করা হচ্ছে...",
+                  imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?q=80&w=2070&auto=format&fit=crop",
+                  originalUrl: linkUrl,
+                  source: new URL(url).hostname.replace("www.", ""),
+                  category: "National",
+                  priority: "medium",
+                  publishedAt: new Date(),
+                  expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+                });
+              }
+            }
+            if (newsItems.length >= 10) break;
+          }
+        }
+      } catch (jinaError) {
+        console.error(`Jina AI fallback also failed for ${url}`);
+      }
+    }
 
     console.log(`Scraped ${newsItems.length} items from ${url}`);
     return newsItems;

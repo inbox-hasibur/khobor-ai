@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { createBackgroundClient } from '@/utils/supabase/background';
 import { scrapeJamunaTV } from '@/lib/scraper';
 import { summarizeNews } from '@/lib/ai';
 
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   console.log(`🕖 Cron started: ${now.toISOString()} (Dhaka: ${period})`);
 
   try {
-    const supabase = await createClient();
+    const supabase = createBackgroundClient();
 
     // Step 1: Weather + Date + Traffic intro
     let introText = '';
@@ -63,24 +63,37 @@ export async function GET(req: NextRequest) {
         ai_summary: aiSummary,
         original_url: item.originalUrl,
         source: item.source || "Jamuna TV",
-        status: "published",
+        status: "pending", // Always require approval for cron scraped items
         published_at: item.publishedAt || new Date().toISOString(),
+        audio_url: `/api/audio/tts?text=${encodeURIComponent((item.title || "").substring(0, 200))}`,
+        summary_audio_url: `/api/audio/tts?text=${encodeURIComponent((aiSummary || "").substring(0, 200))}`,
       });
     }
 
-    // Step 4: Supabase তে save করো (upsert to avoid duplicates)
+    // Step 4: Supabase তে save করো (Check and Insert to avoid missing unique constraint errors)
     console.log('💾 Saving to database...');
     let savedCount = 0;
     for (const item of processedNews) {
       try {
+        const { data: existing } = await supabase
+          .from('news_articles')
+          .select('id')
+          .eq('original_url', item.original_url)
+          .single();
+
+        if (existing) {
+          console.log('Skipping existing item:', item.headline);
+          continue;
+        }
+
         const { error } = await supabase
           .from('news_articles')
-          .upsert(item, { onConflict: 'original_url' });
+          .insert([item]);
           
         if (!error) savedCount++;
         else console.error('Failed to save item:', item.headline, error);
       } catch (e) {
-        console.error('Failed to save item:', item.headline, e);
+        console.error('Failed to check/save item:', item.headline, e);
       }
     }
 
